@@ -11,6 +11,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // 只能使用 NEXT_PUBLIC_ 开头的环境变量
   return (
     <html lang="en">
       <body
