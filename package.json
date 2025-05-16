@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack -p 12001",
     "build": "next build",
-    "start": "next start",
+    "build:copy-assets": "next build && npm run copy-assets",
+    "copy-assets": "cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
     "lint": "next lint"
   },
   "dependencies": {
