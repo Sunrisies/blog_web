@@ -1,7 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-
+@config "../../tailwind.config.ts";
 @custom-variant dark (&:is(.dark *));
+
+
+
 
 @theme inline {
   --color-background: var(--background);
@@ -41,6 +44,36 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* 断点系统 */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1200px;
+  /* 你的自定义断点 */
+
+  /* 容器配置 */
+  --container-padding: 1rem;
+  --container-center: true;
+}
+
+/* 容器核心样式 */
+@layer components {
+  .container {
+    width: 100%;
+    padding-inline: var(--container-padding);
+
+    /* 自动居中配置 */
+    @when [var(--container-center)] {
+      margin-inline: auto;
+    }
+
+    /* 响应式容器宽度 */
+    @media (min-width: 1200px) {
+      max-width: var(--breakpoint-2xl);
+    }
+  }
 }
 
 :root {
@@ -116,6 +149,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }

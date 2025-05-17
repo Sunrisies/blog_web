@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import request from '@/services/request'
 import { IUser } from "@/types";
-import Header from "@/components/header";
+import { SiteHeader } from "@/components/header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,7 +20,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={` antialiased`}>
-        <Header></Header>
+        <SiteHeader></SiteHeader>
         {children}
       </body>
     </html>
