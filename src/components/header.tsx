@@ -40,6 +40,8 @@ const navItems = [
     ],
   },
   { name: "Blog", href: "/blog" },
+  { name: "图库", href: "/image-gallery" },
+
   {
     name: "Resources",
     subItems: [
