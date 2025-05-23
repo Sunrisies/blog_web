@@ -1,0 +1,269 @@
+"use client";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader
+} from "@/components/ui/card";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import Http from "@/services/request";
+import { CategoriesType, IBlog } from "@/types/blog";
+import { checkDeviceType } from "@/utils";
+import { ChevronRight, Clock, Eye } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
+import { formatChineseDateTime } from "sunrise-utils";
+interface PageProps {
+  blog: IBlog[];
+  categories: CategoriesType[];
+  pagination: { total: number, limit: number };
+  id: number;
+}
+const devices = {
+  mobile: 10,
+  tablet: 10,
+  desktop: 8,
+};
+const getPostApi = async <T,>(id: number) =>
+  await Http.get<T[]>(`/article?page=${id}&limit=8`);
+const BlogDetail = ({ blog, categories, pagination, id }: PageProps) => {
+  console.log(blog, "blog");
+  const [page, setPage] = useState(1);
+  const [newArticles, setNewArticles] = useState<IBlog[]>(blog);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedTag, setSelectedTag] = useState("");
+
+  const [deviceType, setDeviceType] = useState<string>("");
+  // console.log(newArticles, "deviceType");
+  // const [limit, setLimit] = useState(10);
+  useEffect(() => {
+    // 初始检查
+    const device = checkDeviceType();
+    setDeviceType(() => device);
+    console.log(deviceType, "111deviceType", device);
+
+    if (device in devices) {
+      console.log(devices[device as keyof typeof devices], "device");
+      // setLimit(() => devices[device as keyof typeof devices]); // 这里使用了类型断言
+    } else {
+      console.log("未知设备类型", device);
+    }
+  }, []);
+  const loadArticles = (page: number) => {
+    // 获取数据的逻辑
+    getPostApi<IBlog>(page).then(({ data }) => {
+      console.log(data, "res");
+      setNewArticles((prevArticles) => [...prevArticles]);
+    });
+    console.log(page, "page");
+  };
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
+
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+    // 实现分类筛选逻辑
+  };
+
+  const handleTagSelect = (tag: string) => {
+    setSelectedTag(tag);
+    // 实现标签筛选逻辑
+  };
+
+  return (
+    <div className="container mx-auto px-4 py-4">
+      <div className="flex justify-between">
+        <h1 className="text-3xl font-bold mb-4">文章列表</h1>
+        {/* 搜索、分类和标签 - 在移动设备上隐藏 */}
+        <div className="hidden md:flex justify-between items-center mb-4">
+          <div className="flex space-x-4">
+            <Select
+              value={selectedCategory}
+              onValueChange={handleCategorySelect}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="所有分类" />
+              </SelectTrigger>
+              <SelectContent className="max-h-60 overflow-auto">
+                <SelectItem
+                  value="all"
+                  className="hover:bg-accent/50 transition-colors"
+                >
+                  所有分类
+                </SelectItem>
+                {categories.map((category) => (
+                  <SelectItem
+                    key={category.value}
+                    value={category.value}
+                    className="hover:bg-accent/50 transition-colors"
+                  >
+                    {category.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select value={selectedTag} onValueChange={handleTagSelect}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="所有标签" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">所有标签</SelectItem>
+                <SelectItem value="react">React</SelectItem>
+                <SelectItem value="nextjs">Next.js</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </div>
+      {/* 新增 H2 标题，提升内容层级结构 */}
+      <h2 className="text-2xl font-semibold mb-2">最新文章</h2>
+      {/* 文章列表 */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {newArticles.map((article) => (
+          <Card key={article.id} className="flex flex-col py-0 gap-0">
+            <CardHeader className="p-0">
+              <div className="relative h-32 w-full">
+                <Image
+                  src={
+                    article.cover ||
+                    "https://kzmolcurk08fsa3stld2.lite.vusercontent.net/placeholder.svg"
+                  }
+                  alt={article.title}
+                  fill
+                  className="object-cover rounded-t-lg"
+                />
+                {article.is_top && (
+                  <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">
+                    置顶
+                  </Badge>
+                )}
+              </div>
+            </CardHeader>
+            <CardContent className="grow p-4">
+              {/* 新增 H3 标题，突出文章标题 */}
+              <h3 className="text-lg font-bold mb-2 line-clamp-1">{article.title}</h3>
+              <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                {article.description}
+              </p>
+              <div className="flex flex-wrap gap-2 mb-2">
+                {article.tags.map((tag) => (
+                  <Badge key={tag.id} variant="secondary" className="text-xs">
+                    {tag.name}
+                  </Badge>
+                ))}
+              </div>
+            </CardContent>
+            <CardFooter className="flex justify-between items-center p-4 pt-0 pr-0">
+              <div className="flex items-center text-sm text-muted-foreground space-x-4">
+                <div className="flex items-center shrink-0 overflow-hidden">
+                  <Eye className="h-4 w-4 mr-1 flex-shrink-0" />
+                  <span className="truncate">{article.views}</span>
+                </div>
+                <div className="flex items-center shrink-0 overflow-hidden">
+                  <Clock className="h-4 w-4 mr-1 flex-shrink-0" />
+                  <span className="truncate">
+                    {formatChineseDateTime(article.publish_time).split(" ")[0]}
+                  </span>
+                </div>
+              </div>
+              <Link href={`/article/${article.id}`} passHref>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-primary cursor-pointer m-0 pr-2"
+                >
+                  阅读更多
+                  <ChevronRight className="h-4 w-4 ml-1" />
+                </Button>
+              </Link>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+      {/* 加载更多触发器 */}
+      {deviceType === "mobile" && newArticles.length < pagination.total && (
+        <div ref={ref} className="flex justify-center mt-8 ">
+          <Button onClick={() => loadArticles(id + 1)} variant="outline">
+            加载更多
+          </Button>
+        </div>
+      )}
+      {/* 加载指示器 */}
+      {/* {(
+        <div className="flex justify-center mt-8 md:hidden">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      )} */}
+      {/* 分页 - 在移动设备上隐藏 */}
+      {deviceType === "desktop" && (
+        <div className="mt-8">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  href="1"
+                  className={id === 1 ? "opacity-50 cursor-not-allowed" : ""}
+                />
+              </PaginationItem>
+              {Array.from(
+                { length: Math.ceil(pagination.total / pagination.limit) },
+                (_, index) => index + 1
+              )
+                // .slice(
+                //   Math.max(0, page - 3),
+                //   Math.min(Math.ceil(pagination.total / pagination.limit), page + 3)
+                // )
+                .map((newPage) => {
+                  console.log("newPage", newPage);
+                  return (
+                    <PaginationItem key={newPage}>
+                      <PaginationLink
+                        href={newPage.toString()}
+                        className={
+                          newPage === id ? "bg-blue-600 text-white" : ""
+                        } // 为当前页添加特殊样式
+                      >
+                        {newPage}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                })}
+              <PaginationItem>
+                <PaginationNext
+                  href={(id + 1).toString()}
+                  className={
+                    id === Math.ceil(pagination.total / pagination.limit)
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default BlogDetail;
