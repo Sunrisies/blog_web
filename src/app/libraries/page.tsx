@@ -11,7 +11,7 @@ export const metadata = {
     type: "website",
     locale: "zh_CN",
     images: [{
-      url: "https://sunrise1024.top/og-library.jpg",
+      url: "https://sunrise1024.top/og-library.png",
       width: 1200,
       height: 630,
       alt: "中文学习资源库"
@@ -21,7 +21,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "中文学习资源库 | 精选优质学习资源",
     description: "探索丰富的中文学习和文化资源，包括教材、视频、播客、应用等。精心筛选的实用学习材料，助你高效掌握中文。",
-    images: ["https://sunrise1024.top/og-library.jpg"]
+    images: ["https://sunrise1024.top/og-library.png"]
   }
 };
 
