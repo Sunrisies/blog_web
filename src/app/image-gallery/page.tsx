@@ -34,10 +34,73 @@ const sampleImages: ImageData[] = [
     type: "image/jpeg",
     created_at: "2025-05-12T07:26:55.626Z",
     storage_provider: "qiniu"
-  }
+  },
+  {
+    id: "4",
+    path: "https://kzmntyc0capmo12j485t.lite.vusercontent.net/placeholder.svg?height=600&width=800",
+    title: "示例图片3.jpeg",
+    size: "2.1 MB",
+    type: "image/jpeg",
+    created_at: "2025-05-12T07:26:55.626Z",
+    storage_provider: "qiniu"
+  },
+  {
+    id: "5",
+    path: "https://kzmntyc0capmo12j485t.lite.vusercontent.net/placeholder.svg?height=600&width=800",
+    title: "示例图片3.jpeg",
+    size: "2.1 MB",
+    type: "image/jpeg",
+    created_at: "2025-05-12T07:26:55.626Z",
+    storage_provider: "qiniu"
+  },
+  {
+    id: "6",
+    path: "https://kzmntyc0capmo12j485t.lite.vusercontent.net/placeholder.svg?height=600&width=800",
+    title: "示例图片3.jpeg",
+    size: "2.1 MB",
+    type: "image/jpeg",
+    created_at: "2025-05-12T07:26:55.626Z",
+    storage_provider: "qiniu"
+  },
+  {
+    id: "7",
+    path: "https://kzmntyc0capmo12j485t.lite.vusercontent.net/placeholder.svg?height=600&width=800",
+    title: "示例图片3.jpeg",
+    size: "2.1 MB",
+    type: "image/jpeg",
+    created_at: "2025-05-12T07:26:55.626Z",
+    storage_provider: "qiniu"
+  },
+  {
+    id: "8",
+    path: "https://kzmntyc0capmo12j485t.lite.vusercontent.net/placeholder.svg?height=600&width=800",
+    title: "示例图片3.jpeg",
+    size: "2.1 MB",
+    type: "image/jpeg",
+    created_at: "2025-05-12T07:26:55.626Z",
+    storage_provider: "qiniu"
+  },
+  {
+    id: "9",
+    path: "https://kzmntyc0capmo12j485t.lite.vusercontent.net/placeholder.svg?height=600&width=800",
+    title: "示例图片3.jpeg",
+    size: "2.1 MB",
+    type: "image/jpeg",
+    created_at: "2025-05-12T07:26:55.626Z",
+    storage_provider: "qiniu"
+  },
+  {
+    id: "10",
+    path: "https://kzmntyc0capmo12j485t.lite.vusercontent.net/placeholder.svg?height=600&width=800",
+    title: "示例图片3.jpeg",
+    size: "2.1 MB",
+    type: "image/jpeg",
+    created_at: "2025-05-12T07:26:55.626Z",
+    storage_provider: "qiniu"
+  },
 ]
 
-export default  function ImageGallery() {
+export default function ImageGallery() {
   const [images, setImages] = useState<ImageData[]>(sampleImages)
   const [filteredImages, setFilteredImages] = useState<ImageData[]>(sampleImages)
   const [searchTerm, setSearchTerm] = useState("")
