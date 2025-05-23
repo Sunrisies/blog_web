@@ -15,15 +15,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // 只能使用 NEXT_PUBLIC_ 开头的环境变量
   const data = await request.get<IUser>('/user')
   console.log(data.data.pagination)
   return (
     <html lang="en">
-      <body className={` antialiased`}>
-      <FPSCounter />
-        <SiteHeader></SiteHeader>
-        {children}
+      <body className="min-h-screen flex flex-col antialiased">
+        <FPSCounter />
+        <SiteHeader />
+        <main className="flex-1">{children}</main>
         <SiteFooter />
       </body>
     </html>
