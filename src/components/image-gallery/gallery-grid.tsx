@@ -30,7 +30,7 @@ export function GalleryGrid({ images, onImageClick }: GalleryGridProps) {
         {currentImages.map((image) => (
           <div
             key={image.id}
-            className="relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer h-64"
+            className="relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer h-60"
             onClick={() => onImageClick(image)}
           >
             <div className="relative w-full h-full">
@@ -39,9 +39,8 @@ export function GalleryGrid({ images, onImageClick }: GalleryGridProps) {
                 alt={image.title}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                className={`object-cover transition-opacity duration-300 ${
-                  loadedImages[image.id] ? "opacity-100" : "opacity-0"
-                }`}
+                className={`object-cover transition-opacity duration-300 ${loadedImages[image.id] ? "opacity-100" : "opacity-0"
+                  }`}
                 onLoad={() => handleImageLoad(image.id)}
                 loading="lazy"
               />
