@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     description: "这是一个专注于全栈开发、Web技术、云原生和DevOps的技术博客。在这里，我分享实用的编程技巧、项目经验和技术见解，帮助开发者解决实际问题，提升编程技能。",
     siteName: "朝阳的码农札记",
     images: [{
-      url: "https://sunrise1024.top/og-image.jpg",
+      url: "https://sunrise1024.top/og-image.png",
       width: 1200,
       height: 630,
       alt: "朝阳的码农札记"
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "朝阳的码农札记 | 全栈开发者的技术分享与经验总结",
     description: "这是一个专注于全栈开发、Web技术、云原生和DevOps的技术博客。在这里，我分享实用的编程技巧、项目经验和技术见解。",
-    images: ["https://sunrise1024.top/og-image.jpg"]
+    images: ["https://sunrise1024.top/og-image.png"]
   },
   robots: {
     index: true,

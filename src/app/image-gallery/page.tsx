@@ -1,6 +1,5 @@
-import { SearchBar } from "@/components/image-gallery/search-bar"
 import { GalleryGrid } from "@/components/image-gallery/gallery-grid"
-import type { ImageData } from "@/types/gallery"
+import { SearchBar } from "@/components/image-gallery/search-bar"
 import { generateMockImages } from '@/lib/mock-data'
 import { Metadata } from "next"
 
@@ -14,7 +13,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "zh_CN",
     images: [{
-      url: "https://sunrise1024.top/og-gallery.jpg",
+      url: "https://sunrise1024.top/og-gallery.png",
       width: 1200,
       height: 630,
       alt: "技术图片库"
@@ -24,7 +23,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "图片库 | 精选技术图片与截图分享",
     description: "探索开发者分享的高质量技术图片、代码截图和项目演示。直观的编程学习资源，助你快速掌握技术要点。",
-    images: ["https://sunrise1024.top/og-gallery.jpg"]
+    images: ["https://sunrise1024.top/og-gallery.png"]
   }
 };
 
