@@ -8,14 +8,14 @@ export const metadata = {
 
 export default function LibrariesPage() {
   return (
-    <div className="container mx-auto px-4 py-5">
-      <div className="flex flex-col gap-4">
-        <div className="w-full">
+    <div className="flex flex-col">
+      <div className="md:static fixed top-14 inset-x-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-10 border-b md:border-none md:bg-transparent md:backdrop-blur-none">
+        <div className="container mx-auto px-4 py-2 md:py-4">
           <LibraryFilters />
         </div>
-        <div className="w-full">
-          <LibrariesList />
-        </div>
+      </div>
+      <div className="container mx-auto px-4 pt-40 md:pt-2 pb-4">
+        <LibrariesList />
       </div>
     </div>
   )
