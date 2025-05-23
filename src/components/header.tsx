@@ -39,7 +39,7 @@ const navItems = [
       },
     ],
   },
-  { name: "文章", href: "/blog" },
+  { name: "文章", href: "/blog/1" },
   { name: "图库", href: "/image-gallery" },
   { name: '第三方库', href: "/libraries" },
   {
