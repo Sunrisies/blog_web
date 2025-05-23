@@ -6,11 +6,14 @@ import { getLibraries } from "@/services/library-service"
 import { LibraryCard } from "./library-card"
 import { useSearchParams } from "next/navigation"
 import { Loader2 } from "lucide-react"
+import { Button } from "../ui/button"
 
 export function LibrariesList() {
   const [libraries, setLibraries] = useState<Library[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 8
   const searchParams = useSearchParams()
 
   // Use a stable reference to searchParams with useCallback
@@ -65,6 +68,12 @@ export function LibrariesList() {
     }
   }, [getFilters])
 
+  // 计算分页数据
+  const totalPages = Math.ceil(libraries.length / itemsPerPage)
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  const currentLibraries = libraries.slice(startIndex, endIndex)
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-20">
@@ -92,10 +101,34 @@ export function LibrariesList() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {libraries.map((library) => (
-        <LibraryCard key={library.id} library={library} />
-      ))}
+    <div className="space-y-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {currentLibraries.map((library) => (
+          <LibraryCard key={library.id} library={library} />
+        ))}
+      </div>
+
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-4">
+          <Button
+            variant="outline"
+            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+          >
+            上一页
+          </Button>
+          <span className="text-sm text-muted-foreground">
+            第 {currentPage} 页，共 {totalPages} 页
+          </span>
+          <Button
+            variant="outline"
+            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+          >
+            下一页
+          </Button>
+        </div>
+      )}
     </div>
   )
 }

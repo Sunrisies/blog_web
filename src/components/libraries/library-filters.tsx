@@ -118,67 +118,60 @@ export function LibraryFilters() {
   const selectedTagId = searchParams.get("tag") ? Number.parseInt(searchParams.get("tag")!) : null
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-lg font-medium mb-4">搜索资源</h2>
-        <form onSubmit={handleSearch} className="relative">
+    <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+        <form onSubmit={handleSearch} className="relative w-full sm:flex-1">
           <Input
             type="search"
             placeholder="搜索资源..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pr-10"
+            className="pr-10 bg-background/50 focus:bg-background"
           />
-          <Button type="submit" size="icon" variant="ghost" className="absolute right-0 top-0 h-full">
-            <Search className="h-4 w-4" />
+          <Button type="submit" size="icon" variant="ghost" className="absolute right-0 top-0 h-full hover:bg-transparent">
+            <Search className="h-4 w-4 text-muted-foreground" />
           </Button>
         </form>
+
+        <div className="flex gap-4">
+          <select
+            className="h-10 w-full sm:w-32 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            value={selectedCategoryId || ""}
+            onChange={(e) => handleFilterSelect("category", Number(e.target.value))}
+          >
+            <option value="">所有分类</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+
+          <select
+            className="h-10 w-full sm:w-32 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            value={selectedTagId || ""}
+            onChange={(e) => handleFilterSelect("tag", Number(e.target.value))}
+          >
+            <option value="">所有标签</option>
+            {tags.map((tag) => (
+              <option key={tag.id} value={tag.id}>
+                {tag.name}
+              </option>
+            ))}
+          </select>
+
+          {isFilterActive && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-10 w-10 hover:bg-destructive/10 hover:text-destructive"
+              onClick={handleClearFilters}
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
       </div>
-
-      <Accordion type="multiple" defaultValue={["categories", "tags"]} className="w-full">
-        <AccordionItem value="categories">
-          <AccordionTrigger>分类</AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-1">
-              {categories.map((category) => (
-                <Button
-                  key={category.id}
-                  variant={selectedCategoryId === category.id ? "secondary" : "ghost"}
-                  className="w-full justify-start text-sm"
-                  onClick={() => handleFilterSelect("category", category.id)}
-                >
-                  {category.name}
-                </Button>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-
-        <AccordionItem value="tags">
-          <AccordionTrigger>标签</AccordionTrigger>
-          <AccordionContent>
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <Badge
-                  key={tag.id}
-                  variant={selectedTagId === tag.id ? "default" : "outline"}
-                  className="cursor-pointer"
-                  onClick={() => handleFilterSelect("tag", tag.id)}
-                >
-                  {tag.name}
-                </Badge>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-
-      {isFilterActive && (
-        <Button variant="outline" className="w-full flex items-center justify-center" onClick={handleClearFilters}>
-          <X className="h-4 w-4 mr-2" />
-          清除所有筛选
-        </Button>
-      )}
     </div>
   )
 }

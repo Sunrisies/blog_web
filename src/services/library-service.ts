@@ -1,93 +1,48 @@
-import type { Library, LibraryFilters } from "@/types/library"
-
+import { faker } from '@faker-js/faker/locale/zh_CN'
+import type { Category, Library, LibraryFilters, Tag } from "@/types/library"
 // Sample data matching the required structure
-export const sampleLibraries: Library[] = [
-  {
-    id: 1,
-    name: "Vue.js",
-    officialUrl: "https://vuejs.org",
-    description: "渐进式JavaScript框架",
-    metadata: {},
-    created_at: "2025-05-18T13:21:15.000Z",
-    updated_at: "2025-05-18T13:21:15.000Z",
-    category: {
-      id: 14,
-      name: "网站",
-    },
-    tags: [
-      {
-        id: 34,
-        name: "arcgis",
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "React",
-    officialUrl: "https://reactjs.org",
-    description: "用于构建用户界面的 JavaScript 库",
-    metadata: {},
-    created_at: "2025-05-17T10:15:22.000Z",
-    updated_at: "2025-05-17T10:15:22.000Z",
-    category: {
-      id: 14,
-      name: "网站",
-    },
-    tags: [
-      {
-        id: 35,
-        name: "frontend",
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: "汉语词典",
-    officialUrl: "https://dict.example.com",
-    description: "全面的中文词典和学习资源",
-    metadata: {},
-    created_at: "2025-05-16T08:30:45.000Z",
-    updated_at: "2025-05-16T08:30:45.000Z",
-    category: {
-      id: 15,
-      name: "语言学习",
-    },
-    tags: [
-      {
-        id: 36,
-        name: "dictionary",
-      },
-      {
-        id: 37,
-        name: "learning",
-      },
-    ],
-  },
-  {
-    id: 4,
-    name: "中国历史博物馆",
-    officialUrl: "https://history.example.org",
-    description: "探索中国丰富的历史和文化遗产",
-    metadata: {},
-    created_at: "2025-05-15T14:22:30.000Z",
-    updated_at: "2025-05-15T14:22:30.000Z",
-    category: {
-      id: 16,
-      name: "历史",
-    },
-    tags: [
-      {
-        id: 38,
-        name: "culture",
-      },
-      {
-        id: 39,
-        name: "history",
-      },
-    ],
-  },
+
+// 预定义分类
+const categories: Category[] = [
+  { id: 1, name: "网站" },
+  { id: 2, name: "语言学习" },
+  { id: 3, name: "历史" },
+  { id: 4, name: "文化" },
+  { id: 5, name: "技术" }
 ]
 
+// 预定义标签
+const tags: Tag[] = [
+  { id: 1, name: "frontend" },
+  { id: 2, name: "backend" },
+  { id: 3, name: "dictionary" },
+  { id: 4, name: "learning" },
+  { id: 5, name: "culture" },
+  { id: 6, name: "history" },
+  { id: 7, name: "arcgis" }
+]
+
+// 生成单个资源
+function generateLibrary(id: number): Library {
+  const category = faker.helpers.arrayElement(categories)
+  const numTags = faker.number.int({ min: 1, max: 3 })
+  const selectedTags = faker.helpers.arrayElements(tags, numTags)
+
+  return {
+    id,
+    name: faker.company.name(),
+    officialUrl: faker.internet.url(),
+    description: faker.lorem.sentence(),
+    metadata: {},
+    created_at: faker.date.past().toISOString(),
+    updated_at: faker.date.recent().toISOString(),
+    category,
+    tags: selectedTags
+  }
+}
+export const sampleLibraries: Library[] = Array.from({ length: 20 }, (_, index) =>
+  generateLibrary(index + 1)
+)
 // Cached data for categories and tags to prevent unnecessary recalculations
 const cachedCategories = Array.from(new Map(sampleLibraries.map((lib) => [lib.category.id, lib.category])).values())
 
