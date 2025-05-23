@@ -1,3 +1,4 @@
+import { IBlog } from "@/types/blog"
 import Link from "next/link"
 
 const recentPosts = [
@@ -28,14 +29,14 @@ const recentPosts = [
   },
 ]
 
-export function RecentPostsList() {
+export function RecentPostsList({ blogs }: { blogs: IBlog[] }) {
   return (
     <ul className="space-y-3">
-      {recentPosts.map((post) => (
-        <li key={post.slug} className="text-sm">
-          <Link href={`/blog/${post.slug}`} className="block hover:text-primary">
+      {blogs.map((post) => (
+        <li key={post.id} className="text-sm">
+          <Link href={`/article/${post.id}`} className="block hover:text-primary">
             <span className="line-clamp-1">{post.title}</span>
-            <span className="text-xs text-muted-foreground">{post.date}</span>
+            <span className="text-xs text-muted-foreground">{post.publish_time}</span>
           </Link>
         </li>
       ))}

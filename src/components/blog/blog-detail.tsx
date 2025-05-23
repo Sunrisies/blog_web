@@ -161,8 +161,11 @@ const BlogDetail = ({ blog, categories, pagination, id }: PageProps) => {
             </CardHeader>
             <CardContent className="grow p-4">
               {/* 新增 H3 标题，突出文章标题 */}
-              <h3 className="text-lg font-bold mb-2 line-clamp-1">{article.title}</h3>
-              <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+              <h3 className="text-lg  font-bold mb-2 line-clamp-1" title={article.title}>{article.title}</h3>
+              <p
+                className="text-sm text-muted-foreground mb-4 line-clamp-2 cursor-pointer"
+                title={article.description}
+              >
                 {article.description}
               </p>
               <div className="flex flex-wrap gap-2 mb-2">

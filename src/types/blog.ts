@@ -16,6 +16,7 @@ export interface IBlog {
     author: string
     content: string
     description: string
+    uuid: string
 }
 
 type optionsType = {
