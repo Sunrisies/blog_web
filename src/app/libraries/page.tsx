@@ -8,15 +8,12 @@ export const metadata = {
 
 export default function LibrariesPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-2">资源库</h1>
-      <p className="text-muted-foreground mb-8">探索有用的中文学习和文化资源</p>
-
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        <div className="lg:col-span-1">
+    <div className="container mx-auto px-4 py-5">
+      <div className="flex flex-col gap-4">
+        <div className="w-full">
           <LibraryFilters />
         </div>
-        <div className="lg:col-span-3">
+        <div className="w-full">
           <LibrariesList />
         </div>
       </div>

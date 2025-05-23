@@ -17,10 +17,10 @@ export function LibraryCard({ library }: LibraryCardProps) {
   }
 
   return (
-    <Card className="h-full flex flex-col">
-      <CardContent className="pt-6 flex-1">
+    <Card className="h-full gap-0 flex flex-col py-4">
+      <CardContent className="flex-1">
         <div className="flex justify-between items-start mb-2">
-          <h3 className="text-xl font-semibold">
+          <h3 className="text-xl font-semibold line-clamp-2">
             <Link href={`/libraries/${library.id}`} className="hover:underline">
               {library.name}
             </Link>
@@ -28,7 +28,7 @@ export function LibraryCard({ library }: LibraryCardProps) {
           <Badge variant="outline">{library.category.name}</Badge>
         </div>
 
-        <p className="text-muted-foreground mb-4">{library.description}</p>
+        <p className="text-muted-foreground mb-4 line-clamp-2 text-sm">{library.description}</p>
 
         <div className="flex flex-wrap gap-2 mb-4">
           {library.tags.map((tag) => (
@@ -41,7 +41,7 @@ export function LibraryCard({ library }: LibraryCardProps) {
         </div>
       </CardContent>
 
-      <CardFooter className="flex justify-between border-t pt-4">
+      <CardFooter className="flex justify-between border-t !pt-3">
         <div className="flex items-center text-xs text-muted-foreground">
           <Calendar className="h-3 w-3 mr-1" />
           <span>{formatDate(library.updated_at)}</span>
