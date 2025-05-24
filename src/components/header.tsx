@@ -40,16 +40,9 @@ const navItems = [
     ],
   },
   { name: "文章", href: "/blog/1" },
+  { name: "时光轴", href: "/timeline" },
   { name: "图库", href: "/image-gallery" },
   { name: '第三方库', href: "/libraries" },
-  {
-    name: "Resources",
-    subItems: [
-      { name: "Learning Materials", href: "/resources/learning" },
-      { name: "Travel Guides", href: "/resources/travel" },
-      { name: "Recommended Books", href: "/resources/books" },
-    ],
-  },
   { name: "关于", href: "/about" },
 ]
 
