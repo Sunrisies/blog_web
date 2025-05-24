@@ -7,6 +7,7 @@ import ArticleHeader from "./article-header";
 import TableOfContents from "./table-of-contents";
 import Http from "@/services/request";
 import { useState } from "react";
+import { ScrollToTopButton } from "../ScrollToTopButton";
 const getTextCommentsApi = async <T,>(slug: number) =>
   await Http.get<T[]>(`/comments?articleId=${slug}`);
 
@@ -46,6 +47,7 @@ export default function ArticleDetail({
           <TableOfContents content={article.content} />
         </div>
       </div>
+      <ScrollToTopButton />
     </div>
   );
 }
