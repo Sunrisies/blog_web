@@ -3,6 +3,7 @@ import { IBlog, CategoriesType } from "@/types/blog";
 import React from "react";
 import BlogDetail from "@/components/blog/blog-detail";
 import { getClientInfo } from "@/utils/get-client-info";
+import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 
 // 获取博客仓库数据
 const getWarehouseApi = async <T,>() =>
@@ -24,12 +25,17 @@ const Blog = async ({ params }: ArticleListProps) => {
     const { data: categories } = await getCategoriesApi<CategoriesType>();
     console.log("articles", categories);
     return (
-        <BlogDetail
+        <>
+            <BlogDetail
             blog={blog}
             pagination={pagination!}
             categories={categories}
             id={+id}
         />
+      <ScrollToTopButton />
+        </>
+        
+
     );
 };
 
