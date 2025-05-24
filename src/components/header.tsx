@@ -42,6 +42,7 @@ const navItems = [
   { name: "文章", href: "/blog/1" },
   { name: "时光轴", href: "/timeline" },
   { name: "图库", href: "/image-gallery" },
+  {name:'音乐库','href':'/music-player'},
   { name: '第三方库', href: "/libraries" },
   { name: "关于", href: "/about" },
 ]
