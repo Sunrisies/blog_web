@@ -9,6 +9,7 @@ import { getClientInfo } from "@/utils/get-client-info";
 import Http from "@/services/request";
 import { IBlog } from "@/types/blog"
 import SentencesCarousel from "@/components/home/SentencesCarousel";
+import { ScrollToTopButton } from "@/components/ScrollToTopButton"
 // import dynamic from 'next/dynamic';
 
 // const SentencesCarousel = dynamic(
@@ -74,6 +75,7 @@ export default async function HomePage() {
           </div>
         </section>
       </main>
+      <ScrollToTopButton />
     </div>
   )
 }
