@@ -45,23 +45,18 @@ const devices = {
 const getPostApi = async <T,>(id: number) =>
   await Http.get<T[]>(`/article?page=${id}&limit=8`);
 const BlogDetail = ({ blog, categories, pagination, id }: PageProps) => {
-  console.log(blog, "blog");
   const [page, setPage] = useState(1);
   const [newArticles, setNewArticles] = useState<IBlog[]>(blog);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedTag, setSelectedTag] = useState("");
 
   const [deviceType, setDeviceType] = useState<string>("");
-  // console.log(newArticles, "deviceType");
-  // const [limit, setLimit] = useState(10);
   useEffect(() => {
     // 初始检查
     const device = checkDeviceType();
     setDeviceType(() => device);
-    console.log(deviceType, "111deviceType", device);
 
     if (device in devices) {
-      console.log(devices[device as keyof typeof devices], "device");
       // setLimit(() => devices[device as keyof typeof devices]); // 这里使用了类型断言
     } else {
       console.log("未知设备类型", device);
@@ -70,10 +65,8 @@ const BlogDetail = ({ blog, categories, pagination, id }: PageProps) => {
   const loadArticles = (page: number) => {
     // 获取数据的逻辑
     getPostApi<IBlog>(page).then(({ data }) => {
-      console.log(data, "res");
       setNewArticles((prevArticles) => [...prevArticles]);
     });
-    console.log(page, "page");
   };
   const { ref, inView } = useInView({
     threshold: 0,
@@ -237,7 +230,6 @@ const BlogDetail = ({ blog, categories, pagination, id }: PageProps) => {
                 //   Math.min(Math.ceil(pagination.total / pagination.limit), page + 3)
                 // )
                 .map((newPage) => {
-                  console.log("newPage", newPage);
                   return (
                     <PaginationItem key={newPage}>
                       <PaginationLink

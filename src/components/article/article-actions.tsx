@@ -79,9 +79,7 @@ export default function ArticleActions({article, className}: ArticleActionsProps
 }
 
 function LikeButton({articleId}: { articleId: number }) {
-    // In a real app, this would check if the user has already liked the article
     const hasLiked = false
-    console.log(hasLiked, articleId)
     return (
         <div className="space-y-2">
             <button

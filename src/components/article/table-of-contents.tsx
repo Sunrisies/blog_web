@@ -41,7 +41,6 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
 
       items.push({ id, text, level })
     }
-    console.log(items, 'items')
     setTocItems(items)
   }, [content])
 
