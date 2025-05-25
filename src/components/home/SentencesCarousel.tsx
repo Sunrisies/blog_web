@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function SentencesCarousel() {
     const sentences = [
@@ -11,6 +11,13 @@ export default function SentencesCarousel() {
     ];
 
     const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentIndex(prev => (prev + 1) % sentences.length);
+        }, 3000);
+        return () => clearInterval(timer);
+    }, [sentences.length]);
 
     return (
         <div
