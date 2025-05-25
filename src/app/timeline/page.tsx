@@ -64,7 +64,6 @@ export const metadata: Metadata = {
 export default async function TimelinePage() {
     const { data: articles } = await getTimelineArticlesApi<IArticle[]>();
     const { data: warehouse } = await getWarehouse<warehouseType>()
-    console.log(warehouse, 'warehouse')
     return (
 
         <div className="container mx-auto w-full md:w-3/4 px-2 md:px-4 py-8">

@@ -20,8 +20,6 @@ export function SynchronizedLyrics({ lyrics, playbackState, className = "" }: Sy
     lyrics,
     playbackState,
     onLyricChange: (currentLine, nextLine) => {
-      // Optional: Add sound effects or haptic feedback here
-      console.log("Lyric changed:", currentLine?.text)
     },
   })
 

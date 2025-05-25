@@ -62,9 +62,7 @@ class Http {
     }
   }
   async get<T, R = PaginatedResponseDto<T>>(url: string, options?: any): Promise<R> {
-    // this.url = url
     this.options = { ...options }
-    console.log(this.options, 'options')
     return await this.fetch<T, R>(url, { method: 'GET', ...options })
   }
 

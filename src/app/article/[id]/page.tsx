@@ -43,7 +43,6 @@ export default async function ArticlePage({ params }: Props) {
   const { data: article } = await articleApi<IArticle>(+id);
 
   const { data: { prevArticle, nextArticle } } = await getPrevNextArticleApi<IPrevNext>(+id);
-  console.log(prevArticle, nextArticle, "prevArticle, nextArticle");
   return (
     <ArticleDetail
       article={article}

@@ -13,18 +13,7 @@ interface LibraryPageProps {
 
 
 export default async function LibraryPage({ params }: LibraryPageProps) {
-  // const id = Number.parseInt(params.id)
-
-  // if (isNaN(id)) {
-  //   notFound()
-  // }
-
   const library = sampleLibraries[0]
-  // console.log(library,'=======')
-  // if (!library) {
-  //   notFound()
-  // }
-
   return (
     <div className="container mx-auto px-4 py-8">
       <Link href="/libraries" className="flex items-center text-muted-foreground hover:text-foreground mb-6">

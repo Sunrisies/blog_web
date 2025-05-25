@@ -23,7 +23,6 @@ const Blog = async ({ params }: ArticleListProps) => {
     const { id } = await params;
     const { data: blog, pagination } = await getPostApi<IBlog>(+id);
     const { data: categories } = await getCategoriesApi<CategoriesType>();
-    console.log("articles", categories);
     return (
         <>
             <BlogDetail

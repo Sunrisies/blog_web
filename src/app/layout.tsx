@@ -60,8 +60,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const data = await request.get<IUser>('/user')
-  console.log(data.data.pagination)
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col antialiased">

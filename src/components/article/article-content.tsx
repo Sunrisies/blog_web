@@ -30,13 +30,10 @@ export default function ArticleContent({ content }: ArticleContentProps) {
         components={{
           h1: ({ children }) => {
             const id = createSlug(children as string)
-            console.log(id, 'children')
-
             return <h1 id={id}>{children}</h1>
           },
           h2: ({ children }) => {
             const id = createSlug(children as string)
-            console.log(id, 'children', children)
             return <h2 id={id}>{children}</h2>
           },
           h3: ({ children }) => {
@@ -56,7 +53,6 @@ export default function ArticleContent({ content }: ArticleContentProps) {
             return <h6 id={id}>{children}</h6>
           },
           code({ inline, className, children, ...props }) {
-            console.log(inline, className, children, '---------inline, className, children')
             const match = /language-(\w+)/.exec(className || '')
             const language = match ? match[1] : ''
 
