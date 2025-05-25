@@ -1,13 +1,15 @@
 import { getClientInfo } from '@/utils/get-client-info'
 import type { Metadata } from "next";
 import { IArticle } from "@/types/article";
+import CalendarHeatmap from '@/components/timeline/calendar-heatmap'
 import Http, { ResponseDto } from "@/services/request";
+import { warehouseType } from '@/types/blog';
 // 获取时光轴文章的接口
 const getTimelineArticlesApi = async <T,>() => {
     const headers = await getClientInfo()
     return (await Http.get<T>(`/article/timeline`, { headers })).data;
 }
-
+const getWarehouse = async <T,>() => await Http.get<T, ResponseDto<T>>('/article/uploadTime')
 export const metadata: Metadata = {
     title: "时光轴 | 朝阳的码农札记",
     description: "记录技术成长的点点滴滴，分享学习历程和技术见解，见证每一步成长的足迹。",
@@ -61,20 +63,22 @@ export const metadata: Metadata = {
 
 export default async function TimelinePage() {
     const { data: articles } = await getTimelineArticlesApi<IArticle[]>();
+    const { data: warehouse } = await getWarehouse<warehouseType>()
+    console.log(warehouse, 'warehouse')
     return (
-        <div className="container mx-auto px-4 py-8">
+
+        <div className="container mx-auto w-full md:w-3/4 px-2 md:px-4 py-8">
             <h1 className="text-3xl font-bold mb-8">时光轴</h1>
-
-            <div className="relative border-l-2 border-primary/30 pl-7.5 ml-10">
+            <div className="flex justify-start">
+                <div className="my-4 w-full md:w-5/6 border-red-400 hidden md:block">
+                  <CalendarHeatmap warehouse={warehouse} />
+                </div>
+            </div>
+            <div className="relative border-l-2 border-primary/30 pl-4 md:pl-7.5 ml-2 md:ml-10">
                 {articles.length > 0 ? articles.map((article, index) => (
-                    <div
-                        key={article.id}
-                        className="mb-8 relative w-3/4"
-                    >
-                        {/* 时间点 */}
-                        <div className="absolute -left-[41px] w-5 h-5 bg-background border-2 border-primary rounded-full" />
-
-                        <div className="group block p-6 bg-card hover:bg-accent rounded-lg transition-colors">
+                    <div key={article.id} className="mb-8 relative w-full md:w-3/4">
+                        <div className="absolute -left-[25px] md:-left-[41px] w-5 h-5 bg-background border-2 border-primary rounded-full" />
+                        <div className="group block p-4 md:p-6 bg-card hover:bg-accent rounded-lg transition-colors">
                             {/* 日期 */}
                             <time className="text-sm text-muted-foreground mb-2 block">
                                 {new Date(article.publish_time!).toLocaleDateString('zh-CN', {

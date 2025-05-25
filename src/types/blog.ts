@@ -25,3 +25,4 @@ type optionsType = {
 }
 export type CategoriesType = optionsType
 
+export type warehouseType = (string | number)[][]
