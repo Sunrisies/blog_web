@@ -1,5 +1,6 @@
 import { LibrariesList } from "@/components/libraries/libraries-list"
 import { LibraryFilters } from "@/components/libraries/library-filters"
+import { Suspense } from "react";
 
 export const metadata = {
   title: "中文学习资源库 | 朝阳的码农札记 - 精选优质学习资源",
@@ -24,17 +25,23 @@ export const metadata = {
     images: ["https://sunrise1024.top/og-library.png"]
   }
 };
-
+function SearchBarFallback() {
+  return <>placeholder</>
+}
 export default function LibrariesPage() {
   return (
     <div className="flex flex-col">
       <div className="md:static fixed top-14 inset-x-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-10 border-b md:border-none md:bg-transparent md:backdrop-blur-none">
         <div className="container mx-auto px-4 py-2 md:py-4">
-          <LibraryFilters />
+          <Suspense fallback={<SearchBarFallback />}>
+            <LibraryFilters />
+          </Suspense>
         </div>
       </div>
       <div className="container mx-auto px-4 pt-40 md:pt-2 pb-4">
-        <LibrariesList />
+        <Suspense fallback={<SearchBarFallback />}>
+          <LibrariesList />
+        </Suspense>
       </div>
     </div>
   )

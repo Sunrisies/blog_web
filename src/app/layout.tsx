@@ -60,6 +60,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log(process.env.NEXT_PUBLIC_API_URL, '===')
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col antialiased">
