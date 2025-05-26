@@ -7,6 +7,7 @@ import ArticleHeader from "./article-header";
 import TableOfContents from "./table-of-contents";
 import Http from "@/services/request";
 import { useState } from "react";
+import Comment from '@/components/comment'
 import { ScrollToTopButton } from "../ScrollToTopButton";
 const getTextCommentsApi = async <T,>(slug: number) =>
   await Http.get<T[]>(`/comments?articleId=${slug}`);
@@ -40,7 +41,7 @@ export default function ArticleDetail({
             prevArticle={prevArticle}
             nextArticle={nextArticle}
           />
-         
+
         </div>
 
         <div className="hidden lg:block lg:col-span-3">
@@ -48,6 +49,8 @@ export default function ArticleDetail({
         </div>
       </div>
       <ScrollToTopButton />
+      <Comment></Comment>
+
     </div>
   );
 }
