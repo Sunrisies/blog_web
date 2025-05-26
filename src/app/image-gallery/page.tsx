@@ -2,6 +2,7 @@ import { GalleryGrid } from "@/components/image-gallery/gallery-grid"
 import { SearchBar } from "@/components/image-gallery/search-bar"
 import { generateMockImages } from '@/lib/mock-data'
 import { Metadata } from "next"
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "图片库 | 朝阳的码农札记 - 精选技术图片与截图分享",
@@ -26,6 +27,9 @@ export const metadata: Metadata = {
     images: ["https://sunrise1024.top/og-gallery.png"]
   }
 };
+function SearchBarFallback() {
+  return <>placeholder</>
+}
 
 export default function ImageGallery() {
   const images = generateMockImages(100)
@@ -34,11 +38,15 @@ export default function ImageGallery() {
     <div className=" flex flex-col">
       <div className="md:static fixed top-14 inset-x-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-10 border-b md:border-none md:bg-transparent md:backdrop-blur-none">
         <div className="container mx-auto px-4 py-2  md:py-4">
-          <SearchBar />
+          <Suspense fallback={<SearchBarFallback />}>
+            <SearchBar />
+          </Suspense>
         </div>
       </div>
       <div className="container mx-auto px-4 pt-20 md:pt-4 pb-4">
-        <GalleryGrid images={images} />
+        <Suspense fallback={<SearchBarFallback />}>
+          <GalleryGrid images={images} />
+        </Suspense>
       </div>
     </div>
   )

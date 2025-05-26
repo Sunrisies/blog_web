@@ -2,15 +2,13 @@
 
 import type React from "react"
 
-import { useState, useEffect, useCallback } from "react"
-import { useRouter, usePathname, useSearchParams } from "next/navigation"
-import { Search, X } from "lucide-react"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Input } from "@/components/ui/input"
 import { getAllCategories, getAllTags } from "@/services/library-service"
-import { Badge } from "@/components/ui/badge"
 import type { Category, Tag } from "@/types/library"
+import { Search, X } from "lucide-react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useCallback, useEffect, useState } from "react"
 
 export function LibraryFilters() {
   const [categories, setCategories] = useState<Category[]>([])
