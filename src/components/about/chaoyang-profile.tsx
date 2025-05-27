@@ -1,7 +1,7 @@
-import Image from "next/image"
-import { MapPin, Calendar, Coffee, Code } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Card, CardContent } from "@/components/ui/card"
+import { Calendar, Code, Coffee, MapPin } from "lucide-react"
+import Image from "next/image"
 
 export function ChaoyanProfile() {
     return (

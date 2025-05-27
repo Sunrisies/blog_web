@@ -2,16 +2,16 @@
 
 import { useState } from 'react'
 import Markdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import rehypeSlug from 'rehype-slug'
+import remarkGfm from 'remark-gfm'
 
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { tomorrow, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import { useTheme } from 'next-themes'
-import { Check, Copy } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { generateHeadingId } from '@/utils'
+import { Check, Copy } from 'lucide-react'
+import { useTheme } from 'next-themes'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { oneLight, tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 
 interface ArticleContentProps {

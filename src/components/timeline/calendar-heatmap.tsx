@@ -1,8 +1,8 @@
 "use client"
-import React from "react";
-import ReactECharts from "echarts-for-react";
-import * as echarts from "echarts";
 import type { warehouseType } from "@/types/blog";
+import * as echarts from "echarts";
+import ReactECharts from "echarts-for-react";
+import React from "react";
 
 interface CalendarHeatmapProps {
   warehouse: warehouseType;

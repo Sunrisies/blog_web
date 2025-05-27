@@ -1,9 +1,9 @@
 "use client"
 
-import {useCallback} from "react"
-import {Heart, Bookmark, Copy, Facebook, Twitter} from "lucide-react"
-import {IArticle} from "@/types/article"
-import {cn} from "@/lib/utils"
+import { cn } from "@/lib/utils"
+import { IArticle } from "@/types/article"
+import { Bookmark, Copy, Facebook, Heart, Twitter } from "lucide-react"
+import { useCallback } from "react"
 
 interface ArticleActionsProps {
     article: IArticle

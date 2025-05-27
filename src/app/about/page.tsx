@@ -1,7 +1,7 @@
 import { ChaoyanProfile } from "@/components/about/chaoyang-profile"
 import { CodeFarmerNotes } from "@/components/about/code-farmer-notes"
-import { SkillsSection } from "@/components/about/skills-section"
 import { ContactSection } from "@/components/about/contact-section"
+import { SkillsSection } from "@/components/about/skills-section"
 import { Metadata } from "next"
 export const metadata: Metadata = {
     title: "关于朝阳 | 码农札记与个人简介",

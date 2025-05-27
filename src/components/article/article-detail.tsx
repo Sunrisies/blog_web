@@ -1,14 +1,13 @@
 "use client";
+import Comment from '@/components/comment';
+import Http from "@/services/request";
 import { IArticle } from "@/types/article";
-import ArticleContent from "./article-content";
+import { ScrollToTopButton } from "../ScrollToTopButton";
 import ArticleActions from "./article-actions";
+import ArticleContent from "./article-content";
 import ArticleFooter from "./article-footer";
 import ArticleHeader from "./article-header";
 import TableOfContents from "./table-of-contents";
-import Http from "@/services/request";
-import { useState } from "react";
-import Comment from '@/components/comment'
-import { ScrollToTopButton } from "../ScrollToTopButton";
 const getTextCommentsApi = async <T,>(slug: number) =>
   await Http.get<T[]>(`/comments?articleId=${slug}`);
 

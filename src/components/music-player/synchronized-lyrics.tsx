@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import type { LyricLine, PlaybackState } from "@/types"
 import { useLyricsSync } from "@/hooks/use-lyrics-sync"
+import type { LyricLine, PlaybackState } from "@/types"
+import { useEffect, useRef, useState } from "react"
 
 interface SynchronizedLyricsProps {
   lyrics: LyricLine[]

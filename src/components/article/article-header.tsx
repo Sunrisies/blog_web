@@ -1,8 +1,7 @@
+import { IArticle } from "@/types/article";
+import { Calendar, Clock, Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Calendar, Eye, Clock } from "lucide-react";
-import { formatDate } from "@/lib/utils";
-import  { IArticle } from "@/types/article";
 
 interface ArticleHeaderProps {
   article: IArticle;

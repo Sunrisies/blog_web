@@ -1,6 +1,6 @@
+import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Badge } from "@/components/ui/badge"
 
 const skills = [
     { name: "JavaScript/TypeScript", level: 95, category: "前端" },
