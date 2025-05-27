@@ -1,11 +1,11 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
-import { Play, Pause, SkipBack, SkipForward, Volume2, Repeat, Shuffle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
+import type { PlaybackState, Song } from "@/types"
+import { Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume2 } from "lucide-react"
 import Image from "next/image"
-import type { Song, PlaybackState } from "@/types"
+import { useEffect, useRef, useState } from "react"
 import { SynchronizedLyrics } from "./synchronized-lyrics"
 
 // Sample playlist with timestamped lyrics

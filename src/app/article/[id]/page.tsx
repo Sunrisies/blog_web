@@ -1,8 +1,8 @@
-import type { Metadata, ResolvingMetadata } from "next";
 import ArticleDetail from "@/components/article/article-detail";
-import type { IArticle } from "@/types/article";
 import Http, { ResponseDto } from "@/services/request";
+import type { IArticle } from "@/types/article";
 import { getClientInfo } from "@/utils/get-client-info";
+import type { Metadata } from "next";
 interface IPrevNext {
   prevArticle?: { id: number; title: string };
   nextArticle?: { id: number; title: string };

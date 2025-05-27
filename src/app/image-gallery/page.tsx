@@ -1,7 +1,7 @@
-import { GalleryGrid } from "@/components/image-gallery/gallery-grid"
-import { SearchBar } from "@/components/image-gallery/search-bar"
-import { generateMockImages } from '@/lib/mock-data'
-import { Metadata } from "next"
+import { GalleryGrid } from "@/components/image-gallery/gallery-grid";
+import { SearchBar } from "@/components/image-gallery/search-bar";
+import { generateMockImages } from '@/lib/mock-data';
+import { Metadata } from "next";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {

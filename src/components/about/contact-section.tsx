@@ -1,6 +1,6 @@
-import { Mail, Github, Twitter, Linkedin, MessageCircle } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Github, Linkedin, Mail, MessageCircle, Twitter } from "lucide-react"
 
 const contactMethods = [
     {

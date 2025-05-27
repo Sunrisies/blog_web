@@ -1,5 +1,5 @@
-import { LibrariesList } from "@/components/libraries/libraries-list"
-import { LibraryFilters } from "@/components/libraries/library-filters"
+import { LibrariesList } from "@/components/libraries/libraries-list";
+import { LibraryFilters } from "@/components/libraries/library-filters";
 import { Suspense } from "react";
 
 export const metadata = {

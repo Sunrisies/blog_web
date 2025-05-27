@@ -1,9 +1,8 @@
-import Http from "@/services/request";
-import { IBlog, CategoriesType } from "@/types/blog";
-import React from "react";
 import BlogDetail from "@/components/blog/blog-detail";
-import { getClientInfo } from "@/utils/get-client-info";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
+import Http from "@/services/request";
+import { CategoriesType, IBlog } from "@/types/blog";
+import { getClientInfo } from "@/utils/get-client-info";
 
 // 获取博客仓库数据
 const getWarehouseApi = async <T,>() =>

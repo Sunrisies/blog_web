@@ -1,10 +1,10 @@
 "use client"
 
-import { useSearchParams } from "next/navigation"
+import type { ImageData } from "@/types/gallery"
 import Image from "next/image"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { useState } from "react"
-import type { ImageData } from "@/types/gallery"
 import { FullScreenView } from "./full-screen-view"
 
 interface GalleryGridProps {

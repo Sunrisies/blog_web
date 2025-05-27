@@ -1,9 +1,9 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import Image from "next/image"
-import { X, ChevronLeft, ChevronRight, Info } from "lucide-react"
 import type { ImageData } from "@/types/gallery"
+import { ChevronLeft, ChevronRight, Info, X } from "lucide-react"
+import Image from "next/image"
+import { useEffect, useState } from "react"
 
 interface FullScreenViewProps {
   image: ImageData

@@ -1,10 +1,9 @@
-import { notFound } from "next/navigation"
-import Link from "next/link"
-import { ExternalLink, Calendar, ArrowLeft } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { formatDate } from "@/lib/utils"
-import {sampleLibraries} from '@/services/library-service'
+import { sampleLibraries } from '@/services/library-service'
+import { ArrowLeft, Calendar, ExternalLink } from "lucide-react"
+import Link from "next/link"
 interface LibraryPageProps {
   params: {
     id: string

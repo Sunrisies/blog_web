@@ -1,7 +1,7 @@
+import { Button } from "@/components/ui/button"
+import { Github, Mail, Twitter } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { Github, Twitter, Mail } from "lucide-react"
-import { Button } from "@/components/ui/button"
 
 export function ProfileCard() {
   return (

@@ -1,8 +1,8 @@
-import Link from "next/link"
-import { Calendar, ArrowRight, BookOpen, Code2, Lightbulb } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ArrowRight, BookOpen, Calendar, Code2, Lightbulb } from "lucide-react"
+import Link from "next/link"
 
 const recentNotes = [
     {

@@ -1,16 +1,16 @@
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { BlogPostCard } from "@/components/home/blog-post-card"
-import { TagCloud } from "@/components/home/tag-cloud"
-import { RecentPostsList } from "@/components/home/recent-posts-list"
-import { ProfileCard } from "@/components/home/profile-card"
-import { getClientInfo } from "@/utils/get-client-info";
-import Http from "@/services/request";
-import { IBlog } from "@/types/blog"
-import SentencesCarousel from "@/components/home/SentencesCarousel";
-import { ScrollToTopButton } from "@/components/ScrollToTopButton"
 import Comment from "@/components/comment"
+import { BlogPostCard } from "@/components/home/blog-post-card"
+import { ProfileCard } from "@/components/home/profile-card"
+import { RecentPostsList } from "@/components/home/recent-posts-list"
+import SentencesCarousel from "@/components/home/SentencesCarousel"
+import { TagCloud } from "@/components/home/tag-cloud"
+import { ScrollToTopButton } from "@/components/ScrollToTopButton"
+import { Button } from "@/components/ui/button"
+import Http from "@/services/request"
+import { IBlog } from "@/types/blog"
+import { getClientInfo } from "@/utils/get-client-info"
+import { ArrowRight } from "lucide-react"
+import Link from "next/link"
 // import dynamic from 'next/dynamic';
 
 // const SentencesCarousel = dynamic(

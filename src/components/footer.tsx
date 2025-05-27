@@ -1,7 +1,7 @@
 "use client"
 
-import Link from "next/link"
-import { Github } from "lucide-react"
+import { Github } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from 'react';
 
 const SITE_START_TIME = new Date('2024-01-01T00:00:00'); // 替换为你的网站上线时间
