@@ -14,31 +14,31 @@ import { useMobile } from "@/hooks/use-mobile"
 
 const navItems = [
   { name: "Home", href: "/" },
-  {
-    name: "Categories",
-    subItems: [
-      {
-        name: "Culture",
-        href: "/category/culture",
-        description: "Traditions, festivals, and cultural insights",
-      },
-      {
-        name: "Language",
-        href: "/category/language",
-        description: "Learning resources and linguistic insights",
-      },
-      {
-        name: "Food",
-        href: "/category/food",
-        description: "Recipes, culinary traditions, and food culture",
-      },
-      {
-        name: "Arts",
-        href: "/category/arts",
-        description: "Literature, calligraphy, music, and visual arts",
-      },
-    ],
-  },
+  // {
+  //   name: "Categories",
+  //   subItems: [
+  //     {
+  //       name: "Culture",
+  //       href: "/category/culture",
+  //       description: "Traditions, festivals, and cultural insights",
+  //     },
+  //     {
+  //       name: "Language",
+  //       href: "/category/language",
+  //       description: "Learning resources and linguistic insights",
+  //     },
+  //     {
+  //       name: "Food",
+  //       href: "/category/food",
+  //       description: "Recipes, culinary traditions, and food culture",
+  //     },
+  //     {
+  //       name: "Arts",
+  //       href: "/category/arts",
+  //       description: "Literature, calligraphy, music, and visual arts",
+  //     },
+  //   ],
+  // },
   { name: "文章", href: "/blog/1" },
   { name: "时光轴", href: "/timeline" },
   { name: "图库", href: "/image-gallery" },

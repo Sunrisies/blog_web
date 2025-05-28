@@ -133,7 +133,10 @@ const BlogDetail = ({ blog, categories, pagination, id }: PageProps) => {
       {/* 文章列表 */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {newArticles.map((article) => (
-          <Card key={article.id} className="flex flex-col py-0 gap-0">
+          <Card
+            key={article.id}
+            className="flex flex-col py-0 gap-0 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+          >
             <CardHeader className="p-0">
               <div className="relative h-32 w-full">
                 <Image
@@ -154,6 +157,7 @@ const BlogDetail = ({ blog, categories, pagination, id }: PageProps) => {
             </CardHeader>
             <CardContent className="grow p-4">
               {/* 新增 H3 标题，突出文章标题 */}
+              
               <h3 className="text-lg  font-bold mb-2 line-clamp-1" title={article.title}>{article.title}</h3>
               <p
                 className="text-sm text-muted-foreground mb-4 line-clamp-2 cursor-pointer"

@@ -25,15 +25,13 @@ const Blog = async ({ params }: ArticleListProps) => {
     return (
         <>
             <BlogDetail
-            blog={blog}
-            pagination={pagination!}
-            categories={categories}
-            id={+id}
-        />
-      <ScrollToTopButton />
+                blog={blog}
+                pagination={pagination!}
+                categories={categories}
+                id={+id}
+            />
+            <ScrollToTopButton />
         </>
-        
-
     );
 };
 
