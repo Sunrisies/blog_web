@@ -9,7 +9,7 @@ import { formatChineseDateTime } from 'sunrise-utils'
 
 export function BlogPostCard({ blog: { title, description, publish_time, tags, uuid } }: { blog: IBlog }) {
   return (
-    <Card className="overflow-hidden transition-all hover:shadow-md p-0">
+    <Card className="group overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1 p-0">
       <CardContent className="p-5">
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <Calendar className="h-3 w-3" />
@@ -17,7 +17,10 @@ export function BlogPostCard({ blog: { title, description, publish_time, tags, u
         </div>
 
         <h3 className="mt-2 text-xl font-semibold">
-          <Link href={`/article/${uuid}`} className="hover:text-primary">
+          <Link 
+            href={`/article/${uuid}`} 
+            className="relative hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform group-hover:after:scale-x-100"
+          >
             {title}
           </Link>
         </h3>
