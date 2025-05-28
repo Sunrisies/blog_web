@@ -1,16 +1,16 @@
 "use client"
 
-import { Menu, Moon, Search, Sun, X } from "lucide-react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { Menu, Search, Sun, Moon, X } from "lucide-react"
 
-import { NavItem } from "@/components/navbar"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { NavItem } from "@/components/navbar"
 import { useMobile } from "@/hooks/use-mobile"
-import { cn } from "@/lib/utils"
 
 const navItems = [
   { name: "Home", href: "/" },

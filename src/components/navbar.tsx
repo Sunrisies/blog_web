@@ -47,8 +47,9 @@ export function NavItem({ item, isMobile = false }: NavItemProps) {
       <Link
         href={item.href || "#"}
         className={cn(
-          "text-sm font-medium transition-colors hover:text-primary",
-          pathname === item.href ? "text-primary" : "text-muted-foreground",
+          "text-sm font-medium transition-colors hover:text-primary relative",
+          "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:after:scale-x-100",
+          pathname === item.href ? "text-primary after:scale-x-100" : "text-muted-foreground",
         )}
       >
         {item.name}
