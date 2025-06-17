@@ -17,20 +17,7 @@ const contactMethods = [
         href: "https://github.com/Sunrisies",
         description: "查看我的开源项目",
     },
-    {
-        icon: Twitter,
-        label: "Twitter",
-        value: "@chaoyang_dev",
-        href: "https://twitter.com/chaoyang_dev",
-        description: "技术动态和日常分享",
-    },
-    {
-        icon: Linkedin,
-        label: "LinkedIn",
-        value: "朝阳",
-        href: "https://linkedin.com/in/chaoyang",
-        description: "职业网络和经历",
-    },
+
 ]
 
 export function ContactSection() {
@@ -48,9 +35,9 @@ export function ContactSection() {
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {contactMethods.map((method) => (
+                    { contactMethods.map((method) => (
                         <div
-                            key={method.label}
+                            key={ method.label }
                             className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors"
                         >
                             <div className="p-2 bg-primary/10 rounded-lg">
@@ -58,17 +45,17 @@ export function ContactSection() {
                             </div>
                             <div className="flex-1">
                                 <div className="flex items-center gap-2">
-                                    <span className="font-medium">{method.label}</span>
+                                    <span className="font-medium">{ method.label }</span>
                                     <Button variant="ghost" size="sm" asChild>
-                                        <a href={method.href} target="_blank" rel="noopener noreferrer">
-                                            {method.value}
+                                        <a href={ method.href } target="_blank" rel="noopener noreferrer">
+                                            { method.value }
                                         </a>
                                     </Button>
                                 </div>
-                                <p className="text-xs text-muted-foreground">{method.description}</p>
+                                <p className="text-xs text-muted-foreground">{ method.description }</p>
                             </div>
                         </div>
-                    ))}
+                    )) }
                 </div>
 
                 <div className="mt-6 p-4 bg-muted/50 rounded-lg">
