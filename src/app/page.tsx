@@ -11,24 +11,13 @@ import { IBlog } from "@/types/blog"
 import { getClientInfo } from "@/utils/get-client-info"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
-// import dynamic from 'next/dynamic';
-
-// const SentencesCarousel = dynamic(
-//   () => import('@/components/home/SentencesCarousel')
-//     .then(mod => mod.default)
-//     .catch(() => () => <div>Loading...</div>),
-//   {
-//     ssr: false,
-//     loading: () => <div className="h-20 animate-pulse bg-muted/50 rounded-lg" />
-//   }
-// );
 
 const getPostApi = async <T,>(slug: number) => {
   const headers = await getClientInfo()
-  return (await Http.get<T[]>(`/article?page=${slug}&limit=8`, { headers })).data;
+  return (await Http.get<T[]>(`/article?page=${slug}&limit=8`, { headers })).data
 }
 export default async function HomePage() {
-  const { data: blogs } = await getPostApi<IBlog>(1);
+  const { data: blogs } = await getPostApi<IBlog>(1)
   return (
     <div className="flex min-h-screen flex-col bg-[#f9f9f9] dark:bg-zinc-900">
       <main className="flex-1">
@@ -44,12 +33,12 @@ export default async function HomePage() {
 
             <div className="md:col-span-2">
               <div className="grid gap-6">
-                {blogs.map((item) => (
+                { blogs.map((item) => (
                   <BlogPostCard
-                    key={item.id}
-                    blog={item}
+                    key={ item.id }
+                    blog={ item }
                   />
-                ))}
+                )) }
               </div>
               <div className="mt-8 text-center">
                 <Button variant="outline" asChild className="group">
@@ -70,14 +59,13 @@ export default async function HomePage() {
 
               <div className="mt-8 rounded-lg border bg-card p-4 shadow-sm">
                 <h2 className="mb-4 text-lg font-medium">最新文章</h2>
-                <RecentPostsList blogs={blogs} />
+                <RecentPostsList blogs={ blogs } />
               </div>
             </div>
           </div>
         </section>
       </main>
       <ScrollToTopButton />
-      <Comment></Comment>
     </div>
   )
 }
