@@ -1,5 +1,5 @@
 "use client"
-
+import { ArrowUp } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
 
@@ -30,11 +30,11 @@ export function ScrollToTopButton() {
   return (
     <Button
       type="button"
-      onClick={scrollToTop}
-      className={`fixed bottom-4 right-4 p-3 bg-primary text-white rounded-full shadow-lg transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      onClick={ scrollToTop }
+      className={ `fixed bottom-4 right-4  bg-primary text-white rounded-full shadow-lg  h-12 w-12 transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'}` }
       aria-label="Scroll to top"
     >
-      ↑
+      <ArrowUp className="!w-6 !h-6" strokeWidth={ 2.25 } absoluteStrokeWidth />
     </Button>
   )
 }

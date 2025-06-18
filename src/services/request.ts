@@ -1,7 +1,7 @@
 export interface IPagination {
-  total: number;
-  page: number;
-  limit: number;
+  total: number
+  page: number
+  limit: number
 }
 
 // GET请求返回类型
