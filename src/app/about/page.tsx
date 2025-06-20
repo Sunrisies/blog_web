@@ -1,4 +1,4 @@
-import { ChaoyanProfile } from "@/components/about/chaoyang-profile"
+import { ChaoYangProfile } from "@/components/about/chaoyang-profile"
 import { CodeFarmerNotes } from "@/components/about/code-farmer-notes"
 import { ContactSection } from "@/components/about/contact-section"
 import { SkillsSection } from "@/components/about/skills-section"
@@ -48,7 +48,7 @@ export default function AboutPage() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
             <div className="container mx-auto px-4 py-8">
-                <ChaoyanProfile />
+                <ChaoYangProfile />
                 <div className="mt-12 space-y-12">
                     <SkillsSection />
                     <CodeFarmerNotes />
