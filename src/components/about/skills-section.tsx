@@ -12,8 +12,13 @@ const skills = [
     { name: "Docker/Kubernetes", level: 75, category: "DevOps" },
     { name: "AWS/云服务", level: 82, category: "云计算" },
 ]
-
-const tools = ["VS Code", "Git", "Docker", "Figma", "Postman", "Jest", "Webpack", "Vite"]
+const workflows = [
+    "敏捷开发 & Scrum",
+    "测试驱动开发 (TDD)",
+    "持续集成/持续部署 (CI/CD)",
+    "代码审查 & 结对编程"
+]
+const tools = ["VS Code", "Git", "Docker", "JavaScript", "ApiFox", "Vue 全家桶", "Webpack", "Vite", "React", "Next.js", "Node.js", "Nestjs", "PostgreSQL", "MongoDB", "Redis", "Nginx"]
 
 export function SkillsSection() {
     return (
@@ -25,20 +30,20 @@ export function SkillsSection() {
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    {skills.map((skill) => (
-                        <div key={skill.name} className="space-y-2">
+                    { skills.map((skill) => (
+                        <div key={ skill.name } className="space-y-2">
                             <div className="flex justify-between items-center">
-                                <span className="font-medium">{skill.name}</span>
+                                <span className="font-medium">{ skill.name }</span>
                                 <div className="flex items-center gap-2">
                                     <Badge variant="outline" className="text-xs">
-                                        {skill.category}
+                                        { skill.category }
                                     </Badge>
-                                    <span className="text-sm text-muted-foreground">{skill.level}%</span>
+                                    <span className="text-sm text-muted-foreground">{ skill.level }%</span>
                                 </div>
                             </div>
-                            <Progress value={skill.level} className="h-2" />
+                            <Progress value={ skill.level } className="h-2" />
                         </div>
-                    ))}
+                    )) }
                 </CardContent>
             </Card>
 
@@ -48,36 +53,26 @@ export function SkillsSection() {
                 </CardHeader>
                 <CardContent>
                     <div className="flex flex-wrap gap-2">
-                        {tools.map((tool) => (
-                            <Badge key={tool} variant="secondary">
-                                {tool}
+                        { tools.map((tool) => (
+                            <Badge key={ tool } variant="secondary">
+                                { tool }
                             </Badge>
-                        ))}
+                        )) }
                     </div>
 
                     <div className="mt-6 space-y-4">
                         <h3 className="font-medium">工作流程</h3>
                         <div className="space-y-2 text-sm text-muted-foreground">
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 bg-primary rounded-full"></div>
-                                <span>敏捷开发 & Scrum</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 bg-primary rounded-full"></div>
-                                <span>测试驱动开发 (TDD)</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 bg-primary rounded-full"></div>
-                                <span>持续集成/持续部署 (CI/CD)</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 bg-primary rounded-full"></div>
-                                <span>代码审查 & 结对编程</span>
-                            </div>
+                            { workflows.map((workflow) => (
+                                <div key={ workflow } className="flex items-center gap-2">
+                                    <div className="w-2 h-2 bg-primary rounded-full"></div>
+                                    <span>{ workflow }</span>
+                                </div>
+                            )) }
                         </div>
                     </div>
                 </CardContent>
             </Card>
-        </div>
+        </div >
     )
 }
