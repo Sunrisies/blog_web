@@ -6,54 +6,54 @@ import { Mail, Phone, MapPin } from "lucide-react"
 
 export default function ContactPage() {
     return (
-        <div className=" bg-gradient-to-br h-full from-slate-50 to-slate-100 pt-6 pb-7.5 px-4">
+        <div className="bg-gradient-to-br h-full from-slate-50 to-slate-100 pt-6 pb-7.5 px-4">
             <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-4">
-                    <h1 className="text-4xl font-bold text-slate-800 mb-4">Contact Support</h1>
-                    <p className="text-xl text-slate-600">We're here to help. Get in touch with our support team.</p>
+                    <h1 className="text-4xl font-bold text-slate-800 mb-4">联系支持</h1>
+                    <p className="text-xl text-slate-600">我们随时准备帮助您。请联系我们的支持团队。</p>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-8">
-                    {/* Contact Form */}
+                    {/* 联系表单 */ }
                     <Card>
                         <CardHeader>
-                            <CardTitle>Send us a message</CardTitle>
+                            <CardTitle>发送消息给我们</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="text-sm font-medium text-slate-700 mb-2 block">First Name</label>
-                                    <Input placeholder="John" />
+                                    <label className="text-sm font-medium text-slate-700 mb-2 block">名</label>
+                                    <Input placeholder="张" />
                                 </div>
                                 <div>
-                                    <label className="text-sm font-medium text-slate-700 mb-2 block">Last Name</label>
-                                    <Input placeholder="Doe" />
+                                    <label className="text-sm font-medium text-slate-700 mb-2 block">姓</label>
+                                    <Input placeholder="伟" />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="text-sm font-medium text-slate-700 mb-2 block">Email</label>
-                                <Input type="email" placeholder="john@example.com" />
+                                <label className="text-sm font-medium text-slate-700 mb-2 block">电子邮件</label>
+                                <Input type="email" placeholder="zhangwei@example.com" />
                             </div>
 
                             <div>
-                                <label className="text-sm font-medium text-slate-700 mb-2 block">Subject</label>
-                                <Input placeholder="How can we help?" />
+                                <label className="text-sm font-medium text-slate-700 mb-2 block">主题</label>
+                                <Input placeholder="我们如何帮助您？" />
                             </div>
 
                             <div>
-                                <label className="text-sm font-medium text-slate-700 mb-2 block">Message</label>
-                                <Textarea placeholder="Please describe your issue or question..." rows={5} />
+                                <label className="text-sm font-medium text-slate-700 mb-2 block">消息</label>
+                                <Textarea placeholder="请描述您的问题或疑问..." className="h-24" rows={ 5 } />
                             </div>
 
                             <Button className="w-full">
                                 <Mail className="w-4 h-4 mr-2" />
-                                Send Message
+                                发送消息
                             </Button>
                         </CardContent>
                     </Card>
 
-                    {/* Contact Information */}
+                    {/* 联系信息 */ }
                     <div className="space-y-6">
                         <Card>
                             <CardContent className="p-6">
@@ -62,9 +62,9 @@ export default function ContactPage() {
                                         <Mail className="w-6 h-6 text-primary" />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-slate-800">Email Support</h3>
-                                        <p className="text-slate-600">support@yourcompany.com</p>
-                                        <p className="text-sm text-slate-500">We'll respond within 24 hours</p>
+                                        <h3 className="font-semibold text-slate-800">电子邮件支持</h3>
+                                        <p className="text-slate-600">3266420686@qq.com</p>
+                                        <p className="text-sm text-slate-500">我们将在24小时内回复</p>
                                     </div>
                                 </div>
                             </CardContent>
@@ -77,9 +77,9 @@ export default function ContactPage() {
                                         <Phone className="w-6 h-6 text-primary" />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-slate-800">Phone Support</h3>
-                                        <p className="text-slate-600">+1 (555) 123-4567</p>
-                                        <p className="text-sm text-slate-500">Mon-Fri, 9AM-6PM EST</p>
+                                        <h3 className="font-semibold text-slate-800">电话支持</h3>
+                                        <p className="text-slate-600">13839063614</p>
+                                        <p className="text-sm text-slate-500">周一至周五，上午9点至下午6点（EST）</p>
                                     </div>
                                 </div>
                             </CardContent>
@@ -92,9 +92,8 @@ export default function ContactPage() {
                                         <MapPin className="w-6 h-6 text-primary" />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-slate-800">Office Location</h3>
-                                        <p className="text-slate-600">123 Business Ave</p>
-                                        <p className="text-slate-600">Suite 100, City, ST 12345</p>
+                                        <h3 className="font-semibold text-slate-800">办公室地址</h3>
+                                        <p className="text-slate-600">M78星云</p>
                                     </div>
                                 </div>
                             </CardContent>
