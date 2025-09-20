@@ -8,21 +8,21 @@ interface IPrevNext {
   nextArticle?: { id: number; title: string }
 }
 interface Props {
-  params: Promise<{ id: string }>
+  params: Promise<{ uuid: string }>
 }
 // 获取文章详情的接口
-const articleApi = async <T,>(id: number) => {
+const articleApi = async <T,>(uuid: string) => {
   const headers = await getClientInfo()
-  return await Http.get<T, ResponseDto<T>>(`/article/${id}`, { headers })
+  return await Http.get<T, ResponseDto<T>>(`/article/${uuid}`, { headers })
 }
 
 // 获取上一篇和下一篇文章的接口
-const getPrevNextArticleApi = async <T,>(id: number) =>
-  await Http.get<T, ResponseDto<T>>(`/article/prevNext/${id}`)
+const getPrevNextArticleApi = async <T,>(uuid: string) =>
+  await Http.get<T, ResponseDto<T>>(`/article/prevNext/${uuid}`)
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params
-  const { data: article } = await articleApi<IArticle>(+id)
+  const { uuid } = await params
+  const { data: article } = await articleApi<IArticle>(uuid)
   return {
     title: article.title,
     description: article.description,
@@ -36,16 +36,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ArticlePage({ params }: Props) {
-  const { id } = await params
-  const { data: article } = await articleApi<IArticle>(+id)
+  const { uuid } = await params
+  console.log(uuid)
+  const { data: article } = await articleApi<IArticle>(uuid)
 
-  const { data: { prevArticle, nextArticle } } = await getPrevNextArticleApi<IPrevNext>(+id)
+  const { data: { prevArticle, nextArticle } } = await getPrevNextArticleApi<IPrevNext>(uuid)
   return (
     <ArticleDetail
-      article={ article }
-      prevArticle={ prevArticle }
-      nextArticle={ nextArticle }
-      id={ +id }
+      article={article}
+      prevArticle={prevArticle}
+      nextArticle={nextArticle}
+      id={uuid}
     />
   )
 }

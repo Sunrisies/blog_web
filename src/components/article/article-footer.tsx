@@ -4,8 +4,8 @@ import Link from "next/link";
 
 interface ArticleFooterProps {
   article: IArticle;
-  prevArticle?: { id: number; title: string };
-  nextArticle?: { id: number; title: string };
+  prevArticle?: { uuid: string; title: string };
+  nextArticle?: { uuid: string; title: string };
 }
 
 export default function ArticleFooter({
@@ -44,7 +44,7 @@ export default function ArticleFooter({
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-8 border-t pt-8">
         {prevArticle && (
           <Link
-            href={`/article/${prevArticle.id}`}
+            href={`/article/${prevArticle.uuid}`}
             className="group flex items-center p-4 border rounded-lg hover:bg-secondary/50 transition-colors"
           >
             <ChevronLeft className="h-5 w-5 mr-2 text-muted-foreground group-hover:text-foreground transition-colors" />
@@ -59,7 +59,7 @@ export default function ArticleFooter({
 
         {nextArticle && (
           <Link
-            href={`/article/${nextArticle.id}`}
+            href={`/article/${nextArticle.uuid}`}
             className="group flex items-center justify-end p-4 border rounded-lg hover:bg-secondary/50 transition-colors text-right"
           >
             <div>
