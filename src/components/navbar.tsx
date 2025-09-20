@@ -20,25 +20,26 @@ interface NavItemProps {
     subItems?: SubNavItem[]
   }
   isMobile?: boolean
+  setIsOpen: (isOpen: boolean) => void
 }
 
-export function NavItem({ item, isMobile = false }: NavItemProps) {
+export function NavItem({ item, isMobile = false, setIsOpen }: NavItemProps) {
   const pathname = usePathname()
-  const [isOpen, setIsOpen] = useState(false)
+  // const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
-      }
-    }
+    // const handleClickOutside = (event: MouseEvent) => {
+    //   if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    //     setIsOpen(false)
+    //   }
+    // }
 
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
+    // document.addEventListener("mousedown", handleClickOutside)
+    // return () => {
+    //   document.removeEventListener("mousedown", handleClickOutside)
+    // }
   }, [])
 
   // Handle direct navigation items
@@ -48,12 +49,20 @@ export function NavItem({ item, isMobile = false }: NavItemProps) {
         href={item.href || "#"}
         className={cn(
           "text-sm font-medium transition-colors hover:text-primary relative",
-          "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:after:scale-x-100",
-          pathname === item.href ? "text-primary after:scale-x-100" : "text-muted-foreground",
+          // "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:after:scale-x-100",
+          // pathname === item.href ? "text-primary after:scale-x-100" : "text-muted-foreground",
         )}
+
       >
-        {item.name}
-      </Link>
+        <div className={cn("border w-24 text-center", "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:after:scale-x-100", pathname === item.href ? "text-primary after:scale-x-100" : "text-muted-foreground")} onClick={() => {
+          console.log('点击')
+          setIsOpen(false)
+          // setIsOpen(false)
+        }}>
+
+          {item.name}
+        </div>
+      </Link >
     )
   }
 

@@ -42,7 +42,7 @@ const navItems = [
   { name: "文章", href: "/blog/1" },
   { name: "时光轴", href: "/timeline" },
   { name: "图库", href: "/image-gallery" },
-  {name:'音乐库','href':'/music-player'},
+  { name: '音乐库', 'href': '/music-player' },
   { name: '第三方库', href: "/libraries" },
   { name: "关于", href: "/about" },
 ]
@@ -50,6 +50,7 @@ const navItems = [
 export function SiteHeader() {
   const [showSearch, setShowSearch] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
   const isMobile = useMobile()
 
@@ -75,6 +76,7 @@ export function SiteHeader() {
             <span className="text-lg font-bold">中文博客</span>
           </Link>
         </div>
+        {JSON.stringify(isOpen)}--
 
         {/* Search - On left for mobile, before menu for desktop */}
         <div className={cn("flex items-center", isMobile ? "flex-1" : "mr-6")}>
@@ -116,7 +118,8 @@ export function SiteHeader() {
 
         {/* Mobile Menu Toggle - Right side on mobile */}
         <div className="md:hidden ml-2">
-          <Sheet>
+
+          <Sheet open={isOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
                 <Menu className="h-5 w-5" />
@@ -130,7 +133,7 @@ export function SiteHeader() {
                 </div>
                 <nav className="flex flex-col gap-4 flex-1">
                   {navItems.map((item) => (
-                    <NavItem key={item.name} item={item} isMobile={true} />
+                    <NavItem key={item.name} item={item} isMobile={true} setIsOpen={setIsOpen} />
                   ))}
                 </nav>
               </div>
