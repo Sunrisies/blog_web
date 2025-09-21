@@ -25,39 +25,39 @@ interface NavItemProps {
 
 export function NavItem({ item, isMobile = false, setIsOpen }: NavItemProps) {
   const pathname = usePathname()
-  // const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Close dropdown when clicking outside
   useEffect(() => {
-    // const handleClickOutside = (event: MouseEvent) => {
-    //   if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-    //     setIsOpen(false)
-    //   }
-    // }
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
 
-    // document.addEventListener("mousedown", handleClickOutside)
-    // return () => {
-    //   document.removeEventListener("mousedown", handleClickOutside)
-    // }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
   }, [])
-
-  // Handle direct navigation items
-  if (!item.subItems) {
+  if (isMobile) {
     return (
       <Link
         href={item.href || "#"}
         className={cn(
           "text-sm font-medium transition-colors hover:text-primary relative",
-          // "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:after:scale-x-100",
-          // pathname === item.href ? "text-primary after:scale-x-100" : "text-muted-foreground",
         )}
-
       >
-        <div className={cn("border w-24 text-center", "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:after:scale-x-100", pathname === item.href ? "text-primary after:scale-x-100" : "text-muted-foreground")} onClick={() => {
-          console.log('点击')
+        <div className={cn(
+          "border w-fit py-2 px-4 rounded-md text-center relative",          // 需要 relative 让伪元素定位参考这里
+          "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px]",
+          "after:origin-left after:scale-x-0 after:bg-primary after:transition-transform",
+          "hover:after:scale-x-100",
+          pathname === item.href
+            ? "text-primary after:scale-x-100"
+            : "text-muted-foreground"
+        )} onClick={() => {
           setIsOpen(false)
-          // setIsOpen(false)
         }}>
 
           {item.name}
@@ -66,38 +66,26 @@ export function NavItem({ item, isMobile = false, setIsOpen }: NavItemProps) {
     )
   }
 
-  // Handle dropdown items
-  if (isMobile) {
-    // Mobile dropdown (click to expand)
+
+  // Handle direct navigation items
+  if (!item.subItems) {
     return (
-      <div className="relative" ref={dropdownRef}>
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className={cn(
-            "flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary",
-            isOpen ? "text-primary" : "text-muted-foreground",
-          )}
-        >
-          {item.name}
-          <ChevronDown className={cn("h-4 w-4 transition-transform", isOpen && "rotate-180")} />
-        </button>
-        {isOpen && (
-          <div className="mt-2 space-y-2 pl-4">
-            {item.subItems.map((subItem) => (
-              <Link
-                key={subItem.name}
-                href={subItem.href}
-                className="block text-sm text-muted-foreground hover:text-primary"
-                onClick={() => setIsOpen(false)}
-              >
-                {subItem.name}
-              </Link>
-            ))}
-          </div>
+      <Link
+
+        href={item.href || "#"}
+        className={cn(
+          "text-sm font-medium transition-colors hover:text-primary relative",
+          "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:after:scale-x-100",
+          pathname === item.href ? "text-primary after:scale-x-100" : "text-muted-foreground",
         )}
-      </div>
+
+      >
+        {item.name}
+      </Link >
     )
   }
+
+  // Handle dropdown items
 
   // Desktop dropdown (hover to expand)
   return (
