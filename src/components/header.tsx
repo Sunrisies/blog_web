@@ -76,8 +76,6 @@ export function SiteHeader() {
             <span className="text-lg font-bold">中文博客</span>
           </Link>
         </div>
-        {JSON.stringify(isOpen)}--
-
         {/* Search - On left for mobile, before menu for desktop */}
         <div className={cn("flex items-center", isMobile ? "flex-1" : "mr-6")}>
           {showSearch ? (
