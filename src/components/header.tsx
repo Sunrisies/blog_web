@@ -119,7 +119,7 @@ export function SiteHeader() {
         {/* Mobile Menu Toggle - Right side on mobile */}
         <div className="md:hidden ml-2">
 
-          <Sheet open={isOpen}>
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
                 <Menu className="h-5 w-5" />
