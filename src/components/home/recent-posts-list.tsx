@@ -1,5 +1,6 @@
 import { IBlog } from "@/types/blog"
 import Link from "next/link"
+import { formatChineseDateTime } from "sunrise-utils"
 
 export function RecentPostsList({ blogs }: { blogs: IBlog[] }) {
   return (
@@ -8,7 +9,7 @@ export function RecentPostsList({ blogs }: { blogs: IBlog[] }) {
         <li key={post.id} className="text-sm">
           <Link href={`/article/${post.id}`} className="block hover:text-primary">
             <span className="line-clamp-1">{post.title}</span>
-            <span className="text-xs text-muted-foreground">{post.publish_time}</span>
+            <span className="text-xs text-muted-foreground">{formatChineseDateTime(post.publish_time)}</span>
           </Link>
         </li>
       ))}

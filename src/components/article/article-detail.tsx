@@ -26,29 +26,29 @@ export default function ArticleDetail({
 }: ArticleDetailProps) {
   return (
     <div className="container px-4 py-8 mx-auto">
-      <ArticleHeader article={ article } />
+      <ArticleHeader article={article} />
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 mt-6">
         <div className="hidden lg:block lg:col-span-1">
-          <ArticleActions article={ article } />
+          <ArticleActions article={article} />
         </div>
 
         <div className="lg:col-span-8">
-          <ArticleContent content={ article.content } />
+          <ArticleContent content={article.content} />
           <ArticleFooter
-            article={ article }
-            prevArticle={ prevArticle }
-            nextArticle={ nextArticle }
+            article={article}
+            prevArticle={prevArticle}
+            nextArticle={nextArticle}
           />
 
         </div>
 
         <div className="hidden lg:block lg:col-span-3">
-          <TableOfContents content={ article.content } />
+          <TableOfContents content={article.content} />
         </div>
       </div>
       <ScrollToTopButton />
-      <Comment className='mx-20 mt-6'></Comment>
+      <Comment className='mx-auto mt-6 max-w-4xl px-4 sm:px-6 md:mx-20'></Comment>
     </div>
   )
 }

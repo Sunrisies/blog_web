@@ -95,7 +95,7 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
 
   return (
     <div className="space-y-4 sticky top-24">
-      <h3 className="text-xl font-semibold border-b pb-3">Table of Contents</h3>
+      <h3 className="text-xl font-semibold border-b pb-3">目录</h3>
       <nav className="space-y-1">
         {tocItems.map((item) => (
           <div

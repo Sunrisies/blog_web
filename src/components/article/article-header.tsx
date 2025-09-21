@@ -2,6 +2,7 @@ import { IArticle } from "@/types/article";
 import { Calendar, Clock, Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { formatChineseDateTime } from "sunrise-utils";
 
 interface ArticleHeaderProps {
   article: IArticle;
@@ -21,7 +22,7 @@ export default function ArticleHeader({ article }: ArticleHeaderProps) {
       <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
         <div className="flex items-center gap-1">
           <Calendar className="h-4 w-4" />
-          <span>{article.publish_time}</span>
+          <span>{formatChineseDateTime(article.publish_time)}</span>
         </div>
 
         <div className="flex items-center gap-1">

@@ -20,7 +20,7 @@ interface NavItemProps {
     subItems?: SubNavItem[]
   }
   isMobile?: boolean
-  setIsOpen: (isOpen: boolean) => void
+  setIsOpen?: (isOpen: boolean) => void
 }
 
 export function NavItem({ item, isMobile = false, setIsOpen }: NavItemProps) {
