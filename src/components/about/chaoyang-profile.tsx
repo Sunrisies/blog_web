@@ -2,27 +2,19 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Calendar, Code, Coffee, MapPin } from "lucide-react"
 import Image from "next/image"
+import { Avatar } from "@/components/avatar"
 
 export function ChaoYangProfile() {
     return (
         <div className="relative">
-            {/* Hero Section */ }
+            {/* Hero Section */}
             <div className="text-center mb-12">
                 <div className="relative inline-block mb-6">
-                    <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-primary/20 shadow-lg">
-                        <Image
-                            src="/placeholder.svg?height=128&width=128"
-                            alt="朝阳的头像"
-                            width={ 128 }
-                            height={ 128 }
-                            className="object-cover"
-                        />
-                    </div>
-                    <div className="absolute -bottom-2 -right-2 bg-primary text-primary-foreground rounded-full p-2">
+                    <Avatar size={40} />
+                    <div className="absolute -bottom-2 right-3 bg-primary text-primary-foreground rounded-full p-2">
                         <Code className="h-4 w-4" />
                     </div>
                 </div>
-
                 <h1 className="text-4xl font-bold mb-2">朝阳</h1>
                 <p className="text-xl text-muted-foreground mb-4">全栈开发工程师 & 代码农夫</p>
 
@@ -42,7 +34,7 @@ export function ChaoYangProfile() {
                 </div>
             </div>
 
-            {/* Biography Section */ }
+            {/* Biography Section */}
             <Card className="mb-8">
                 <CardContent className="pt-6">
                     <h2 className="text-2xl font-semibold mb-4">关于我</h2>
@@ -68,7 +60,7 @@ export function ChaoYangProfile() {
                 </CardContent>
             </Card>
 
-            {/* Interests & Values */ }
+            {/* Interests & Values */}
             <Card>
                 <CardContent className="pt-6">
                     <h2 className="text-2xl font-semibold mb-4">兴趣与价值观</h2>

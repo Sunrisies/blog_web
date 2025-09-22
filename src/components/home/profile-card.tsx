@@ -2,15 +2,16 @@ import { Button } from "@/components/ui/button"
 import { Github, Mail, Twitter } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { Avatar } from "@/components/avatar"
 
 export function ProfileCard() {
   return (
     <div className="rounded-lg border bg-card p-4 shadow-sm">
       <div className="flex flex-col items-center">
-        <div className="relative h-20 w-20 overflow-hidden rounded-full  transition-all duration-1500  hover:scale-150 hover:rotate-360">
+        {/* <div className="relative h-20 w-20 overflow-hidden rounded-full  transition-all duration-1500  hover:scale-150 hover:rotate-360">
           <Image src="blog.png" alt="Profile" fill className="object-cover" />
-        </div>
-
+        </div> */}
+        <Avatar />
         <h2 className="mt-4 text-lg font-medium">Li Wei</h2>
         <p className="text-center text-sm text-muted-foreground">Writer and Chinese culture enthusiast</p>
 
