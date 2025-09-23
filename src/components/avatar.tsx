@@ -16,7 +16,7 @@ const sizeClasses = {
 export const Avatar: React.FC<Props> = ({ size = 16 }: Props) => {
 
     return (
-        <div className={cn("relative overflow-hidden rounded-full rounded-full overflow-hidden border-4 border-primary/20 shadow-lg  transition-all duration-1500  hover:scale-120 hover:rotate-360",
+        <div className={cn("relative overflow-hidden cursor-pointer rounded-full rounded-full overflow-hidden border-4 border-primary/20 shadow-lg  transition-all duration-1500  hover:scale-120 hover:rotate-360",
             sizeClasses[size])}
         >
             <Image src="blog.png" alt="Profile" fill className="object-cover" />

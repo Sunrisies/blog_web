@@ -71,49 +71,49 @@ export default async function TimelinePage() {
         <h1 className="text-3xl font-bold mb-8">时光轴</h1>
         <div className="flex justify-start">
           <div className="my-4 w-full md:w-5/6 border-red-400 hidden md:block">
-            <CalendarHeatmap warehouse={ warehouse } />
+            <CalendarHeatmap warehouse={warehouse} />
           </div>
         </div>
         <div className="relative border-l-2 border-primary/30 pl-4 md:pl-7.5 ml-2 md:ml-10">
-          { articles.length > 0 ? articles.map((article, index) => (
-            <div key={ article.id } className="mb-8 relative w-full md:w-3/4">
+          {articles.length > 0 ? articles.map((article, index) => (
+            <div key={article.uuid} className="mb-8 relative w-full md:w-3/4">
               <div className="absolute -left-[25px] md:-left-[41px] w-5 h-5 bg-background border-2 border-primary rounded-full" />
               <div className="group block p-4 md:p-6 bg-card hover:bg-accent rounded-lg transition-colors">
-                {/* 日期 */ }
+                {/* 日期 */}
                 <time className="text-sm text-muted-foreground mb-2 block">
-                  { new Date(article.publish_time!).toLocaleDateString('zh-CN', {
+                  {new Date(article.publish_time!).toLocaleDateString('zh-CN', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
-                  }) }
+                  })}
                 </time>
 
-                {/* 文章标题 */ }
+                {/* 文章标题 */}
                 <h2 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
-                  <a href={ `/article/${article.id}` }>
-                    { article.title }
+                  <a href={`/article/${article.uuid}`}>
+                    {article.title}
                   </a>
                 </h2>
 
-                {/* 文章描述 */ }
+                {/* 文章描述 */}
                 <p className="text-muted-foreground line-clamp-2">
-                  { article.description }
+                  {article.description}
                 </p>
 
-                {/* 标签 */ }
+                {/* 标签 */}
                 <div className="flex flex-wrap gap-2 mt-3">
-                  { article.tags!.map(tag => (
+                  {article.tags!.map(tag => (
                     <span
-                      key={ tag.id }
+                      key={tag.id}
                       className="px-2 py-1 text-xs bg-secondary text-secondary-foreground rounded-full"
                     >
-                      #{ tag.name }
+                      #{tag.name}
                     </span>
-                  )) }
+                  ))}
                 </div>
               </div>
             </div>
-          )) : <div>没有文章</div> }
+          )) : <div>没有文章</div>}
         </div>
       </div>
       <ScrollToTopButton />
