@@ -8,28 +8,20 @@ export function ProfileCard() {
   return (
     <div className="rounded-lg border bg-card p-4 shadow-sm">
       <div className="flex flex-col items-center">
-        {/* <div className="relative h-20 w-20 overflow-hidden rounded-full  transition-all duration-1500  hover:scale-150 hover:rotate-360">
-          <Image src="blog.png" alt="Profile" fill className="object-cover" />
-        </div> */}
         <Avatar />
-        <h2 className="mt-4 text-lg font-medium">Li Wei</h2>
-        <p className="text-center text-sm text-muted-foreground">Writer and Chinese culture enthusiast</p>
+        <h2 className="mt-4 text-lg font-medium">朝阳</h2>
+        <p className="text-center text-sm text-muted-foreground"> 朝阳的码农札记</p>
 
         <div className="mt-4 flex gap-2">
           <Button variant="ghost" size="icon" asChild>
-            <Link href="https://github.com">
+            <Link href="https://github.com/Sunrisies">
               <Github className="h-4 w-4" />
               <span className="sr-only">GitHub</span>
             </Link>
           </Button>
+
           <Button variant="ghost" size="icon" asChild>
-            <Link href="https://twitter.com">
-              <Twitter className="h-4 w-4" />
-              <span className="sr-only">Twitter</span>
-            </Link>
-          </Button>
-          <Button variant="ghost" size="icon" asChild>
-            <Link href="mailto:contact@example.com">
+            <Link href="mailto:3266420686@qq.com">
               <Mail className="h-4 w-4" />
               <span className="sr-only">Email</span>
             </Link>
