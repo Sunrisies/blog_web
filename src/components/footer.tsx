@@ -18,55 +18,196 @@ function getDuration() {
 
 export function SiteFooter() {
   const [duration, setDuration] = useState("")
+  const [isMounted, setIsMounted] = useState(false)
+
   useEffect(() => {
-    setDuration(getDuration()) // 首次挂载时立即设置
+    setIsMounted(true)
+    setDuration(getDuration())
+
     const timer = setInterval(() => {
       setDuration(getDuration())
     }, 1000)
+
     return () => clearInterval(timer)
   }, [])
+
+  if (!isMounted) {
+    return (
+      <footer className="w-full border-t bg-background mt-auto">
+        <div className="container py-6">
+          <div className="animate-pulse flex justify-center">
+            <div className="h-4 bg-muted rounded w-48"></div>
+          </div>
+        </div>
+      </footer>
+    )
+  }
+
   return (
-    <footer className="w-full border-t bg-background mt-auto">
-      <div className="container flex flex-col items-center gap-4 py-6 md:h-24 md:flex-row md:py-0">
-        <div className="flex flex-col items-center gap-2 md:flex-row md:gap-2 md:px-0 w-full md:w-auto">
-          <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-            Built by{ " " }
-            <Link href="/" className="font-medium underline underline-offset-4">
-              中文博客
-            </Link>
-            . The source code is available on{ " " }
+    <footer className="w-full border-t bg-gradient-to-b from-background to-muted/20 mt-auto">
+      <div className="container flex flex-col items-center gap-6 py-8 md:py-12">
+        {/* 主要内容和社交链接 */}
+        <div className="flex flex-col md:flex-row items-center justify-between w-full gap-6">
+          {/* 品牌和描述 */}
+          <div className="flex flex-col items-center md:items-start gap-4 max-w-md">
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
+                <span className="text-primary-foreground font-bold text-sm">博</span>
+              </div>
+              <span className="text-lg font-semibold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                技术博客
+              </span>
+            </div>
+
+            <p className="text-center md:text-left text-sm text-muted-foreground leading-relaxed">
+              分享前沿技术、开发经验与编程心得
+              <br />
+              探索数字世界的无限可能
+            </p>
+
+            {duration && (
+              <div className="flex items-center gap-2 text-xs text-muted-foreground bg-muted/50 px-3 py-1.5 rounded-full">
+                <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse"></div>
+                <span>已稳定运行 {duration}</span>
+              </div>
+            )}
+          </div>
+
+          {/* 导航链接 */}
+          <div className="flex sm:flex-col sm:flex-row gap-6 sm:gap-10">
+            <div className="flex flex-col gap-3">
+              <h4 className="text-sm font-semibold text-center">探索</h4>
+              <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+                <Link href="/articles" className="hover:text-foreground transition-colors">
+                  文章列表
+                </Link>
+                <Link href="/categories" className="hover:text-foreground transition-colors">
+                  分类目录
+                </Link>
+                <Link href="/tags" className="hover:text-foreground transition-colors">
+                  标签云
+                </Link>
+                <Link href="/archives" className="hover:text-foreground transition-colors">
+                  文章归档
+                </Link>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <h4 className="text-sm font-semibold text-center">支持</h4>
+              <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+                <Link href="/about" className="hover:text-foreground transition-colors">
+                  关于本站
+                </Link>
+                <Link href="/rss" className="hover:text-foreground transition-colors">
+                  RSS订阅
+                </Link>
+                <Link
+                  href="https://github.com/yourusername/blog"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  源码仓库
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* 社交链接 */}
+          <div className="flex flex-col items-center md:items-end gap-4">
+            <div className="flex items-center gap-4">
+              <Link
+                href="https://github.com/yourusername/blog"
+                target="_blank"
+                rel="noreferrer"
+                className="h-9 w-9 rounded-full bg-muted flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-200"
+              >
+                <Github className="h-4 w-4" />
+                <span className="sr-only">GitHub</span>
+              </Link>
+              <Link
+                href="/rss"
+                className="h-9 w-9 rounded-full bg-muted flex items-center justify-center hover:bg-orange-500 hover:text-white transition-all duration-200"
+              >
+                <Rss className="h-4 w-4" />
+                <span className="sr-only">RSS</span>
+              </Link>
+              <Link
+                href="mailto:3266420686@qq.com"
+                className="h-9 w-9 rounded-full bg-muted flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all duration-200"
+              >
+                <Mail className="h-4 w-4" />
+                <span className="sr-only">Email</span>
+              </Link>
+            </div>
+
+            <div className="text-xs text-muted-foreground text-center md:text-right">
+              <p>有想法？欢迎交流</p>
+              <p>3266420686@qq.com</p>
+            </div>
+          </div>
+        </div>
+
+        {/* 分割线 */}
+        <div className="w-full border-t" />
+
+        {/* 底部信息 */}
+        <div className="flex flex-col md:flex-row items-center justify-between w-full gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-2 text-sm text-muted-foreground">
+            <span>© 2024 技术博客</span>
+            <span className="hidden sm:inline">•</span>
+            <span>用心创作每一篇内容</span>
+          </div>
+
+          <div className="flex items-center gap-4 text-sm">
             <Link
-              href="https://github.com/yourusername/blog"
+              href="https://beian.miit.gov.cn/"
               target="_blank"
               rel="noreferrer"
-              className="font-medium underline underline-offset-4"
+              className="text-muted-foreground hover:text-foreground transition-colors hover:underline"
             >
-              GitHub
+              豫ICP备2023028265号-2
             </Link>
-            { duration && <span className="block md:inline ml-0 md:ml-2 mt-2 md:mt-0">本站已运行：{ duration }</span> }
-          </p>
+          </div>
         </div>
-        <div className="flex items-center gap-4 md:ml-auto">
-          <Link
-            href="https://github.com/yourusername/blog"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Github className="h-5 w-5" />
-            <span className="sr-only">GitHub</span>
-          </Link>
-        </div>
-      </div>
-      <div className="container flex justify-center py-4 text-sm text-muted-foreground border-t">
-        <Link
-          href="https://beian.miit.gov.cn/"
-          target="_blank"
-          rel="noreferrer"
-          className="hover:underline"
-        >
-          豫ICP备2023028265号-2
-        </Link>
       </div>
     </footer>
+  )
+}
+
+// 需要添加的图标组件（如果你还没有的话）
+function Rss(props) {
+  return (
+    <svg
+      {...props}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4 11a9 9 0 0 1 9 9" />
+      <path d="M4 4a16 16 0 0 1 16 16" />
+      <circle cx="5" cy="19" r="1" />
+    </svg>
+  )
+}
+
+function Mail(props) {
+  return (
+    <svg
+      {...props}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect width="20" height="16" x="2" y="4" rx="2" />
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+    </svg>
   )
 }
