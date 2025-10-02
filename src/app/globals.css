@@ -198,3 +198,13 @@
   animation: bubble linear infinite;
   animation-fill-mode: both;
 }
+
+.dark::view-transition-old(root) {
+  z-index: 100;
+}
+
+::view-transition-new(root),
+::view-transition-old(root) {
+  animation: none;
+  transform: none !important;
+}

@@ -1,4 +1,4 @@
-import { ScrollToTopButton } from '@/components/ScrollToTopButton'
+import { ScrollToTopButton } from '@/components/scroll-to-top-button'
 import { CalendarHeatmap } from '@/components/timeline/calendar-heatmap'
 import Http, { ResponseDto } from "@/services/request"
 import { IArticle } from "@/types/article"

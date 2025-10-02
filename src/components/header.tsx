@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { NavItem } from "@/components/navbar"
 import { useMobile } from "@/hooks/use-mobile"
+import { ThemeToggle } from "./theme-toggle"
 
 const navItems = [
   { name: "Home", href: "/" },
@@ -60,12 +61,6 @@ export function SiteHeader() {
     setIsDarkMode(isDark)
   }, [])
 
-  const toggleTheme = () => {
-    const newMode = !isDarkMode
-    setIsDarkMode(newMode)
-    document.documentElement.classList.toggle("dark", newMode)
-    localStorage.setItem("theme", newMode ? "dark" : "light")
-  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -107,12 +102,7 @@ export function SiteHeader() {
         </nav>
 
         {/* Theme Toggle - Always visible */}
-        <div className="flex items-center ml-auto md:ml-0">
-          <Button variant="ghost" size="icon" onClick={toggleTheme} className="mr-1">
-            {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            <span className="sr-only">Toggle theme</span>
-          </Button>
-        </div>
+        <ThemeToggle></ThemeToggle>
 
         {/* Mobile Menu Toggle - Right side on mobile */}
         <div className="md:hidden ml-2">

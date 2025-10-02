@@ -1,5 +1,5 @@
 import BlogDetail from "@/components/blog/blog-detail"
-import { ScrollToTopButton } from "@/components/ScrollToTopButton"
+import { ScrollToTopButton } from "@/components/scroll-to-top-button"
 import Http from "@/services/request"
 import { CategoriesType, IBlog } from "@/types/blog"
 import { getClientInfo } from "@/utils/get-client-info"
@@ -25,10 +25,10 @@ const Blog = async ({ params }: ArticleListProps) => {
     return (
         <>
             <BlogDetail
-                blog={ blog }
-                pagination={ pagination! }
-                categories={ categories }
-                id={ +id }
+                blog={blog}
+                pagination={pagination!}
+                categories={categories}
+                id={+id}
             />
             <ScrollToTopButton />
         </>

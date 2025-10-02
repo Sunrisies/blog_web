@@ -2,7 +2,7 @@
 import Comment from '@/components/comment'
 import Http from "@/services/request"
 import { IArticle } from "@/types/article"
-import { ScrollToTopButton } from "../ScrollToTopButton"
+import { ScrollToTopButton } from "../scroll-to-top-button"
 import ArticleActions from "./article-actions"
 import ArticleContent from "./article-content"
 import ArticleFooter from "./article-footer"
