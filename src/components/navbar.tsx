@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, House } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
@@ -18,6 +18,7 @@ interface NavItemProps {
     name: string
     href?: string
     subItems?: SubNavItem[]
+    icon?: React.ReactNode
   }
   isMobile?: boolean
   setIsOpen?: (isOpen: boolean) => void
@@ -49,17 +50,17 @@ export function NavItem({ item, isMobile = false, setIsOpen }: NavItemProps) {
         )}
       >
         <div className={cn(
-          "border w-fit py-2 px-4 rounded-md text-center relative",          // 需要 relative 让伪元素定位参考这里
+          "border py-2 px-4 rounded-md text-center relative",          // 需要 relative 让伪元素定位参考这里
           "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px]",
           "after:origin-left after:scale-x-0 after:bg-primary after:transition-transform",
-          "hover:after:scale-x-100",
+          "hover:after:scale-x-100 flex items-center gap-2 py-3",
           pathname === item.href
             ? "text-primary after:scale-x-100"
             : "text-muted-foreground"
         )} onClick={() => {
           setIsOpen(false)
         }}>
-
+          {item.icon}
           {item.name}
         </div>
       </Link >

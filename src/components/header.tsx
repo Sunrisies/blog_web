@@ -3,49 +3,26 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, Search, Sun, Moon, X } from "lucide-react"
+import { Menu, Search, Sun, Moon, X, FileText, History, Image as ImageUI, Music, Library, User, House } from "lucide-react"
+import Image from "next/image"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { NavItem } from "@/components/navbar"
+import { NavItem, MenuItem1 } from "@/components/navbar"
 import { useMobile } from "@/hooks/use-mobile"
 import { ThemeToggle } from "./theme-toggle"
+import { Avatar } from "./avatar"
 
 const navItems = [
-  { name: "Home", href: "/" },
-  // {
-  //   name: "Categories",
-  //   subItems: [
-  //     {
-  //       name: "Culture",
-  //       href: "/category/culture",
-  //       description: "Traditions, festivals, and cultural insights",
-  //     },
-  //     {
-  //       name: "Language",
-  //       href: "/category/language",
-  //       description: "Learning resources and linguistic insights",
-  //     },
-  //     {
-  //       name: "Food",
-  //       href: "/category/food",
-  //       description: "Recipes, culinary traditions, and food culture",
-  //     },
-  //     {
-  //       name: "Arts",
-  //       href: "/category/arts",
-  //       description: "Literature, calligraphy, music, and visual arts",
-  //     },
-  //   ],
-  // },
-  { name: "文章", href: "/blog/1" },
-  { name: "时光轴", href: "/timeline" },
-  { name: "图库", href: "/image-gallery" },
-  { name: '音乐库', 'href': '/music-player' },
-  { name: '第三方库', href: "/libraries" },
-  { name: "关于", href: "/about" },
+  { name: "Home", href: "/", icon: <House /> },
+  { name: "文章", href: "/blog/1", icon: <FileText /> },
+  { name: "时光轴", href: "/timeline", icon: <History /> },
+  { name: "图库", href: "/image-gallery", icon: <ImageUI /> },
+  { name: '音乐库', 'href': '/music-player', icon: <Music /> },
+  { name: '第三方库', href: "/libraries", icon: <Library /> },
+  { name: "关于", href: "/about", icon: <User /> },
 ]
 
 export function SiteHeader() {
@@ -115,20 +92,35 @@ export function SiteHeader() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[240px] sm:w-[300px]">
-              <div className="flex flex-col h-full">
-                <div className="py-4">
-                  <span className="text-lg font-bold">中文博客</span>
+              <div className="">
+                <div className="border border-red-400">
+                  <div className="sidebar-header h-32 ">
+                    <div className="h-full relative flex ">
+                      <Image src="./navbar-bg.jpg" alt="Logo" fill className="object-cover -z-1" />
+                      <div className="flex flex-col gap-2 justify-center items-center py-2 px-4 text-white z-10">
+                        <Avatar size={24} />
+                        <h2>朝阳</h2>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="sidebar-menu">
+                    <div className="px-4 py-3 flex items-center cursor-pointer hover:bg-[#f5f5f5]">
+                      <span className="menu-item-icon">🏠</span>
+                      <span className="menu-item-text">主页</span>
+                    </div>
+                    <nav className="flex flex-col flex-1 px-4">
+                      {navItems.map((item) => (
+                        <NavItem key={item.name} item={item} isMobile={true} setIsOpen={setIsOpen} />
+                      ))}
+                    </nav>
+                  </div>
                 </div>
-                <nav className="flex flex-col gap-4 flex-1">
-                  {navItems.map((item) => (
-                    <NavItem key={item.name} item={item} isMobile={true} setIsOpen={setIsOpen} />
-                  ))}
-                </nav>
+
               </div>
             </SheetContent>
           </Sheet>
         </div>
       </div>
-    </header>
+    </header >
   )
 }
