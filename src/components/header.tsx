@@ -9,7 +9,7 @@ import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { NavItem, MenuItem1 } from "@/components/navbar"
 import { useMobile } from "@/hooks/use-mobile"
 import { ThemeToggle } from "./theme-toggle"
@@ -91,31 +91,20 @@ export function SiteHeader() {
                 <span className="sr-only">Toggle menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[240px] sm:w-[300px]">
-              <div className="">
-                <div className="border border-red-400">
-                  <div className="sidebar-header h-32 ">
-                    <div className="h-full relative flex ">
-                      <Image src="./navbar-bg.jpg" alt="Logo" fill className="object-cover -z-1" />
-                      <div className="flex flex-col gap-2 justify-center items-center py-2 px-4 text-white z-10">
-                        <Avatar size={24} />
-                        <h2>朝阳</h2>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="sidebar-menu">
-                    <div className="px-4 py-3 flex items-center cursor-pointer hover:bg-[#f5f5f5]">
-                      <span className="menu-item-icon">🏠</span>
-                      <span className="menu-item-text">主页</span>
-                    </div>
-                    <nav className="flex flex-col flex-1 px-4">
-                      {navItems.map((item) => (
-                        <NavItem key={item.name} item={item} isMobile={true} setIsOpen={setIsOpen} />
-                      ))}
-                    </nav>
+            <SheetContent side="right" className="w-[240px] sm:w-[300px] text-white">
+              <div className="h-32">
+                <div className="h-full relative flex ">
+                  <Image src="/navbar-bg.jpg" alt="Logo" fill className="object-cover -z-1" />
+                  <div className="flex flex-col gap-2 justify-center items-center py-2 px-4 text-white z-10">
+                    <Avatar size={24} />
+                    <h2>朝阳</h2>
                   </div>
                 </div>
-
+                <nav className="flex flex-col flex-1 px-4 py-4">
+                  {navItems.map((item) => (
+                    <NavItem key={item.name} item={item} isMobile={true} setIsOpen={setIsOpen} />
+                  ))}
+                </nav>
               </div>
             </SheetContent>
           </Sheet>
