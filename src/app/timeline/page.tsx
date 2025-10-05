@@ -67,16 +67,16 @@ export default async function TimelinePage() {
   const { data: warehouse } = await getWarehouse<warehouseType>()
   return (
     <>
-      <div className="container mx-auto w-full md:w-3/4 px-2 md:px-4 py-8">
+      <div className="container mx-auto w-full md:w-3/4 px-2 xs:px-4 tb:px-0 py-8">
         <h1 className="text-3xl font-bold mb-8">时光轴</h1>
         <div className="flex justify-start">
-          <div className="my-4 w-full md:w-5/6 border-red-400 hidden md:block">
+          <div className="my-4 w-full border-red-400 hidden tb:block">
             <CalendarHeatmap warehouse={warehouse} />
           </div>
         </div>
         <div className="relative border-l-2 border-primary/30 pl-4 md:pl-7.5 ml-2 md:ml-10">
           {articles.length > 0 ? articles.map((article, index) => (
-            <div key={article.uuid} className="mb-8 relative w-full md:w-3/4">
+            < div key={article.uuid || article.id} className="mb-8 relative w-full" >
               <div className="absolute -left-[25px] md:-left-[41px] w-5 h-5 bg-background border-2 border-primary rounded-full" />
               <div className="group block p-4 md:p-6 bg-card hover:bg-accent rounded-lg transition-colors">
                 {/* 日期 */}
@@ -115,7 +115,7 @@ export default async function TimelinePage() {
             </div>
           )) : <div>没有文章</div>}
         </div>
-      </div>
+      </div >
       <ScrollToTopButton />
     </>
   )

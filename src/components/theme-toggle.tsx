@@ -101,7 +101,7 @@ export function ThemeToggle() {
                 variant="ghost"
                 size="icon"
                 onClick={() => toggleTheme(event as PointerEvent)}
-                className={`relative mr-1 h-9 w-9 overflow-hidden transition-transform duration-300 ${isAnimating ? "scale-90" : "scale-100 hover:scale-110"
+                className={`relative mr-1 h-9 w-9 overflow-hidden cursor-pointer transition-transform duration-300 ${isAnimating ? "scale-90" : "scale-100 hover:scale-110"
                     }`}
                 disabled={isAnimating}
                 aria-label="切换主题"
