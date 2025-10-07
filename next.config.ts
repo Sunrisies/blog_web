@@ -33,6 +33,15 @@ const nextConfig: NextConfig = {
       }
     ]
   },
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // 生成版本号，例如使用时间戳
+    const version = Date.now().toString();
+    // 添加环境变量
+    config.plugins.push(new webpack.DefinePlugin({
+      'process.env.NEXT_PUBLIC_VERSION': JSON.stringify(version),
+    }));
+    return config;
+  },
 };
 
 export default nextConfig;

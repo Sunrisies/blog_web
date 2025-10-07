@@ -24,8 +24,8 @@ check_success() {
 
 # 构建 Next.js 项目
 log "正在构建 Next.js 项目..."
-pnpm run build
-check_success "pnpm build"
+bun run build
+check_success "bun build"
 
 # 构建 Docker 镜像
 log "正在构建 Docker 镜像..."
