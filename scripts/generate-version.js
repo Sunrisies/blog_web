@@ -17,15 +17,6 @@ function generateVersionInfo() {
         './public/version.json',
         JSON.stringify(versionInfo, null, 2)
     );
-
-    // 生成环境变量文件
-    const envContent = `
-NEXT_PUBLIC_APP_VERSION=${versionInfo.version}
-NEXT_PUBLIC_BUILD_DATE=${versionInfo.buildDate}
-NEXT_PUBLIC_COMMIT_REF=${versionInfo.commitHash}
-  `.trim();
-
-    fs.writeFileSync('./.env.build', envContent);
 }
 
 function getCommitHash() {

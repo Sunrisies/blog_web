@@ -49,6 +49,10 @@ check_success "清理临时文件"
 # 远程执行命令
 log "正在远程服务器上部署..."
 ssh $REMOTE_USER@$REMOTE_HOST "
+  log() {
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1"
+  }
+
   cd $REMOTE_DIR || exit 1
 
   # 停止并删除旧容器
@@ -63,9 +67,5 @@ ssh $REMOTE_USER@$REMOTE_HOST "
 "
 check_success "ssh"
 
-# log "部署成功完成！"
-# rm -r qiniu/_next/static/*
-# cp -r .next/static/* qiniu/_next/static/
-# node upload.js
-log "部署成功完成！"
+log "博客部署完成！"
 

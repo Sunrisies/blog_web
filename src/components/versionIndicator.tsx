@@ -13,13 +13,15 @@ export default function VersionIndicator() {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        // 从环境变量或API获取版本信息
-        const info: VersionInfo = {
-            version: process.env.NEXT_PUBLIC_APP_VERSION || '1.0.0',
-            buildDate: process.env.NEXT_PUBLIC_BUILD_DATE || new Date().toISOString(),
-        };
+        // 从public下面的version.json获取版本信息
+        fetch('/version.json').then(response => response.json()).then(data => {
+            setVersionInfo(data);
+        }).catch(error => {
+            console.error('无法获取版本信息:', error);
+        });
 
-        setVersionInfo(info);
+
+        // setVersionInfo(info);
     }, []);
 
     if (!versionInfo) return null;
