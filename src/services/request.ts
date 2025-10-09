@@ -41,7 +41,6 @@ class Http {
     request: [] as ((config: RequestInitExtended) => RequestInitExtended)[],
     response: [] as ((response: Response) => Response)[]
   }
-  private options: any
   constructor(private readonly BASE_URL: string, private defaultOptions: RequestInitExtended = {
     cache: 'no-store'
   }) {
@@ -62,7 +61,6 @@ class Http {
     }
   }
   async get<T, R = PaginatedResponseDto<T>>(url: string, options?: any): Promise<R> {
-    this.options = { ...options }
     return await this.fetch<T, R>(url, { method: 'GET', ...options })
   }
 

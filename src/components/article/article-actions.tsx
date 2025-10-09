@@ -10,7 +10,7 @@ interface ArticleActionsProps {
     className?: string
 }
 
-export default function ArticleActions({article, className}: ArticleActionsProps) {
+export default function ArticleActions({ article, className }: ArticleActionsProps) {
     const copyLink = useCallback(() => {
         navigator.clipboard.writeText(window.location.href)
         // In a real app, you would show a toast notification here
@@ -37,7 +37,7 @@ export default function ArticleActions({article, className}: ArticleActionsProps
 
     return (
         <div className={cn("flex flex-col items-center space-y-6 sticky top-24", className)}>
-            <LikeButton articleId={article.id}/>
+            <LikeButton articleId={article.id} />
 
             <div className="space-y-4">
                 <div className="text-center text-xs text-muted-foreground">Share</div>
@@ -47,7 +47,7 @@ export default function ArticleActions({article, className}: ArticleActionsProps
                         className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
                         aria-label="Share on Facebook"
                     >
-                        <Facebook className="h-5 w-5"/>
+                        <Facebook className="h-5 w-5" />
                     </button>
 
                     <button
@@ -55,7 +55,7 @@ export default function ArticleActions({article, className}: ArticleActionsProps
                         className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
                         aria-label="Share on Twitter"
                     >
-                        <Twitter className="h-5 w-5"/>
+                        <Twitter className="h-5 w-5" />
                     </button>
 
                     <button
@@ -63,7 +63,7 @@ export default function ArticleActions({article, className}: ArticleActionsProps
                         className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
                         aria-label="Copy link"
                     >
-                        <Copy className="h-5 w-5"/>
+                        <Copy className="h-5 w-5" />
                     </button>
                 </div>
             </div>
@@ -72,13 +72,13 @@ export default function ArticleActions({article, className}: ArticleActionsProps
                 className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
                 aria-label="Bookmark this article"
             >
-                <Bookmark className="h-5 w-5"/>
+                <Bookmark className="h-5 w-5" />
             </button>
         </div>
     )
 }
 
-function LikeButton({articleId}: { articleId: number }) {
+function LikeButton() {
     const hasLiked = false
     return (
         <div className="space-y-2">
@@ -86,7 +86,7 @@ function LikeButton({articleId}: { articleId: number }) {
                 className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
                 aria-label="Like this article"
             >
-                <Heart className={cn("h-5 w-5", hasLiked && "fill-destructive text-destructive")}/>
+                <Heart className={cn("h-5 w-5", hasLiked && "fill-destructive text-destructive")} />
             </button>
             <div className="text-center text-xs text-muted-foreground">
                 {/* This would be the actual like count from the backend */}

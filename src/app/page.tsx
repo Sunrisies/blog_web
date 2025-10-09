@@ -1,4 +1,3 @@
-import Comment from "@/components/comment"
 import { BlogPostCard } from "@/components/home/blog-post-card"
 import { ProfileCard } from "@/components/home/profile-card"
 import { RecentPostsList } from "@/components/home/recent-posts-list"

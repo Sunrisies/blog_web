@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Github, Linkedin, Mail, MessageCircle, Twitter } from "lucide-react"
+import { Github, Mail, MessageCircle } from "lucide-react"
 
 const contactMethods = [
     {
@@ -35,9 +35,9 @@ export function ContactSection() {
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    { contactMethods.map((method) => (
+                    {contactMethods.map((method) => (
                         <div
-                            key={ method.label }
+                            key={method.label}
                             className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors"
                         >
                             <div className="p-2 bg-primary/10 rounded-lg">
@@ -45,17 +45,17 @@ export function ContactSection() {
                             </div>
                             <div className="flex-1">
                                 <div className="flex items-center gap-2">
-                                    <span className="font-medium">{ method.label }</span>
+                                    <span className="font-medium">{method.label}</span>
                                     <Button variant="ghost" size="sm" asChild>
-                                        <a href={ method.href } target="_blank" rel="noopener noreferrer">
-                                            { method.value }
+                                        <a href={method.href} target="_blank" rel="noopener noreferrer">
+                                            {method.value}
                                         </a>
                                     </Button>
                                 </div>
-                                <p className="text-xs text-muted-foreground">{ method.description }</p>
+                                <p className="text-xs text-muted-foreground">{method.description}</p>
                             </div>
                         </div>
-                    )) }
+                    ))}
                 </div>
 
                 <div className="mt-6 p-4 bg-muted/50 rounded-lg">

@@ -1,7 +1,6 @@
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Calendar, Code, Coffee, MapPin } from "lucide-react"
-import Image from "next/image"
 import { Avatar } from "@/components/avatar"
 
 export function ChaoYangProfile() {

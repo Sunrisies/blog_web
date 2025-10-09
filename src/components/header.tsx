@@ -3,14 +3,14 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, Search, Sun, Moon, X, FileText, History, Image as ImageUI, Music, Library, User, House } from "lucide-react"
+import { Menu, Search, X, FileText, History, Image as ImageUI, Music, Library, User, House } from "lucide-react"
 import Image from "next/image"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { NavItem, MenuItem1 } from "@/components/navbar"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { NavItem } from "@/components/navbar"
 import { useMobile } from "@/hooks/use-mobile"
 import { ThemeToggle } from "./theme-toggle"
 import { Avatar } from "./avatar"
@@ -19,7 +19,7 @@ const navItems = [
   { name: "Home", href: "/", icon: <House /> },
   { name: "文章", href: "/blog/1", icon: <FileText /> },
   { name: "时光轴", href: "/timeline", icon: <History /> },
-  { name: "图库", href: "/image-gallery", icon: <ImageUI /> },
+  { name: "影像长廊", href: "/album", icon: <ImageUI /> },
   { name: '音乐库', 'href': '/music-player', icon: <Music /> },
   { name: '第三方库', href: "/libraries", icon: <Library /> },
   { name: "关于", href: "/about", icon: <User /> },
@@ -29,7 +29,6 @@ export function SiteHeader() {
   const [showSearch, setShowSearch] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-  const pathname = usePathname()
   const isMobile = useMobile()
 
   useEffect(() => {

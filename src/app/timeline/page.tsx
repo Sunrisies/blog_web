@@ -75,7 +75,7 @@ export default async function TimelinePage() {
           </div>
         </div>
         <div className="relative border-l-2 border-primary/30 pl-4 md:pl-7.5 ml-2 md:ml-10">
-          {articles.length > 0 ? articles.map((article, index) => (
+          {articles.length > 0 ? articles.map((article) => (
             < div key={article.uuid || article.id} className="mb-8 relative w-full" >
               <div className="absolute -left-[25px] md:-left-[41px] w-5 h-5 bg-background border-2 border-primary rounded-full" />
               <div className="group block p-4 md:p-6 bg-card hover:bg-accent rounded-lg transition-colors">

@@ -59,7 +59,7 @@ export default function NotFound() {
           </Link>
 
           <Link
-            href="/blog"
+            href="/blog/1"
             className="inline-flex items-center justify-center rounded-md border border-primary/20 px-6 py-3 text-base font-medium text-primary transition-all duration-300 hover:bg-primary/10 hover:scale-105"
           >
             <svg

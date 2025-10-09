@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Github, Mail, Twitter } from "lucide-react"
-import Image from "next/image"
+import { Github, Mail } from "lucide-react"
 import Link from "next/link"
 import { Avatar } from "@/components/avatar"
 

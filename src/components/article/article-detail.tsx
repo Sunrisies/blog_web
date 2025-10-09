@@ -8,8 +8,6 @@ import ArticleContent from "./article-content"
 import ArticleFooter from "./article-footer"
 import ArticleHeader from "./article-header"
 import TableOfContents from "./table-of-contents"
-const getTextCommentsApi = async <T,>(slug: number) =>
-  await Http.get<T[]>(`/comments?articleId=${slug}`)
 
 interface ArticleDetailProps {
   article: IArticle
@@ -22,7 +20,6 @@ export default function ArticleDetail({
   article,
   prevArticle,
   nextArticle,
-  id,
 }: ArticleDetailProps) {
   return (
     <div className="container px-4 py-8 mx-auto">
