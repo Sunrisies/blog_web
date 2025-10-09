@@ -45,7 +45,7 @@ export function SiteFooter() {
 
   return (
     <footer className="w-full border-t bg-gradient-to-b from-background to-muted/20 mt-auto">
-      <div className="container flex flex-col items-center gap-6 py-8 md:py-12">
+      <div className="container flex flex-col items-center gap-6 py-8 pc:py-6">
         {/* 主要内容和社交链接 */}
         <div className="flex flex-col md:flex-row items-center justify-between w-full gap-6">
           {/* 品牌和描述 */}

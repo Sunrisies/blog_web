@@ -208,3 +208,34 @@
   animation: none;
   transform: none !important;
 }
+
+/* 精细控制版本的动画 */
+@keyframes float-404 {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotateX(0deg);
+    text-shadow:
+      0 0 20px rgba(59, 130, 246, 0.3),
+      0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  33% {
+    transform: translateY(-8px) rotateX(5deg);
+    text-shadow:
+      0 0 25px rgba(59, 130, 246, 0.4),
+      0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  66% {
+    transform: translateY(-4px) rotateX(-3deg);
+    text-shadow:
+      0 0 22px rgba(59, 130, 246, 0.35),
+      0 6px 18px rgba(0, 0, 0, 0.12);
+  }
+}
+
+
+.animate-float-404 {
+  animation: float-404 4s ease-in-out infinite;
+}
