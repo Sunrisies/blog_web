@@ -36,14 +36,14 @@ export default function ArticleActions({ article, className }: ArticleActionsPro
     )
 
     return (
-        <div className={cn("flex flex-col items-center space-y-6 sticky top-24", className)}>
-            <LikeButton articleId={article.id} />
+        <div className={ cn("flex flex-col items-center space-y-6 sticky top-24", className) }>
+            <LikeButton articleId={ article.uuid } />
 
             <div className="space-y-4">
                 <div className="text-center text-xs text-muted-foreground">Share</div>
                 <div className="flex flex-col items-center space-y-4">
                     <button
-                        onClick={() => shareOnSocial("facebook")}
+                        onClick={ () => shareOnSocial("facebook") }
                         className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
                         aria-label="Share on Facebook"
                     >
@@ -51,7 +51,7 @@ export default function ArticleActions({ article, className }: ArticleActionsPro
                     </button>
 
                     <button
-                        onClick={() => shareOnSocial("twitter")}
+                        onClick={ () => shareOnSocial("twitter") }
                         className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
                         aria-label="Share on Twitter"
                     >
@@ -59,7 +59,7 @@ export default function ArticleActions({ article, className }: ArticleActionsPro
                     </button>
 
                     <button
-                        onClick={copyLink}
+                        onClick={ copyLink }
                         className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
                         aria-label="Copy link"
                     >
@@ -86,10 +86,10 @@ function LikeButton() {
                 className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
                 aria-label="Like this article"
             >
-                <Heart className={cn("h-5 w-5", hasLiked && "fill-destructive text-destructive")} />
+                <Heart className={ cn("h-5 w-5", hasLiked && "fill-destructive text-destructive") } />
             </button>
             <div className="text-center text-xs text-muted-foreground">
-                {/* This would be the actual like count from the backend */}
+                {/* This would be the actual like count from the backend */ }
                 42
             </div>
         </div>

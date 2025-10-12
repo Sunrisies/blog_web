@@ -13,7 +13,7 @@ import Link from "next/link"
 
 const getPostApi = async <T,>(slug: number) => {
   const headers = await getClientInfo()
-  return (await Http.get<T[]>(`/article?page=${slug}&limit=8`, { headers })).data
+  return (await Http.get<T[]>(`/v1/posts?page=${slug}&limit=12`, { headers })).data
 }
 export default async function HomePage() {
   const { data: blogs } = await getPostApi<IBlog>(1)

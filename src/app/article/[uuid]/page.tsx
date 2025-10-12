@@ -13,7 +13,7 @@ interface Props {
 // 获取文章详情的接口
 const articleApi = async <T,>(uuid: string) => {
   const headers = await getClientInfo()
-  return await Http.get<T, ResponseDto<T>>(`/article/${uuid}`, { headers })
+  return await Http.get<T, ResponseDto<T>>(`/v1/posts/${uuid}`, { headers })
 }
 
 // 获取上一篇和下一篇文章的接口
@@ -23,6 +23,7 @@ const getPrevNextArticleApi = async <T,>(uuid: string) =>
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { uuid } = await params
   const { data: article } = await articleApi<IArticle>(uuid)
+  console.log(article, 'article')
   return {
     title: article.title,
     description: article.description,
@@ -40,13 +41,12 @@ export default async function ArticlePage({ params }: Props) {
   console.log(uuid)
   const { data: article } = await articleApi<IArticle>(uuid)
 
-  const { data: { prevArticle, nextArticle } } = await getPrevNextArticleApi<IPrevNext>(uuid)
+  // const { data: { prevArticle, nextArticle } } = await getPrevNextArticleApi<IPrevNext>(uuid)
   return (
     <ArticleDetail
-      article={article}
-      prevArticle={prevArticle}
-      nextArticle={nextArticle}
-      id={uuid}
+      article={ article }
+    // prevArticle={ prevArticle }
+    // nextArticle={ nextArticle }
     />
   )
 }
