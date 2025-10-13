@@ -40,7 +40,7 @@ export default async function ArticlePage({ params }: Props) {
   const { uuid } = await params
   console.log(uuid)
   const { data: article } = await articleApi<IArticle>(uuid)
-
+  console.log(article, 'article')
   // const { data: { prevArticle, nextArticle } } = await getPrevNextArticleApi<IPrevNext>(uuid)
   return (
     <ArticleDetail
