@@ -5,7 +5,7 @@ import { Slider } from "@/components/ui/slider"
 import type { PlaybackState, Song } from "@/types"
 import { Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume2 } from "lucide-react"
 import Image from "next/image"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { SynchronizedLyrics } from "./synchronized-lyrics"
 
 // Sample playlist with timestamped lyrics
@@ -53,8 +53,6 @@ export default function MusicPlayer() {
   const [playbackRate, setPlaybackRate] = useState(1)
   const [isRepeat, setIsRepeat] = useState(false)
   const [isShuffle, setIsShuffle] = useState(false)
-
-  const audioRef = useRef<HTMLAudioElement>(null)
 
   // Create playback state object for lyrics synchronization
   const playbackState: PlaybackState = {
@@ -124,44 +122,43 @@ export default function MusicPlayer() {
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-amber-100 via-orange-50 to-amber-200">
-      {/* Playlist Section */}
+      {/* Playlist Section */ }
       <div className="w-1/3 p-6 bg-black/20 backdrop-blur-sm">
         <div className="space-y-2">
-          {playlist.map((song, index) => (
+          { playlist.map((song, index) => (
             <div
-              key={song.id}
-              onClick={() => selectSong(song)}
-              className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all duration-200 ${
-                currentSong.id === song.id ? "bg-white/30 backdrop-blur-sm shadow-lg" : "hover:bg-white/10"
-              }`}
+              key={ song.id }
+              onClick={ () => selectSong(song) }
+              className={ `flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all duration-200 ${currentSong.id === song.id ? "bg-white/30 backdrop-blur-sm shadow-lg" : "hover:bg-white/10"
+                }` }
             >
               <div className="flex items-center space-x-4">
-                <span className="text-white font-medium w-6">{index + 1}</span>
-                <span className="text-white font-medium">{song.title}</span>
+                <span className="text-white font-medium w-6">{ index + 1 }</span>
+                <span className="text-white font-medium">{ song.title }</span>
               </div>
-              <span className="text-white/70 text-sm">{song.artist}</span>
+              <span className="text-white/70 text-sm">{ song.artist }</span>
             </div>
-          ))}
+          )) }
         </div>
       </div>
 
-      {/* Right Panel - Album Art and Synchronized Lyrics */}
+      {/* Right Panel - Album Art and Synchronized Lyrics */ }
       <div className="w-2/3 p-6 flex flex-col">
-        {/* Album Cover and Song Details */}
+        {/* Album Cover and Song Details */ }
         <div className="flex items-center space-x-6 mb-6">
           <div className="relative flex-shrink-0">
             <Image
               src="/placeholder.svg?height=120&width=120"
               alt="Album Cover"
-              width={120}
-              height={120}
+              width={ 120 }
+              height={ 120 }
               className="rounded-lg shadow-xl"
             />
           </div>
 
           <div className="flex-1">
             <h2 className="text-xl font-bold text-gray-800 mb-2">
-              {currentSong.title} - {currentSong.artist}
+              { currentSong.title } - { currentSong.artist }
             </h2>
             <div className="text-sm text-gray-600 space-y-1">
               <p>词：符格</p>
@@ -171,81 +168,81 @@ export default function MusicPlayer() {
           </div>
         </div>
 
-        {/* Synchronized Lyrics Display */}
+        {/* Synchronized Lyrics Display */ }
         <div className="flex-1 bg-white/80 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
-          <SynchronizedLyrics lyrics={currentSong.lyrics || []} playbackState={playbackState} className="h-full" />
+          <SynchronizedLyrics lyrics={ currentSong.lyrics || [] } playbackState={ playbackState } className="h-full" />
         </div>
 
-        {/* Music Controls */}
+        {/* Music Controls */ }
         <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg mt-4">
-          {/* Progress Bar */}
+          {/* Progress Bar */ }
           <div className="space-y-2 mb-4">
             <Slider
-              value={[currentTime]}
-              max={duration}
-              step={0.1}
-              onValueChange={handleProgressChange}
+              value={ [currentTime] }
+              max={ duration }
+              step={ 0.1 }
+              onValueChange={ handleProgressChange }
               className="w-full"
             />
             <div className="flex justify-between text-xs text-gray-600">
-              <span>{formatTime(currentTime)}</span>
-              <span>{formatTime(duration)}</span>
+              <span>{ formatTime(currentTime) }</span>
+              <span>{ formatTime(duration) }</span>
             </div>
           </div>
 
-          {/* Control Buttons */}
+          {/* Control Buttons */ }
           <div className="flex items-center justify-center space-x-4 mb-4">
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setIsShuffle(!isShuffle)}
-              className={isShuffle ? "text-blue-600" : "text-gray-600"}
+              onClick={ () => setIsShuffle(!isShuffle) }
+              className={ isShuffle ? "text-blue-600" : "text-gray-600" }
             >
               <Shuffle className="h-4 w-4" />
             </Button>
 
-            <Button variant="ghost" size="sm" onClick={previousTrack}>
+            <Button variant="ghost" size="sm" onClick={ previousTrack }>
               <SkipBack className="h-5 w-5" />
             </Button>
 
-            <Button variant="default" size="lg" onClick={togglePlayPause} className="rounded-full w-12 h-12">
-              {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
+            <Button variant="default" size="lg" onClick={ togglePlayPause } className="rounded-full w-12 h-12">
+              { isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" /> }
             </Button>
 
-            <Button variant="ghost" size="sm" onClick={nextTrack}>
+            <Button variant="ghost" size="sm" onClick={ nextTrack }>
               <SkipForward className="h-5 w-5" />
             </Button>
 
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setIsRepeat(!isRepeat)}
-              className={isRepeat ? "text-blue-600" : "text-gray-600"}
+              onClick={ () => setIsRepeat(!isRepeat) }
+              className={ isRepeat ? "text-blue-600" : "text-gray-600" }
             >
               <Repeat className="h-4 w-4" />
             </Button>
           </div>
 
-          {/* Volume Control and Playback Rate */}
+          {/* Volume Control and Playback Rate */ }
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2 flex-1">
               <Volume2 className="h-4 w-4 text-gray-600" />
-              <Slider value={volume} max={100} step={1} onValueChange={setVolume} className="flex-1" />
-              <span className="text-xs text-gray-600 w-8">{volume[0]}%</span>
+              <Slider value={ volume } max={ 100 } step={ 1 } onValueChange={ setVolume } className="flex-1" />
+              <span className="text-xs text-gray-600 w-8">{ volume[0] }%</span>
             </div>
 
             <div className="flex items-center space-x-2">
               <span className="text-xs text-gray-600">Speed:</span>
               <select
-                value={playbackRate}
-                onChange={(e) => setPlaybackRate(Number(e.target.value))}
+                value={ playbackRate }
+                onChange={ (e) => setPlaybackRate(Number(e.target.value)) }
                 className="text-xs bg-transparent border rounded px-1"
               >
-                <option value={0.5}>0.5x</option>
-                <option value={0.75}>0.75x</option>
-                <option value={1}>1x</option>
-                <option value={1.25}>1.25x</option>
-                <option value={1.5}>1.5x</option>
+                <option value={ 0.5 }>0.5x</option>
+                <option value={ 0.75 }>0.75x</option>
+                <option value={ 1 }>1x</option>
+                <option value={ 1.25 }>1.25x</option>
+                <option value={ 1.5 }>1.5x</option>
               </select>
             </div>
           </div>

@@ -1,26 +1,26 @@
 "use client"
-import type { warehouseType } from "@/types/blog";
-import * as echarts from "echarts";
-import ReactECharts from "echarts-for-react";
-import React from "react";
+import type { warehouseType } from "@/types/blog"
+import * as echarts from "echarts"
+import ReactECharts from "echarts-for-react"
+import React from "react"
 
 interface CalendarHeatmapProps {
-  warehouse: warehouseType;
+  warehouse: warehouseType
 }
 
 export const CalendarHeatmap: React.FC<CalendarHeatmapProps> = ({ warehouse }) => {
   const heatmapWidth = (months: number): [string, string][] => {
-    const now = new Date();
-    const past = new Date(now);
-    past.setMonth(now.getMonth() - months);
-    const nowStr = echarts.format.formatTime("yyyy-MM-dd", now);
-    const pastStr = echarts.format.formatTime("yyyy-MM-dd", past);
-    return [[pastStr, nowStr]];
-  };
+    const now = new Date()
+    const past = new Date(now)
+    past.setMonth(now.getMonth() - months)
+    const nowStr = echarts.format.formatTime("yyyy-MM-dd", now)
+    const pastStr = echarts.format.formatTime("yyyy-MM-dd", past)
+    return [[pastStr, nowStr]]
+  }
 
   const getRangeArr = (): [string, string][] => {
-    return heatmapWidth(12);
-  };
+    return heatmapWidth(12)
+  }
 
   const options = {
     title: {
@@ -31,9 +31,7 @@ export const CalendarHeatmap: React.FC<CalendarHeatmapProps> = ({ warehouse }) =
     tooltip: {
       hideDelay: 1000,
       enterable: true,
-      formatter: function (e: any) {
-        return `${e.data[0]} - ${e.data[1]} 篇文章`;
-      }
+      formatter: '{c}篇文章'
     },
     visualMap: {
       min: 0,
@@ -75,11 +73,11 @@ export const CalendarHeatmap: React.FC<CalendarHeatmapProps> = ({ warehouse }) =
       coordinateSystem: "calendar",
       data: warehouse
     }
-  };
+  }
 
   return (
     <div className="w-full bg-white-500 rounded-lg shadow-lg border border-white-500 p-4 mt-4">
-      <ReactECharts option={options} className="!h-44" />
+      <ReactECharts option={ options } className="!h-44" />
     </div>
-  );
-};
+  )
+}

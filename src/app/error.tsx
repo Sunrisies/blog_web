@@ -3,8 +3,7 @@
 import { useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { AlertTriangle, Home, Mail, RefreshCw } from "lucide-react"
+import { RefreshCw, Home, Mail } from "lucide-react"
 
 interface ErrorProps {
     error: Error & { digest?: string }
@@ -13,73 +12,93 @@ interface ErrorProps {
 
 export default function Error({ error, reset }: ErrorProps) {
     useEffect(() => {
-        // Log the error to an error reporting service
-        console.error("Application error:", error)
+        console.error("应用错误:", error)
     }, [error])
 
-    // Determine if this is a 500 error or another type
+    // 判断是否为500错误或其他类型错误
     const isServerError = error.message.includes("500") || error.digest
-    const errorCode = isServerError ? "500" : "Error"
-    const errorTitle = isServerError ? "Internal Server Error" : "Something Went Wrong"
+    const errorCode = isServerError ? "500" : "错误"
+    const errorTitle = isServerError ? "服务器内部错误" : "出错了"
     const errorMessage = isServerError
-        ? "We're experiencing some technical difficulties on our end. Our team has been notified and is working to resolve the issue."
-        : "An unexpected error occurred while processing your request. Please try again or contact support if the problem persists."
+        ? "我们遇到了一些技术问题，我们的团队已收到通知并正在努力解决。"
+        : "处理您的请求时发生了意外错误。"
 
     return (
-        <div className=" bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center p-4">
-            <Card className="w-full max-w-md shadow-lg border-red-200 !m-0 p-0">
-                <CardContent className="p-8 text-center space-y-6">
-                    {/* Error Icon and Code */}
-                    <div className="space-y-3">
-                        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto">
-                            <AlertTriangle className="w-8 h-8 text-red-600" />
-                        </div>
-                        <h1 className="text-4xl font-bold text-red-600">{errorCode}</h1>
-                        <div className="w-16 h-1 bg-red-500 mx-auto rounded-full"></div>
+        <div className="flex xs:min-h-[calc(100vh-3rem)] tb:min-h-[calc(100vh-21rem)] flex-col items-center justify-center overflow-hidden px-4 relative">
+            {/* 背景装饰元素 */ }
+            <div className="absolute inset-0 overflow-hidden -z-10">
+                <div className="absolute -top-20 -left-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+                <div className="absolute top-1/2 left-1/4 w-20 h-20 bg-blue-300/20 rounded-full blur-2xl animate-bounce"></div>
+            </div>
+
+            {/* 主要内容 */ }
+            <div className="text-center relative">
+                {/* 错误代码动画 */ }
+                <div className="text-center relative">
+                    <div className="relative mb-8">
+                        <h1 className="xs:text-[4.5rem] xs:leading-[4.5rem] tb:text-[7rem] tb:leading-[7rem] pc:text-[8.5rem] pc:leading-[8.5rem] font-black text-primary animate-float-404 drop-shadow-lg">
+                            { errorCode }
+                        </h1>
                     </div>
+                </div>
 
-                    {/* Error Message */}
-                    <div className="space-y-3">
-                        <h2 className="text-2xl font-semibold text-slate-800">{errorTitle}</h2>
-                        <p className="text-slate-600 leading-relaxed">{errorMessage}</p>
-                    </div>
+                {/* 副标题 */ }
+                <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-4">
+                    { errorTitle }
+                </h2>
 
-                    {/* Action Buttons */}
-                    <div className="space-y-3 pt-4">
-                        <Button onClick={reset} className="w-full">
-                            <RefreshCw className="w-4 h-4 mr-2" />
-                            Try Again
-                        </Button>
-
-                        <div className="flex gap-2">
-                            <Button variant="outline" asChild className="flex-1">
-                                <Link href="/">
-                                    <Home className="w-4 h-4 mr-2" />
-                                    Homepage
-                                </Link>
-                            </Button>
-
-                            <Button variant="outline" asChild className="flex-1">
-                                <Link href="/contact">
-                                    <Mail className="w-4 h-4 mr-2" />
-                                    Support
-                                </Link>
-                            </Button>
-                        </div>
-                    </div>
-
-                    {/* Additional Help */}
-                    <div className="pt-4 border-t border-red-200">
-                        <p className="text-sm text-slate-500">
-                            If this error persists, please{" "}
-                            <Link href="/contact" className="text-red-600 hover:underline">
-                                contact our support team
-                            </Link>{" "}
-                            with the error details above.
+                {/* 描述文字 */ }
+                <div className="max-w-md mx-auto mb-8">
+                    <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                        { errorMessage }
+                    </p>
+                    { !isServerError && (
+                        <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mt-4">
+                            请重试或联系支持团队。
                         </p>
+                    ) }
+                </div>
+
+                {/* 操作按钮组 */ }
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <Button
+                        onClick={ reset }
+                        className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-base font-medium text-primary-foreground transition-all duration-300 hover:bg-primary/90 hover:scale-105 shadow-lg"
+                    >
+                        <RefreshCw className="w-5 h-5 mr-2" />
+                        重试
+                    </Button>
+
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        <Link
+                            href="/"
+                            className="inline-flex items-center justify-center rounded-md border border-primary/20 px-6 py-3 text-base font-medium text-primary transition-all duration-300 hover:bg-primary/10 hover:scale-105"
+                        >
+                            <Home className="w-5 h-5 mr-2" />
+                            返回首页
+                        </Link>
+
+                        <Link
+                            href="/contact"
+                            className="inline-flex items-center justify-center rounded-md border border-primary/20 px-6 py-3 text-base font-medium text-primary transition-all duration-300 hover:bg-primary/10 hover:scale-105"
+                        >
+                            <Mail className="w-5 h-5 mr-2" />
+                            联系支持
+                        </Link>
                     </div>
-                </CardContent>
-            </Card>
+                </div>
+
+                {/* 额外的帮助文本 */ }
+                <p className="mt-8 text-sm text-muted-foreground max-w-xs mx-auto">
+                    如果此错误持续出现，请联系我们的支持团队
+                </p>
+            </div>
+
+            {/* 浮动元素 */ }
+            <div className="absolute bottom-10 left-10 w-8 h-8 bg-primary/20 rounded-full animate-bounce delay-300 hidden md:block"></div>
+            <div className="absolute top-10 right-10 w-6 h-6 bg-blue-300/30 rounded-full animate-bounce delay-700 hidden md:block"></div>
+            <div className="absolute top-1/3 right-1/4 w-4 h-4 bg-green-300/20 rounded-full animate-ping delay-1000 hidden lg:block"></div>
         </div>
     )
 }

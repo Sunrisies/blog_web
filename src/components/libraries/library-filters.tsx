@@ -15,6 +15,7 @@ export function LibraryFilters() {
   const [tags, setTags] = useState<Tag[]>([])
   const [searchQuery, setSearchQuery] = useState("")
   const [loading, setLoading] = useState(true)
+  console.log("LibraryFilters", loading)
 
   const router = useRouter()
   const pathname = usePathname()
@@ -118,12 +119,12 @@ export function LibraryFilters() {
   return (
     <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-4">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-        <form onSubmit={handleSearch} className="relative w-full sm:flex-1">
+        <form onSubmit={ handleSearch } className="relative w-full sm:flex-1">
           <Input
             type="search"
             placeholder="搜索资源..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            value={ searchQuery }
+            onChange={ (e) => setSearchQuery(e.target.value) }
             className="pr-10 bg-background/50 focus:bg-background"
           />
           <Button type="submit" size="icon" variant="ghost" className="absolute right-0 top-0 h-full hover:bg-transparent">
@@ -134,40 +135,40 @@ export function LibraryFilters() {
         <div className="flex gap-4">
           <select
             className="h-10 w-full sm:w-32 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-            value={selectedCategoryId || ""}
-            onChange={(e) => handleFilterSelect("category", Number(e.target.value))}
+            value={ selectedCategoryId || "" }
+            onChange={ (e) => handleFilterSelect("category", Number(e.target.value)) }
           >
             <option value="">所有分类</option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
+            { categories.map((category) => (
+              <option key={ category.id } value={ category.id }>
+                { category.name }
               </option>
-            ))}
+            )) }
           </select>
 
           <select
             className="h-10 w-full sm:w-32 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-            value={selectedTagId || ""}
-            onChange={(e) => handleFilterSelect("tag", Number(e.target.value))}
+            value={ selectedTagId || "" }
+            onChange={ (e) => handleFilterSelect("tag", Number(e.target.value)) }
           >
             <option value="">所有标签</option>
-            {tags.map((tag) => (
-              <option key={tag.id} value={tag.id}>
-                {tag.name}
+            { tags.map((tag) => (
+              <option key={ tag.id } value={ tag.id }>
+                { tag.name }
               </option>
-            ))}
+            )) }
           </select>
 
-          {isFilterActive && (
+          { isFilterActive && (
             <Button
               variant="ghost"
               size="icon"
               className="h-10 w-10 hover:bg-destructive/10 hover:text-destructive"
-              onClick={handleClearFilters}
+              onClick={ handleClearFilters }
             >
               <X className="h-4 w-4" />
             </Button>
-          )}
+          ) }
         </div>
       </div>
     </div>

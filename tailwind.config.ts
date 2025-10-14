@@ -1,5 +1,6 @@
+import typography from "@tailwindcss/typography";
 /** @type {import('tailwindcss').Config} */
-export default {
+const config = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     container: {
@@ -26,5 +27,6 @@ export default {
       },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [typography],
 };
+export default config;

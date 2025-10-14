@@ -18,7 +18,7 @@ const articleApi = async <T,>(uuid: string) => {
 
 // 获取上一篇和下一篇文章的接口
 const getPrevNextArticleApi = async <T,>(uuid: string) =>
-  await Http.get<T, ResponseDto<T>>(`/article/prevNext/${uuid}`)
+  await Http.get<T, ResponseDto<T>>(`/v1/posts/prevNext/${uuid}`)
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { uuid } = await params
@@ -38,15 +38,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ArticlePage({ params }: Props) {
   const { uuid } = await params
-  console.log(uuid)
   const { data: article } = await articleApi<IArticle>(uuid)
-  console.log(article, 'article')
-  // const { data: { prevArticle, nextArticle } } = await getPrevNextArticleApi<IPrevNext>(uuid)
+  const { data: { prevArticle, nextArticle } } = await getPrevNextArticleApi<IPrevNext>(uuid)
   return (
     <ArticleDetail
       article={ article }
-    // prevArticle={ prevArticle }
-    // nextArticle={ nextArticle }
+      prevArticle={ prevArticle }
+      nextArticle={ nextArticle }
     />
   )
 }

@@ -1,6 +1,5 @@
 "use client"
 import Comment from '@/components/comment'
-import Http from "@/services/request"
 import { IArticle } from "@/types/article"
 import { ScrollToTopButton } from "../scroll-to-top-button"
 import ArticleActions from "./article-actions"
@@ -11,8 +10,8 @@ import TableOfContents from "./table-of-contents"
 
 interface ArticleDetailProps {
   article: IArticle
-  prevArticle?: { id: number; title: string }
-  nextArticle?: { id: number; title: string }
+  prevArticle?: { uuid: string; title: string }
+  nextArticle?: { uuid: string; title: string }
 }
 
 export default function ArticleDetail({
@@ -31,11 +30,11 @@ export default function ArticleDetail({
 
         <div className="lg:col-span-8">
           <ArticleContent content={ article.content } />
-          {/* <ArticleFooter
-            article={article}
-            prevArticle={prevArticle}
-            nextArticle={nextArticle}
-          /> */}
+          <ArticleFooter
+            article={ article }
+            prevArticle={ prevArticle }
+            nextArticle={ nextArticle }
+          />
 
         </div>
 

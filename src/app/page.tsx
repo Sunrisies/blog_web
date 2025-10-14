@@ -5,18 +5,17 @@ import SentencesCarousel from "@/components/home/SentencesCarousel"
 import { TagCloud } from "@/components/home/tag-cloud"
 import { ScrollToTopButton } from "@/components/scroll-to-top-button"
 import { Button } from "@/components/ui/button"
-import Http from "@/services/request"
+import Http, { PaginatedResponseDto } from "@/services/request"
 import { IBlog } from "@/types/blog"
-import { getClientInfo } from "@/utils/get-client-info"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 
 const getPostApi = async <T,>(slug: number) => {
-  const headers = await getClientInfo()
-  return (await Http.get<T[]>(`/v1/posts?page=${slug}&limit=12`, { headers })).data
+  const { data } = await Http.get(`v1/posts?page=${slug}&limit=12`).json<PaginatedResponseDto<T>>()
+  return data
 }
 export default async function HomePage() {
-  const { data: blogs } = await getPostApi<IBlog>(1)
+  const { data: blogs } = await getPostApi<IBlog[]>(1)
   return (
     <div className="flex min-h-screen flex-col bg-[#f9f9f9] dark:bg-zinc-900">
       <main className="flex-1">
@@ -32,12 +31,12 @@ export default async function HomePage() {
 
             <div className="md:col-span-2">
               <div className="grid gap-6">
-                {blogs.map((item) => (
+                { blogs.map((item) => (
                   <BlogPostCard
-                    key={item.id}
-                    blog={item}
+                    key={ item.id }
+                    blog={ item }
                   />
-                ))}
+                )) }
               </div>
               <div className="mt-8 text-center">
                 <Button variant="outline" asChild className="group">
@@ -58,7 +57,7 @@ export default async function HomePage() {
 
               <div className="mt-8 rounded-lg border bg-card p-4 shadow-sm">
                 <h2 className="mb-4 text-lg font-medium">最新文章</h2>
-                <RecentPostsList blogs={blogs} />
+                <RecentPostsList blogs={ blogs } />
               </div>
             </div>
           </div>

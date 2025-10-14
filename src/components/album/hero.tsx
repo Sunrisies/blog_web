@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-
+import Image from 'next/image'
 interface Bubble {
     id: number
     left: number
@@ -34,9 +34,10 @@ export function AlbumHero() {
     return (
         <div className="relative mb-8 rounded-lg overflow-hidden">
             <div className="relative h-64 bg-gradient-to-r from-blue-500 to-purple-600">
-                <img
+                <Image
                     src="/city-skyline-with-modern-buildings-and-blue-sky.jpg"
                     alt="网络相册横幅"
+                    fill
                     className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
@@ -44,19 +45,19 @@ export function AlbumHero() {
                 </div>
 
                 <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                    {bubbles.map((bubble) => (
+                    { bubbles.map((bubble) => (
                         <div
-                            key={bubble.id}
+                            key={ bubble.id }
                             className="absolute bottom-0 rounded-full bg-white bg-opacity-20 animate-bubble"
-                            style={{
+                            style={ {
                                 left: `${bubble.left}%`,
                                 width: `${bubble.size}px`,
                                 height: `${bubble.size}px`,
                                 animationDuration: `${bubble.duration}s`,
                                 animationDelay: `${bubble.delay}s`,
-                            }}
+                            } }
                         />
-                    ))}
+                    )) }
                 </div>
             </div>
         </div>
