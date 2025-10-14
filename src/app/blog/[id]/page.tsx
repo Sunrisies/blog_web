@@ -1,19 +1,14 @@
 import BlogDetail from "@/components/blog/blog-detail"
 import { ScrollToTopButton } from "@/components/scroll-to-top-button"
-import Http from "@/services/request"
+import Http, { PaginatedResponseDto } from "@/services/request"
 import { CategoriesType, IBlog, ICategories, ITag, TagType } from "@/types/blog"
-import { getClientInfo } from "@/utils/get-client-info"
 
-// 获取博客仓库数据
-// const getWarehouseApi = async <T,>() =>
-//     await Http.get<T>("/article/uploadTime");
 //获取分类数据
-const getCategoriesApi = async <T,>() => (await Http.get<T[]>("/v1/categories")).data
-const getTagsApi = async <T,>() => (await Http.get<T[]>("/v1/tags?page=1&limit=100")).data
+const getCategoriesApi = async <T,>() => (await (await Http.get("v1/categories")).json<PaginatedResponseDto<T[]>>()).data
+const getTagsApi = async <T,>() => (await (await Http.get("v1/tags?page=1&limit=100")).json<PaginatedResponseDto<T[]>>()).data
 
 const getPostApi = async <T,>(slug: number) => {
-    const headers = await getClientInfo()
-    return (await Http.get<T[]>(`/v1/posts?page=${slug}&limit=8`, { headers })).data
+    return (await (await Http.get<T[]>(`v1/posts?page=${slug}&limit=8`)).json<PaginatedResponseDto<T[]>>()).data
 }
 
 

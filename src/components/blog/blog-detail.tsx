@@ -43,8 +43,8 @@ const devices = {
   tablet: 10,
   desktop: 8,
 }
-const getPostApi = async <T,>(id: number) =>
-  await Http.get<T[]>(`/article?page=${id}&limit=8`)
+// const getPostApi = async <T,>(id: number) =>
+//   await Http.get<T[]>(`/article?page=${id}&limit=8`)
 const BlogDetail = ({ blog, categories, pagination, id, tags }: PageProps) => {
   const [newArticles, setNewArticles] = useState<IBlog[]>(blog)
   const [selectedCategory, setSelectedCategory] = useState("")
@@ -64,9 +64,9 @@ const BlogDetail = ({ blog, categories, pagination, id, tags }: PageProps) => {
   }, [])
   const loadArticles = (page: number) => {
     // 获取数据的逻辑
-    getPostApi<IBlog>(page).then(() => {
-      setNewArticles((prevArticles) => [...prevArticles])
-    })
+    // getPostApi<IBlog>(page).then(() => {
+    //   setNewArticles((prevArticles) => [...prevArticles])
+    // })
   }
   const { ref } = useInView({
     threshold: 0,

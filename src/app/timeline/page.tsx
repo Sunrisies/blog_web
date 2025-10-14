@@ -1,16 +1,16 @@
 import { ScrollToTopButton } from '@/components/scroll-to-top-button'
 import { CalendarHeatmap } from '@/components/timeline/calendar-heatmap'
-import Http, { ResponseDto } from "@/services/request"
+import Http, { PaginatedResponseDto, ResponseDto } from "@/services/request"
 import { IArticle } from "@/types/article"
 import { warehouseType } from '@/types/blog'
 import { getClientInfo } from '@/utils/get-client-info'
 import type { Metadata } from "next"
 // 获取时光轴文章的接口
 const getTimelineArticlesApi = async <T,>() => {
-  const headers = await getClientInfo()
-  return (await Http.get<T>(`/v1/posts?page=1&limit=100`, { headers })).data
+  const { data } = await Http.get(`v1/posts?page=1&limit=100`).json<PaginatedResponseDto<T>>()
+  return data
 }
-const getWarehouse = async <T,>() => await Http.get<T, ResponseDto<T>>('/v1/posts/uploadTime')
+const getWarehouse = async <T,>() => (await Http.get('v1/posts/uploadTime').json<ResponseDto<T>>())
 export const metadata: Metadata = {
   title: "时光轴 | 朝阳的码农札记",
   description: "记录技术成长的点点滴滴，分享学习历程和技术见解，见证每一步成长的足迹。",
