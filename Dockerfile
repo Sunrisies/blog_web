@@ -4,6 +4,5 @@ WORKDIR /temp
 COPY .next/standalone  ./.next/standalone
 COPY .next/static     ./.next/standalone/.next/static
 COPY .env /temp/.env
-COPY .env.build /temp/.env.build
 COPY public  ./.next/standalone/public/
 CMD ["sh", "-c", "node .next/standalone/server.js"]
