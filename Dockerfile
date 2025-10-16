@@ -1,4 +1,4 @@
-FROM node:22 AS build-stage
+FROM node:22-alpine AS build-stage
 # RUN apk add --no-cache --update nodejs
 WORKDIR /temp
 COPY .next/standalone  ./.next/standalone
