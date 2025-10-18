@@ -1,7 +1,7 @@
 {
-  "version": "0.1.11",
-  "buildDate": "2025-10-16T05:23:30.877Z",
-  "commitHash": "3860c9b",
-  "deployDate": "2025-10-16T05:23:30.877Z",
+  "version": "0.1.13",
+  "buildDate": "2025-10-18T05:59:35.370Z",
+  "commitHash": "029374e",
+  "deployDate": "2025-10-18T05:59:35.370Z",
   "environment": "production"
 }

@@ -1,15 +1,13 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { getClientInfo } from "@/utils/get-client-info"
 import { ArrowRight, BookOpen, Calendar, Code2, Lightbulb } from "lucide-react"
 import Link from "next/link"
 import { IBlog } from "@/types/blog"
 import { formatChineseDateTime } from 'sunrise-utils'
-import Http from "@/services/request"
+import Http, { PaginatedResponseDto } from "@/services/request"
 const getPostApi = async <T,>(slug: number) => {
-    const headers = await getClientInfo()
-    return (await Http.get<T[]>(`/article?page=${slug}&limit=5`, { headers })).data
+    return (await (await Http.get(`v1/posts?page=${slug}&limit=5`)).json<PaginatedResponseDto<T[]>>()).data
 }
 
 
@@ -36,7 +34,6 @@ const noteCategories = [
 
 export async function CodeFarmerNotes() {
     const { data: blogs } = await getPostApi<IBlog>(1)
-    console.log(blogs, '============')
     return (
         <div className="space-y-8">
             <div className="text-center">

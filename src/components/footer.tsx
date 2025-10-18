@@ -46,9 +46,9 @@ export function SiteFooter() {
   return (
     <footer className="w-full border-t bg-gradient-to-b from-background to-muted/20 mt-auto">
       <div className="container flex flex-col items-center gap-6 py-8 pc:py-6">
-        {/* 主要内容和社交链接 */}
+        {/* 主要内容和社交链接 */ }
         <div className="flex flex-col md:flex-row items-center justify-between w-full gap-6">
-          {/* 品牌和描述 */}
+          {/* 品牌和描述 */ }
           <div className="flex flex-col items-center md:items-start gap-4 max-w-md">
             <div className="flex items-center gap-3">
               <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
@@ -65,24 +65,21 @@ export function SiteFooter() {
               探索数字世界的无限可能
             </p>
 
-            {duration && (
+            { duration && (
               <div className="flex items-center gap-2 text-xs text-muted-foreground bg-muted/50 px-3 py-1.5 rounded-full">
                 <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse"></div>
-                <span>已稳定运行 {duration}</span>
+                <span>已稳定运行 { duration }</span>
               </div>
-            )}
+            ) }
           </div>
 
-          {/* 导航链接 */}
+          {/* 导航链接 */ }
           <div className="flex sm:flex-col sm:flex-row gap-6 sm:gap-10">
             <div className="flex flex-col gap-3">
               <h4 className="text-sm font-semibold text-center">探索</h4>
               <div className="flex flex-col gap-2 text-sm text-muted-foreground">
-                <Link href="/articles" className="hover:text-foreground transition-colors">
+                <Link href="/blog/1" className="hover:text-foreground transition-colors">
                   文章列表
-                </Link>
-                <Link href="/categories" className="hover:text-foreground transition-colors">
-                  分类目录
                 </Link>
                 <Link href="/tags" className="hover:text-foreground transition-colors">
                   标签云
@@ -114,7 +111,7 @@ export function SiteFooter() {
             </div>
           </div>
 
-          {/* 社交链接 */}
+          {/* 社交链接 */ }
           <div className="flex flex-col items-center md:items-end gap-4">
             <div className="flex items-center gap-4">
               <Link
@@ -149,10 +146,10 @@ export function SiteFooter() {
           </div>
         </div>
 
-        {/* 分割线 */}
+        {/* 分割线 */ }
         <div className="w-full border-t" />
 
-        {/* 底部信息 */}
+        {/* 底部信息 */ }
         <div className="flex flex-col md:flex-row items-center justify-between w-full gap-4">
           <div className="flex flex-col sm:flex-row items-center gap-2 text-sm text-muted-foreground">
             <span>© 2024 技术博客</span>
@@ -180,7 +177,7 @@ export function SiteFooter() {
 function Rss(props) {
   return (
     <svg
-      {...props}
+      { ...props }
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -198,7 +195,7 @@ function Rss(props) {
 function Mail(props) {
   return (
     <svg
-      {...props}
+      { ...props }
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
