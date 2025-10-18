@@ -144,60 +144,59 @@ const BlogDetail = ({ blog, categories, pagination, id, tags }: PageProps) => {
       {/* 文章列表 */ }
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         { newArticles.map((article) => (
-          <Card
-            key={ article.id }
-            className="flex flex-col py-0 gap-0 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
-          >
-            <CardHeader className="p-0">
-              <div className="relative h-32 w-full">
-                <Image
-                  src={
-                    article.cover ||
-                    "https://kzmolcurk08fsa3stld2.lite.vusercontent.net/placeholder.svg"
-                  }
-                  alt={ article.title }
-                  fill
-                  className="object-cover rounded-t-lg"
-                />
-                { article.is_top && (
-                  <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">
-                    置顶
-                  </Badge>
-                ) }
-              </div>
-            </CardHeader>
-            <CardContent className="grow p-4">
-              {/* 新增 H3 标题，突出文章标题 */ }
+          <Link href={ `/article/${article.uuid}` } key={ article.id } passHref>
+            <Card
+              className="flex flex-col py-0 gap-0 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+            >
+              <CardHeader className="p-0">
+                <div className="relative h-32 w-full">
+                  <Image
+                    src={
+                      article.cover ||
+                      "https://kzmolcurk08fsa3stld2.lite.vusercontent.net/placeholder.svg"
+                    }
+                    alt={ article.title }
+                    fill
+                    className="object-cover rounded-t-lg"
+                  />
+                  { article.is_top && (
+                    <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">
+                      置顶
+                    </Badge>
+                  ) }
+                </div>
+              </CardHeader>
+              <CardContent className="grow p-4">
+                {/* 新增 H3 标题，突出文章标题 */ }
 
-              <h3 className="text-lg  font-bold mb-2 line-clamp-1" title={ article.title }>{ article.title }</h3>
-              <p
-                className="text-sm text-muted-foreground mb-4 line-clamp-2 cursor-pointer"
-                title={ article.description }
-              >
-                { article.description }
-              </p>
-              <div className="flex flex-wrap gap-2 mb-2">
-                { article.tags.map((tag) => (
-                  <Badge key={ tag.id } variant="secondary" className="text-xs">
-                    { tag.name }
-                  </Badge>
-                )) }
-              </div>
-            </CardContent>
-            <CardFooter className="flex justify-between items-center p-4 pt-0 pr-0">
-              <div className="flex items-center text-sm text-muted-foreground space-x-4">
-                <div className="flex items-center shrink-0 overflow-hidden">
-                  <Eye className="h-4 w-4 mr-1 flex-shrink-0" />
-                  <span className="truncate">{ article.views }</span>
+                <h3 className="text-lg  font-bold mb-2 line-clamp-1" title={ article.title }>{ article.title }</h3>
+                <p
+                  className="text-sm text-muted-foreground mb-4 line-clamp-2 cursor-pointer"
+                  title={ article.description }
+                >
+                  { article.description }
+                </p>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  { article.tags.map((tag) => (
+                    <Badge key={ tag.id } variant="secondary" className="text-xs">
+                      { tag.name }
+                    </Badge>
+                  )) }
                 </div>
-                <div className="flex items-center shrink-0 overflow-hidden">
-                  <Clock className="h-4 w-4 mr-1 flex-shrink-0" />
-                  <span className="truncate">
-                    { formatChineseDateTime(article.publish_time).split(" ")[0] }
-                  </span>
+              </CardContent>
+              <CardFooter className="flex justify-between items-center p-4 pt-0 pr-0">
+                <div className="flex items-center text-sm text-muted-foreground space-x-4">
+                  <div className="flex items-center shrink-0 overflow-hidden">
+                    <Eye className="h-4 w-4 mr-1 flex-shrink-0" />
+                    <span className="truncate">{ article.views }</span>
+                  </div>
+                  <div className="flex items-center shrink-0 overflow-hidden">
+                    <Clock className="h-4 w-4 mr-1 flex-shrink-0" />
+                    <span className="truncate">
+                      { formatChineseDateTime(article.publish_time).split(" ")[0] }
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <Link href={ `/article/${article.uuid}` } passHref>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -206,9 +205,10 @@ const BlogDetail = ({ blog, categories, pagination, id, tags }: PageProps) => {
                   阅读更多
                   <ChevronRight className="h-4 w-4 ml-1" />
                 </Button>
-              </Link>
-            </CardFooter>
-          </Card>
+              </CardFooter>
+            </Card>
+          </Link>
+
         )) }
       </div>
       {/* 加载更多触发器 */ }
@@ -240,10 +240,6 @@ const BlogDetail = ({ blog, categories, pagination, id, tags }: PageProps) => {
                 { length: Math.ceil(pagination.total / pagination.limit) },
                 (_, index) => index + 1
               )
-                // .slice(
-                //   Math.max(0, page - 3),
-                //   Math.min(Math.ceil(pagination.total / pagination.limit), page + 3)
-                // )
                 .map((newPage) => {
                   return (
                     <PaginationItem key={ newPage }>

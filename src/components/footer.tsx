@@ -124,7 +124,7 @@ export function SiteFooter() {
                 <span className="sr-only">GitHub</span>
               </Link>
               <Link
-                href="/rss"
+                href="/api/rss"
                 className="h-9 w-9 rounded-full bg-muted flex items-center justify-center hover:bg-orange-500 hover:text-white transition-all duration-200"
               >
                 <Rss className="h-4 w-4" />

@@ -31,7 +31,7 @@ export function ScrollToTopButton() {
     <Button
       type="button"
       onClick={ scrollToTop }
-      className={ `fixed bottom-4 right-4  bg-primary text-white rounded-full shadow-lg  h-12 w-12 transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'}` }
+      className={ `fixed bottom-20 right-4  bg-primary text-white rounded-full shadow-lg  h-12 w-12 transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'}` }
       aria-label="Scroll to top"
     >
       <ArrowUp className="!w-6 !h-6" strokeWidth={ 2.25 } absoluteStrokeWidth />
