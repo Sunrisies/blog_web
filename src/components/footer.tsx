@@ -96,7 +96,7 @@ export function SiteFooter() {
                 <Link href="/about" className="hover:text-foreground transition-colors">
                   关于本站
                 </Link>
-                <Link href="/rss" className="hover:text-foreground transition-colors">
+                <Link href="/api/rss" className="hover:text-foreground transition-colors">
                   RSS订阅
                 </Link>
                 <Link
