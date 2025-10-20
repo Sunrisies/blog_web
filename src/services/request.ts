@@ -31,10 +31,14 @@ export default ky.create({
   hooks: {
     beforeRequest: [
       async (request) => {
-        const headers = await getClientInfo();
-        Object.entries(headers).forEach(([key, value]) => {
-          request.headers.set(key, value);
-        });
+        console.log(request, "==========");
+        // if (typeof window !== "undefined") {
+        //   console.log("beforeRequest---------------");
+        //   const headers = await getClientInfo();
+        //   Object.entries(headers).forEach(([key, value]) => {
+        //     request.headers.set(key, value);
+        //   });
+        // }
       },
     ],
     afterResponse: [async () => {}],

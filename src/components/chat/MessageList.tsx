@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { format } from 'date-fns'
 import { zhCN } from 'date-fns/locale'
 import { Image, FileText, Download } from 'lucide-react'
@@ -26,6 +26,17 @@ interface MessageListProps {
 
 export default function MessageList({ messages, currentUserNickname }: MessageListProps) {
     const messagesEndRef = useRef<HTMLDivElement>(null)
+    const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+    // 自动滚动到底部显示最新消息
+    useEffect(() => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTo({
+                top: scrollContainerRef.current.scrollHeight,
+                behavior: 'smooth'
+            })
+        }
+    }, [messages])
 
     const formatTime = (dateString: string) => {
         try {
@@ -111,10 +122,18 @@ export default function MessageList({ messages, currentUserNickname }: MessageLi
 
     const isSystemMessage = (message: Message) => message.message_type === 'system'
 
+    // 按时间戳排序，确保最新的消息在底部
+    const sortedMessages = [...messages].sort((a, b) =>
+        new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+    )
+
     return (
         <div className="relative h-full">
-            <div className="absolute inset-0 overflow-y-auto bg-gradient-to-b from-blue-50/50 to-white p-4">
-                { messages.length === 0 ? (
+            <div
+                ref={ scrollContainerRef }
+                className="absolute inset-0 overflow-y-auto bg-gradient-to-b from-blue-50/50 to-white p-4"
+            >
+                { sortedMessages.length === 0 ? (
                     <div className="h-full flex items-center justify-center">
                         <div className="text-center text-gray-500">
                             <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -125,8 +144,8 @@ export default function MessageList({ messages, currentUserNickname }: MessageLi
                         </div>
                     </div>
                 ) : (
-                    <div className="flex flex-col-reverse space-y-reverse space-y-4 min-h-full">
-                        { messages.map((message, index) => (
+                    <div className="flex flex-col space-y-4">
+                        { sortedMessages.map((message, index) => (
                             <div
                                 key={ `${message.timestamp}-${message.user_id}-${index}` }
                                 className={ `flex ${message.user_nickname === currentUserNickname && !isSystemMessage(message)
@@ -174,6 +193,5 @@ export default function MessageList({ messages, currentUserNickname }: MessageLi
                 <div ref={ messagesEndRef } />
             </div>
         </div>
-
     )
 }

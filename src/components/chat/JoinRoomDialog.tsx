@@ -1,12 +1,5 @@
+
 "use client"
-import Http, { PaginatedResponseDto, ResponseDto } from "@/services/request"
-
-const createRoom = async (roomId: string) => {
-    return await Http.post('v1/rooms', {
-        json: { name: roomId },
-    })
-}
-
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
@@ -28,7 +21,7 @@ export default function JoinRoomDialog() {
             return
         }
         setLoading(true)
-        createRoom(roomId)
+
         // try {
         //     // 导航到聊天页面
         //     router.push(`/chat/${roomId}?nickname=${encodeURIComponent(nickname)}`)
