@@ -121,6 +121,8 @@ export default function MessageList({ messages, currentUserNickname }: MessageLi
     }
 
     const isSystemMessage = (message: Message) => message.message_type === 'system'
+    const isCurrentUserMessage = (message: Message) =>
+        !isSystemMessage(message) && message.user_nickname === currentUserNickname
 
     // 按时间戳排序，确保最新的消息在底部
     const sortedMessages = [...messages].sort((a, b) =>
@@ -148,7 +150,7 @@ export default function MessageList({ messages, currentUserNickname }: MessageLi
                         { sortedMessages.map((message, index) => (
                             <div
                                 key={ `${message.timestamp}-${message.user_id}-${index}` }
-                                className={ `flex ${message.user_nickname === currentUserNickname && !isSystemMessage(message)
+                                className={ `flex ${isCurrentUserMessage(message)
                                     ? 'justify-end'
                                     : 'justify-start'
                                     }` }
@@ -158,9 +160,10 @@ export default function MessageList({ messages, currentUserNickname }: MessageLi
                                         { renderMessageContent(message) }
                                     </div>
                                 ) : (
-                                    <div className={ `max-w-xs lg:max-w-md ${message.user_nickname === currentUserNickname ? 'ml-auto' : ''
+                                    <div className={ `max-w-xs lg:max-w-md ${isCurrentUserMessage(message) ? 'ml-auto' : ''
                                         }` }>
-                                        { message.user_nickname !== currentUserNickname && (
+                                        {/* 对方消息显示头像和昵称 */ }
+                                        { !isCurrentUserMessage(message) && (
                                             <div className="flex items-center gap-2 mb-1">
                                                 <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-xs text-white font-medium">
                                                     { message.user_nickname.charAt(0).toUpperCase() }
@@ -168,20 +171,38 @@ export default function MessageList({ messages, currentUserNickname }: MessageLi
                                                 <span className="text-xs font-medium text-gray-700">
                                                     { message.user_nickname }
                                                 </span>
-                                            </div>
-                                        ) }
-
-                                        <div className={ `flex gap-2 ${message.user_nickname === currentUserNickname ? 'flex-row-reverse' : 'flex-row'
-                                            }` }>
-                                            <div className={ `flex flex-col ${message.user_nickname === currentUserNickname ? 'items-end' : 'items-start'
-                                                }` }>
-                                                { renderMessageContent(message) }
-                                                <p className={ `text-xs mt-1 ${message.user_nickname === currentUserNickname
+                                                <p className={ `text-xs mt-1 ${isCurrentUserMessage(message)
                                                     ? 'text-blue-600'
                                                     : 'text-gray-500'
                                                     }` }>
                                                     { formatTime(message.timestamp) }
                                                 </p>
+                                            </div>
+                                        ) }
+
+                                        <div className={ `flex gap-2 ${isCurrentUserMessage(message) ? 'flex-row-reverse' : 'flex-row'
+                                            }` }>
+                                            {/* 自己消息显示头像 */ }
+                                            <div>
+                                                { isCurrentUserMessage(message) && (
+                                                    <>
+                                                        <div className="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center text-xs text-white font-medium flex-shrink-0">
+                                                            { message.user_nickname.charAt(0).toUpperCase() }
+                                                        </div>
+                                                        <p className={ `text-xs mt-1 ${isCurrentUserMessage(message)
+                                                            ? 'text-blue-600'
+                                                            : 'text-gray-500'
+                                                            }` }>
+                                                            { formatTime(message.timestamp) }
+                                                        </p>
+                                                    </>
+                                                ) }
+                                            </div>
+
+                                            <div className={ `flex flex-col ${isCurrentUserMessage(message) ? 'items-end' : 'items-start'
+                                                }` }>
+                                                {/* 消息内容 */ }
+                                                { renderMessageContent(message) }
                                             </div>
                                         </div>
                                     </div>

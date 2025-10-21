@@ -4,7 +4,7 @@ import Http, { PaginatedResponseDto, ResponseDto } from "@/services/request"
 const createRoom = async (roomId: string) => {
     return await Http.post('v1/rooms', {
         json: { name: roomId },
-    })
+    }).json<ResponseDto<null>>()
 }
 
 import { useState } from 'react'
@@ -28,17 +28,20 @@ export default function JoinRoomDialog() {
             return
         }
         setLoading(true)
-        createRoom(roomId)
-        // try {
-        //     // 导航到聊天页面
-        //     router.push(`/chat/${roomId}?nickname=${encodeURIComponent(nickname)}`)
-        //     onOpenChange(false)
-        // } catch (error) {
-        //     console.error('加入房间失败:', error)
-        //     alert('加入房间失败，请重试')
-        // } finally {
-        //     setLoading(false)
-        // }
+        const { code, data } = await createRoom(roomId)
+        if (code === 200 && !data) {
+            try {
+                // 导航到聊天页面
+                router.push(`/chat/${roomId}?nickname=${encodeURIComponent(nickname)}`)
+                onOpenChange(false)
+            } catch (error) {
+                console.error('加入房间失败:', error)
+                alert('加入房间失败，请重试')
+            } finally {
+                setLoading(false)
+            }
+        }
+
     }
 
     const handleClose = () => {

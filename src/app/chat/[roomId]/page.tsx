@@ -5,40 +5,50 @@ import { useParams, useSearchParams } from 'next/navigation'
 import ChatRoom from '@/components/chat/ChatRoom'
 import { Button } from '@/components/ui/button'
 import { MessageCircle, Users } from 'lucide-react'
+import Http, { PaginatedResponseDto, ResponseDto } from "@/services/request"
+import { IRoomInfo, IRoomMessage } from '@/types/room'
 
-interface RoomInfo {
-    id: string
-    name: string
-    description?: string
-    max_users: number
-    created_at: string
+// const getRoomMessages = async (roomId: string) => {
+//     return await Http.post('v1/rooms', {
+//         json: { name: roomId },
+//     }).json<ResponseDto<null>>()
+// }
+const getRoomMessages = async (roomId: number) => {
+    return await Http.get(`v1/rooms/${roomId}/messages`).json<ResponseDto<IRoomMessage[]>>()
 }
+const getRoomInfo = async (roomId: string) => {
+    return await Http.get(`v1/rooms/${roomId}`).json<ResponseDto<IRoomInfo>>()
+}
+
 
 export default function ChatPage() {
     const params = useParams()
     const searchParams = useSearchParams()
-    const roomId = params.roomId as string
+    const roomName = params.roomId as string
     const nickname = searchParams.get('nickname') || '匿名用户'
 
-    const [room, setRoom] = useState<RoomInfo | null>(null)
+
+    const [room, setRoom] = useState<IRoomInfo | null>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
+    const [roomMessages, setRoomMessages] = useState<IRoomMessage[]>([])
 
     useEffect(() => {
         const loadRoomData = async () => {
             try {
-                // 这里可以调用API获取房间信息
-                // const roomInfo = await getRoomInfo(roomId);
-                // setRoom(roomInfo);
-
+                const roomInfo = await getRoomInfo(roomName)
+                console.log(roomInfo, 'roomInfo')
+                setRoom(roomInfo.data)
+                const { data } = await getRoomMessages(roomInfo.data.id)
+                setRoomMessages(data)
                 // 模拟房间数据
-                setRoom({
-                    id: roomId,
-                    name: `房间 ${roomId}`,
-                    description: '欢迎来到聊天室',
-                    max_users: 100,
-                    created_at: new Date().toISOString(),
-                })
+                // setRoom({
+                //     id: roomName,
+                //     name: `房间 ${roomId}`,
+                //     description: '欢迎来到聊天室',
+                //     max_users: 100,
+                //     created_at: new Date().toISOString(),
+                // })
             } catch (error) {
                 console.error('加载房间失败:', error)
                 setError('房间加载失败')
@@ -47,10 +57,10 @@ export default function ChatPage() {
             }
         }
 
-        if (roomId) {
+        if (roomName) {
             loadRoomData()
         }
-    }, [roomId])
+    }, [roomName])
 
     if (loading) {
         return (
@@ -112,7 +122,7 @@ export default function ChatPage() {
 
             {/* 聊天区域 */ }
             <div className="flex-1 flex overflow-hidden">
-                <ChatRoom roomId={ roomId } />
+                <ChatRoom room={ room } roomMessages={ roomMessages } />
             </div>
         </div>
     )

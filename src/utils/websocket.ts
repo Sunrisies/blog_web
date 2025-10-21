@@ -1,7 +1,10 @@
+// utils/websocket.ts
 import { useEffect, useRef, useState } from "react";
-
+import ReconnectingWebSocket from "reconnecting-websocket";
+import { ErrorEvent, CloseEvent } from "reconnecting-websocket";
 interface WebSocketMessage {
-  room_id: string;
+  room_id: number;
+  room_name: string;
   user_id: string;
   user_nickname: string;
   message_type: string;
@@ -14,78 +17,87 @@ interface WebSocketMessage {
 }
 
 export function useWebSocket(
-  roomId: string,
+  roomId: number,
+  roomName: string,
   userId: string,
   userNickname: string
 ) {
   const [lastMessage, setLastMessage] = useState<MessageEvent | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const ws = useRef<WebSocket | null>(null);
-  const reconnectTimeout = useRef<NodeJS.Timeout>();
+  // 使用 useRef 保存 ReconnectingWebSocket 实例
+  const rws = useRef<ReconnectingWebSocket | null>(null);
 
-  const connect = () => {
+  useEffect(() => {
+    // 确保只在客户端执行
+    if (typeof window === "undefined") return;
+
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const wsUrl = `${protocol}//${process.env.NEXT_PUBLIC_WS_URL}/ws/${roomId}/${userId}`;
+    // 注意：这里去掉了 /api/v1/rooms 前缀，根据你的后端路由调整
+    const wsUrl = `${protocol}//${
+      process.env.NEXT_PUBLIC_WS_URL || "localhost:2345"
+    }/ws/${roomName}/${userId}`;
 
-    console.log("连接 WebSocket:", wsUrl);
+    console.log("初始化 ReconnectingWebSocket:", wsUrl);
 
-    ws.current = new WebSocket(wsUrl);
+    // 初始化 ReconnectingWebSocket
+    rws.current = new ReconnectingWebSocket(wsUrl, [], {});
 
-    ws.current.onopen = () => {
+    // 存储事件处理函数以便清理
+    const handleOpen = () => {
       console.log("WebSocket 连接成功");
       setIsConnected(true);
-
-      if (reconnectTimeout.current) {
-        clearTimeout(reconnectTimeout.current);
-      }
     };
 
-    ws.current.onmessage = (event) => {
+    const handleMessage = (event: MessageEvent) => {
       console.log("收到 WebSocket 消息:", event.data);
       setLastMessage(event);
     };
 
-    ws.current.onclose = (event) => {
+    const handleError = (event: ErrorEvent) => {
+      console.error("WebSocket 错误:", event);
+      setIsConnected(false);
+    };
+
+    const handleClose = (event: CloseEvent) => {
       console.log("WebSocket 连接关闭:", event.code, event.reason);
       setIsConnected(false);
-
-      if (event.code !== 1000) {
-        reconnectTimeout.current = setTimeout(() => {
-          console.log("尝试重新连接...");
-          connect();
-        }, 3000);
-      }
     };
 
-    ws.current.onerror = (error) => {
-      console.error("WebSocket 错误:", error);
-      setIsConnected(false);
-    };
-  };
+    // 绑定事件监听
+    rws.current.addEventListener("open", handleOpen);
+    rws.current.addEventListener("message", handleMessage);
+    rws.current.addEventListener("error", handleError);
+    rws.current.addEventListener("close", handleClose);
 
-  useEffect(() => {
-    connect();
-
+    // 组件卸载或依赖变更时的清理函数
     return () => {
-      if (reconnectTimeout.current) {
-        clearTimeout(reconnectTimeout.current);
+      console.log("清理 WebSocket 连接");
+      if (rws.current) {
+        // 移除事件监听
+        rws.current.removeEventListener("open", handleOpen);
+        rws.current.removeEventListener("message", handleMessage);
+        rws.current.removeEventListener("error", handleError);
+        rws.current.removeEventListener("close", handleClose);
+        // 关闭连接
+        rws.current.close();
+        rws.current = null;
       }
-      if (ws.current) {
-        ws.current.close(1000, "组件卸载");
-      }
+      setIsConnected(false);
+      setLastMessage(null);
     };
-  }, [roomId, userId]);
+  }, [roomName, userId]); // 依赖项
 
   const sendMessage = (
     message: Omit<
       WebSocketMessage,
-      "room_id" | "user_id" | "timestamp" | "user_nickname"
+      "room_id" | "user_id" | "timestamp" | "user_nickname" | "room_name"
     >
   ) => {
-    if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+    if (rws.current) {
       const fullMessage: WebSocketMessage = {
         ...message,
         room_id: roomId,
+        room_name: roomName,
         user_id: userId,
         user_nickname: userNickname,
         timestamp: new Date().toISOString(),
@@ -93,9 +105,9 @@ export function useWebSocket(
 
       const messageJson = JSON.stringify(fullMessage);
       console.log("发送 WebSocket 消息:", messageJson);
-      ws.current.send(messageJson);
+      rws.current.send(messageJson);
     } else {
-      console.error("WebSocket 未连接。当前状态:", ws.current?.readyState);
+      console.error("WebSocket 实例未初始化");
     }
   };
 

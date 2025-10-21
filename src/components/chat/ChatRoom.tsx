@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import MessageList from './MessageList'
 import MessageInput from './MessageInput'
 import { useWebSocket } from '@/utils/websocket'
+import { IRoomInfo, IRoomMessage } from '@/types/room'
 
 interface Message {
     id?: number
@@ -20,19 +21,35 @@ interface Message {
     timestamp: string
 }
 
-interface ChatRoomProps {
-    roomId: string
-}
 
-export default function ChatRoom({ roomId }: ChatRoomProps) {
+export default function ChatRoom({ room, roomMessages }: { room: IRoomInfo, roomMessages: IRoomMessage[] }) {
+    const { id: roomId, name: roomName } = room
     const [messages, setMessages] = useState<Message[]>([])
     const searchParams = useSearchParams()
     const userNickname = searchParams.get('nickname') || '匿名用户'
     const [userId] = useState(() => `user_${Math.random().toString(36).substr(2, 9)}`)
     const messagesEndRef = useRef<HTMLDivElement>(null)
 
-    const { lastMessage, sendMessage, isConnected } = useWebSocket(roomId, userId, userNickname)
+    const { lastMessage, sendMessage, isConnected } = useWebSocket(roomId, roomName, userId, userNickname)
+    useEffect(() => {
+        if (roomMessages && roomMessages.length > 0) {
+            const convertedMessages: Message[] = roomMessages.map(msg => ({
+                id: msg.id,
+                room_id: msg.room_id.toString(), // 转换为字符串
+                user_id: 'system', // 系统消息没有具体用户
+                user_nickname: userNickname || '系统消息',
+                message_type: msg.message_type,
+                content: msg.content,
+                file_url: msg.file_url || undefined,
+                file_name: msg.file_name || undefined,
+                file_size: msg.file_size ? parseInt(msg.file_size) : undefined,
+                retention_hours: msg.retention_hours,
+                timestamp: msg.created_at // 使用 created_at 作为时间戳
+            }))
 
+            setMessages(convertedMessages)
+        }
+    }, [roomMessages])
     // 处理接收到的WebSocket消息
     useEffect(() => {
         if (lastMessage) {
@@ -58,6 +75,7 @@ export default function ChatRoom({ roomId }: ChatRoomProps) {
         }
     }, [lastMessage])
 
+
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
     }
@@ -69,6 +87,7 @@ export default function ChatRoom({ roomId }: ChatRoomProps) {
     const handleSendMessage = async (content: string, messageType: string = 'text') => {
         if (content.trim()) {
             sendMessage({
+                // 房间的id
                 message_type: messageType,
                 content: content.trim(),
                 retention_hours: 24
