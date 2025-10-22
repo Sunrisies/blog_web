@@ -1,0 +1,14 @@
+{
+  "name": "blog-web",
+  "version": "0.1.24",
+  "previousVersion": "0.1.23",
+  "build": "0.1.24-20251022112628",
+  "buildDate": "2025-10-22T11:26:28+08:00",
+  "buildTimestamp": "20251022112628",
+  "gitHash": "936248b",
+  "gitBranch": "main",
+  "environment": "production",
+  "language": "nodejs",
+  "runtime": "standalone",
+  "nodeVersion": "22-alpine"
+}
