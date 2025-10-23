@@ -1,18 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'next/navigation'
 import ChatRoom from '@/components/chat/ChatRoom'
 import { Button } from '@/components/ui/button'
-import { MessageCircle, Users } from 'lucide-react'
-import Http, { PaginatedResponseDto, ResponseDto } from "@/services/request"
+import Http, { ResponseDto } from "@/services/request"
 import { IRoomInfo, IRoomMessage } from '@/types/room'
+import { MessageCircle, Users } from 'lucide-react'
+import { useParams, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
-// const getRoomMessages = async (roomId: string) => {
-//     return await Http.post('v1/rooms', {
-//         json: { name: roomId },
-//     }).json<ResponseDto<null>>()
-// }
+
 const getRoomMessages = async (roomId: number) => {
     return await Http.get(`v1/rooms/${roomId}/messages`).json<ResponseDto<IRoomMessage[]>>()
 }

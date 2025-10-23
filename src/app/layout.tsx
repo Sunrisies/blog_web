@@ -5,6 +5,8 @@ import "./globals.css"
 import { Toaster } from "sonner"
 import VersionIndicator from "@/components/versionIndicator"
 import { Viewport } from 'next'
+import Script from 'next/script'
+
 export function generateViewport(): Viewport {
   return {
     themeColor: [{ media: '(prefers-color-scheme: light)', color: 'cyan' },
@@ -32,6 +34,11 @@ export default async function RootLayout({
         <SiteFooter />
         { process.env.NODE_ENV === 'production' && <VersionIndicator /> }
       </body>
+      <Script
+        src="http://api.chaoyang1024.top:30033/script.js"
+        strategy="afterInteractive"
+        data-website-id="01579b78-c4a6-4a5a-b60f-01fb76d7f588"
+      />
     </html>
   )
 }

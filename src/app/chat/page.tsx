@@ -1,5 +1,5 @@
 "use client"
-import Http, { PaginatedResponseDto, ResponseDto } from "@/services/request"
+import Http, { ResponseDto } from "@/services/request"
 
 const createRoom = async (roomId: string) => {
     return await Http.post('v1/rooms', {
@@ -7,11 +7,11 @@ const createRoom = async (roomId: string) => {
     }).json<ResponseDto<null>>()
 }
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export default function JoinRoomDialog() {
     const [open, onOpenChange] = useState(true)

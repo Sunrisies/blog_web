@@ -7,7 +7,7 @@ import { ScrollToTopButton } from "@/components/scroll-to-top-button"
 import { Button } from "@/components/ui/button"
 import Http, { PaginatedResponseDto, ResponseDto } from "@/services/request"
 import { IBlog } from "@/types/blog"
-import { ArrowRight, AwardIcon, TableColumnsSplit } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import type { Metadata, } from "next"
 
 import Link from "next/link"
@@ -74,7 +74,7 @@ const getTags = async <T,>() => {
 }
 export default async function HomePage() {
   const { data: blogs } = await getPostApi<IBlog[]>(1)
-  const { data: tags } = await getTags<Tag[]>()
+  const { data: tags } = await getTags<Tag>()
   return (
     <div className="flex min-h-screen flex-col bg-[#f9f9f9] dark:bg-zinc-900">
       <main className="flex-1">
