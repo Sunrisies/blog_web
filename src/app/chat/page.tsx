@@ -8,13 +8,11 @@ const createRoom = async (roomId: string) => {
 }
 
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-export default function JoinRoomDialog() {
-    const [open, onOpenChange] = useState(true)
+export default function JoinRoomForm() {
     const [roomId, setRoomId] = useState('')
     const [nickname, setNickname] = useState('')
     const [loading, setLoading] = useState(false)
@@ -33,7 +31,6 @@ export default function JoinRoomDialog() {
             try {
                 // 导航到聊天页面
                 router.push(`/chat/${roomId}?nickname=${encodeURIComponent(nickname)}`)
-                onOpenChange(false)
             } catch (error) {
                 console.error('加入房间失败:', error)
                 alert('加入房间失败，请重试')
@@ -41,26 +38,24 @@ export default function JoinRoomDialog() {
                 setLoading(false)
             }
         }
-
     }
 
-    const handleClose = () => {
+    const handleReset = () => {
         setRoomId('')
         setNickname('')
-        onOpenChange(false)
     }
 
     return (
-        <Dialog open={ open } onOpenChange={ onOpenChange }>
-            <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle className="text-xl font-bold text-center">加入聊天室</DialogTitle>
-                    <DialogDescription className="text-center">
+        <div className="xs:min-h-[calc(100vh-3rem)] tb:min-h-[calc(100vh-21rem)] flex justify-center items-center h-full">
+            <div className="max-w-md flex-1   border border-gray-300 p-6 bg-white rounded-lg shadow-md">
+                <div className="mb-6">
+                    <h2 className="text-xl font-bold text-center">加入聊天室</h2>
+                    <p className="text-center text-gray-600 mt-2">
                         输入房间号和昵称开始聊天
-                    </DialogDescription>
-                </DialogHeader>
+                    </p>
+                </div>
 
-                <form onSubmit={ handleJoinRoom } className="space-y-4 py-4">
+                <form onSubmit={ handleJoinRoom } className="space-y-4">
                     <div className="space-y-2">
                         <label htmlFor="nickname" className="text-sm font-medium leading-none">
                             昵称
@@ -91,14 +86,14 @@ export default function JoinRoomDialog() {
                         />
                     </div>
 
-                    <DialogFooter className="flex flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
+                    <div className="flex flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
                         <Button
                             type="button"
                             variant="outline"
-                            onClick={ handleClose }
+                            onClick={ handleReset }
                             className="w-full sm:w-auto"
                         >
-                            取消
+                            重置
                         </Button>
                         <Button
                             type="submit"
@@ -107,13 +102,14 @@ export default function JoinRoomDialog() {
                         >
                             { loading ? '加入中...' : '加入房间' }
                         </Button>
-                    </DialogFooter>
+                    </div>
                 </form>
 
-                <div className="text-center text-xs text-muted-foreground">
+                <div className="text-center text-xs text-gray-500 mt-4">
                     <p>没有房间？输入任意房间号即可创建</p>
                 </div>
-            </DialogContent>
-        </Dialog>
+            </div>
+        </div>
+
     )
 }

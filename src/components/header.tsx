@@ -23,6 +23,7 @@ const navItems = [
   },
   { name: '音乐库', 'href': '/music-player', icon: <Music /> },
   { name: '第三方库', href: "/libraries", icon: <Library /> },
+  { name: "chat", href: "/chat", icon: <User /> },
   { name: "关于", href: "/about", icon: <User /> },
 ]
 
