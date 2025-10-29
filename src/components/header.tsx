@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Menu, Search, X, FileText, History, Image as ImageUI, Music, Library, User, House } from "lucide-react"
+import { Menu, Search, X, FileText, History, Image as ImageUI, Music, Library, User, House, Folder } from "lucide-react"
 import Image from "next/image"
 
 import { cn } from "@/lib/utils"
@@ -23,7 +23,7 @@ const navItems = [
   },
   { name: '音乐库', 'href': '/music-player', icon: <Music /> },
   { name: '第三方库', href: "/libraries", icon: <Library /> },
-  { name: "chat", href: "/chat", icon: <User /> },
+  { name: "资源库", href: "/chat", icon: <Folder /> },
   { name: "关于", href: "/about", icon: <User /> },
 ]
 

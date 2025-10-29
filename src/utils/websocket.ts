@@ -31,7 +31,7 @@ export function useWebSocket(
     // 确保只在客户端执行
     if (typeof window === "undefined") return;
 
-    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+    const protocol = window.location.protocol === "https:" ? "wss:" : "wss:";
     // 注意：这里去掉了 /api/v1/rooms 前缀，根据你的后端路由调整
     const wsUrl = `${protocol}//${
       process.env.NEXT_PUBLIC_WS_URL || "localhost:2345"
@@ -59,6 +59,7 @@ export function useWebSocket(
     };
 
     const handleClose = (event: CloseEvent) => {
+      console.log("WebSocket 连接关闭:", event, new Date().toLocaleString());
       console.log("WebSocket 连接关闭:", event.code, event.reason);
       setIsConnected(false);
     };

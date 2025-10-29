@@ -150,59 +150,73 @@ export default function MessageList({ messages, currentUserNickname }: MessageLi
                         { sortedMessages.map((message, index) => (
                             <div
                                 key={ `${message.timestamp}-${message.user_id}-${index}` }
-                                className={ `flex ${isCurrentUserMessage(message)
-                                    ? 'justify-end'
-                                    : 'justify-start'
-                                    }` }
+                                className={ `flex ${isCurrentUserMessage(message) ? 'justify-end' : 'justify-start'}` }
                             >
                                 { isSystemMessage(message) ? (
                                     <div className="w-full">
                                         { renderMessageContent(message) }
                                     </div>
                                 ) : (
-                                    <div className={ `max-w-xs lg:max-w-md ${isCurrentUserMessage(message) ? 'ml-auto' : ''
-                                        }` }>
-                                        {/* 对方消息显示头像和昵称 */ }
-                                        { !isCurrentUserMessage(message) && (
-                                            <div className="flex items-center gap-2 mb-1">
-                                                <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-xs text-white font-medium">
-                                                    { message.user_nickname.charAt(0).toUpperCase() }
+                                    <div className={ `max-w-xs lg:max-w-md ${isCurrentUserMessage(message) ? 'ml-auto' : ''}` }>
+                                        <div className={ `flex gap-2 ${isCurrentUserMessage(message) ? 'flex-row-reverse' : 'flex-row'}` }>
+                                            {/* 用户头像 */ }
+                                            <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs text-white font-medium flex-shrink-0"
+                                                style={ { backgroundColor: isCurrentUserMessage(message) ? '#10b981' : '#3b82f6' } }>
+                                                { message.user_nickname.charAt(0).toUpperCase() }
+                                            </div>
+
+                                            {/* 消息主体 */ }
+                                            <div className={ `flex flex-col ${isCurrentUserMessage(message) ? 'items-end' : 'items-start'}` }>
+                                                {/* 用户昵称和时间 */ }
+                                                <div className={ `flex items-center gap-2 mb-1 ${isCurrentUserMessage(message) ? 'flex-row-reverse' : 'flex-row'}` }>
+                                                    <span className="text-xs font-medium text-gray-700">
+                                                        { message.user_nickname }
+                                                    </span>
+                                                    <span className="text-xs text-gray-500">
+                                                        { formatTime(message.timestamp) }
+                                                    </span>
                                                 </div>
-                                                <span className="text-xs font-medium text-gray-700">
-                                                    { message.user_nickname }
-                                                </span>
-                                                <p className={ `text-xs mt-1 ${isCurrentUserMessage(message)
-                                                    ? 'text-blue-600'
-                                                    : 'text-gray-500'
-                                                    }` }>
-                                                    { formatTime(message.timestamp) }
-                                                </p>
-                                            </div>
-                                        ) }
 
-                                        <div className={ `flex gap-2 ${isCurrentUserMessage(message) ? 'flex-row-reverse' : 'flex-row'
-                                            }` }>
-                                            {/* 自己消息显示头像 */ }
-                                            <div>
-                                                { isCurrentUserMessage(message) && (
-                                                    <>
-                                                        <div className="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center text-xs text-white font-medium flex-shrink-0">
-                                                            { message.user_nickname.charAt(0).toUpperCase() }
-                                                        </div>
-                                                        <p className={ `text-xs mt-1 ${isCurrentUserMessage(message)
-                                                            ? 'text-blue-600'
-                                                            : 'text-gray-500'
-                                                            }` }>
-                                                            { formatTime(message.timestamp) }
-                                                        </p>
-                                                    </>
-                                                ) }
-                                            </div>
+                                                {/* 消息内容和复制按钮 */ }
+                                                <div className="flex items-start gap-2 ">
+                                                    {/* 复制按钮 */ }
+                                                    <button
+                                                        onClick={ () => {
+                                                            let contentToCopy = ''
+                                                            if (typeof message.content === 'string') {
+                                                                contentToCopy = message.content
+                                                            } else if (message.content?.type === 'image') {
+                                                                contentToCopy = message.content.url
+                                                            } else if (message.content?.type === 'file') {
+                                                                contentToCopy = message.content.url
+                                                            } else {
+                                                                contentToCopy = JSON.stringify(message.content)
+                                                            }
 
-                                            <div className={ `flex flex-col ${isCurrentUserMessage(message) ? 'items-end' : 'items-start'
-                                                }` }>
-                                                {/* 消息内容 */ }
-                                                { renderMessageContent(message) }
+                                                            navigator.clipboard.writeText(contentToCopy).then(() => {
+                                                                // 可以添加一个提示，表示复制成功
+                                                                const toast = document.createElement('div')
+                                                                toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50'
+                                                                toast.textContent = '已复制到剪贴板'
+                                                                document.body.appendChild(toast)
+                                                                setTimeout(() => {
+                                                                    document.body.removeChild(toast)
+                                                                }, 2000)
+                                                            })
+                                                        } }
+                                                        className="p-1 rounded hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
+                                                        title="复制消息"
+                                                    >
+                                                        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                                        </svg>
+                                                    </button>
+
+                                                    {/* 消息内容 */ }
+                                                    <div className="flex-1">
+                                                        { renderMessageContent(message) }
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -210,6 +224,8 @@ export default function MessageList({ messages, currentUserNickname }: MessageLi
                             </div>
                         )) }
                     </div>
+
+
                 ) }
                 <div ref={ messagesEndRef } />
             </div>
