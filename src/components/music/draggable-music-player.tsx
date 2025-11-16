@@ -9,6 +9,7 @@ import { useMusicPlayer } from '@/hooks/use-music-player'
 import { useAudioPlayer } from '@/hooks/use-audio-player'
 import { useMobile } from '@/hooks/use-mobile'
 import { SynchronizedLyrics } from '@/components/music-player/synchronized-lyrics'
+import { SingleLineLyrics } from './single-line-lyrics'
 import { Slider } from '@/components/ui/slider'
 import { parseLyrics } from '@/utils/lyrics-parser'
 import { LyricLine } from '@/types'
@@ -485,30 +486,34 @@ export function MusicPlayer({
           </div>
         </div>
       </div>
-      {/* 歌词显示区域 - 始终在顶部显示 */ }
+      {/* 歌词显示区域 - 精确定位在header下方 */ }
       {
         currentMusic && parsedLyrics.length > 0 && (
           <div
             className={ cn(
-              'fixed z-9999 w-full',
-              'bg-background/95 backdrop-blur-sm rounded-lg shadow-lg border',
-              ' h-[60px] overflow-hidden',
-              'transition-all duration-300 ease-in-out',
+              'fixed z-40 w-full',
+              'bg-gradient-to-r from-background/90 via-background/95 to-background/90 backdrop-blur-md',
+              'border-b border-border/50 shadow-lg',
+              'h-[50px] overflow-hidden',
+              'transition-all duration-500 ease-out',
               'opacity-100 translate-y-0'
             ) }
+            style={{
+              top: '56px', // header高度是56px，确保不重叠
+              left: 0,
+              right: 0
+            }}
           >
-            <div className="p-2 h-full">
-              <SynchronizedLyrics
-                lyrics={ parsedLyrics }
-                playbackState={ {
-                  isPlaying: isPlaying,
-                  currentTime: currentTime,
-                  duration: currentMusic.duration,
-                  playbackRate: 1
-                } }
-                className="text-sm leading-tight"
-              />
-            </div>
+            <SingleLineLyrics
+              lyrics={ parsedLyrics }
+              playbackState={ {
+                isPlaying: isPlaying,
+                currentTime: currentTime,
+                duration: currentMusic.duration,
+                playbackRate: 1
+              } }
+              className="h-full"
+            />
           </div>
         )
       }
