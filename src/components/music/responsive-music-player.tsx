@@ -1,0 +1,213 @@
+'use client';
+
+import { useState, useRef, useEffect } from 'react';
+import { Play, Pause, Music, X } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { IMusic } from '@/types/music';
+import { MusicList } from './music-list';
+import { useMusicPlayer } from '@/hooks/use-music-player';
+import { useAudioPlayer } from '@/hooks/use-audio-player';
+import { useMobile } from '@/hooks/use-mobile';
+
+interface ResponsiveMusicPlayerProps {
+  className?: string;
+}
+
+export function ResponsiveMusicPlayer({ className }: ResponsiveMusicPlayerProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const playerRef = useRef<HTMLDivElement>(null);
+  const { currentMusic, play, pause, isPlaying: globalIsPlaying } = useMusicPlayer();
+  const { play: audioPlay, pause: audioPause } = useAudioPlayer();
+  const isMobile = useMobile();
+
+  // 同步全局播放状态
+  useEffect(() => {
+    setIsPlaying(globalIsPlaying);
+  }, [globalIsPlaying]);
+
+  // 外部点击关闭面板
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (playerRef.current && !playerRef.current.contains(event.target as Node)) {
+        setIsExpanded(false);
+      }
+    }
+
+    if (isExpanded) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }
+  }, [isExpanded]);
+
+  const handlePlayButtonClick = () => {
+    if (currentMusic) {
+      if (isPlaying) {
+        audioPause();
+        pause();
+      } else {
+        audioPlay();
+        play(currentMusic);
+      }
+    } else {
+      setIsExpanded(!isExpanded);
+    }
+  };
+
+  const handleMusicSelect = (music: IMusic) => {
+    play(music);
+    setIsExpanded(false);
+  };
+
+  const toggleExpanded = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  // 移动端底部弹出面板
+  if (isMobile) {
+    return (
+      <div ref={playerRef} className={cn('fixed z-50', className)}>
+        {/* 圆形播放按钮 - 固定在右下角 */}
+        <button
+          onClick={toggleExpanded}
+          className={cn(
+            'fixed right-6 bottom-6 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500',
+            'shadow-lg hover:shadow-xl transition-all duration-300',
+            'flex items-center justify-center text-white',
+            'hover:scale-110 active:scale-95',
+            'focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2',
+            'dark:focus:ring-offset-gray-900',
+            'z-40'
+          )}
+          aria-label={isPlaying ? '暂停音乐' : '播放音乐'}
+        >
+          {isPlaying ? (
+            <Pause className="w-5 h-5" />
+          ) : (
+            <Music className="w-5 h-5" />
+          )}
+        </button>
+
+        {/* 移动端底部弹出面板 */}
+        <div
+          className={cn(
+            'fixed inset-x-0 bottom-0 bg-background border-t shadow-2xl',
+            'transition-transform duration-300 ease-in-out',
+            'max-h-[80vh] overflow-hidden',
+            isExpanded
+              ? 'translate-y-0'
+              : 'translate-y-full'
+          )}
+        >
+          {/* 面板头部 */}
+          <div className="flex items-center justify-between p-4 border-b">
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={handlePlayButtonClick}
+                className={cn(
+                  'w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500',
+                  'flex items-center justify-center text-white',
+                  'hover:scale-105 active:scale-95 transition-transform'
+                )}
+              >
+                {isPlaying ? (
+                  <Pause className="w-4 h-4" />
+                ) : (
+                  <Play className="w-4 h-4" />
+                )}
+              </button>
+              <div className="min-w-0">
+                <h3 className="text-lg font-semibold text-foreground">音乐播放</h3>
+                {currentMusic && (
+                  <p className="text-sm text-muted-foreground truncate">
+                    {currentMusic.title} - {currentMusic.artist}
+                  </p>
+                )}
+              </div>
+            </div>
+            <button
+              onClick={toggleExpanded}
+              className="p-2 hover:bg-accent rounded-full transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* 音乐列表 */}
+          <div className="flex-1 overflow-y-auto">
+            <MusicList onMusicSelect={handleMusicSelect} currentMusic={currentMusic} />
+          </div>
+        </div>
+
+        {/* 遮罩层 */}
+        {isExpanded && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-30"
+            onClick={toggleExpanded}
+          />
+        )}
+      </div>
+    );
+  }
+
+  // 桌面端右侧悬浮面板
+  return (
+    <div ref={playerRef} className={cn('fixed right-6 top-1/2 -translate-y-1/2 z-50', className)}>
+      {/* 圆形播放按钮 */}
+      <button
+        onClick={handlePlayButtonClick}
+        className={cn(
+          'w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500',
+          'shadow-lg hover:shadow-xl transition-all duration-300',
+          'flex items-center justify-center text-white',
+          'hover:scale-110 active:scale-95',
+          'focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2',
+          'dark:focus:ring-offset-gray-900'
+        )}
+        aria-label={isPlaying ? '暂停音乐' : '播放音乐'}
+      >
+        {isPlaying ? (
+          <Pause className="w-5 h-5" />
+        ) : (
+          <Music className="w-5 h-5" />
+        )}
+      </button>
+
+      {/* 音乐列表面板 */}
+      <div
+        className={cn(
+          'absolute right-0 mt-3 w-64 bg-background rounded-lg shadow-2xl border',
+          'transition-all duration-300 ease-in-out',
+          'transform origin-top-right',
+          isExpanded
+            ? 'opacity-100 scale-100 translate-y-0'
+            : 'opacity-0 scale-95 -translate-y-2 pointer-events-none',
+          'max-h-[300px] overflow-hidden'
+        )}
+      >
+        <div className="p-4 border-b">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-semibold text-foreground">音乐播放</h3>
+              {currentMusic && (
+                <p className="text-sm text-muted-foreground truncate">
+                  正在播放: {currentMusic.title}
+                </p>
+              )}
+            </div>
+            <button
+              onClick={toggleExpanded}
+              className="p-1 hover:bg-accent rounded-full transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+        
+        <MusicList onMusicSelect={handleMusicSelect} currentMusic={currentMusic} />
+      </div>
+    </div>
+  );
+}

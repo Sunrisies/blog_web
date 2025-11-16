@@ -6,6 +6,8 @@ import { Toaster } from "sonner"
 import VersionIndicator from "@/components/versionIndicator"
 import { Viewport } from 'next'
 import Script from 'next/script'
+import { GlobalAudioPlayer } from "@/components/music/global-audio-player"
+import { MusicPlayer } from "@/components/music/draggable-music-player"
 
 export function generateViewport(): Viewport {
   return {
@@ -33,10 +35,12 @@ export default async function RootLayout({
         <main className="flex-1">{ children }</main>
         <SiteFooter />
         { process.env.NODE_ENV === 'production' && <VersionIndicator /> }
+        <GlobalAudioPlayer />
+        <MusicPlayer defaultPosition="bottom-right" />
       </body>
       { process.env.NODE_ENV === 'production' && (
         <Script
-          src="http://api.chaoyang1024.top:30033/script.js"
+          src="https://umami.sunrise1024.top/script.js"
           strategy="afterInteractive"
           data-website-id="01579b78-c4a6-4a5a-b60f-01fb76d7f588"
         />
