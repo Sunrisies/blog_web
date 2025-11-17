@@ -1,12 +1,14 @@
 "use client"
 import Image from 'next/image'
 import { useState } from "react"
+import Link from 'next/link'
 interface IAlbum {
     id: number
     title: string
     category: string
     image: string
     description: string
+    slug: string
 }
 
 const albums: IAlbum[] = [
@@ -16,6 +18,7 @@ const albums: IAlbum[] = [
         category: "美食",
         image: "/delicious-food-and-cooking-dishes.jpg",
         description: "美食记录",
+        slug: "food"
     },
     {
         id: 2,
@@ -23,6 +26,7 @@ const albums: IAlbum[] = [
         category: "足迹",
         image: "/travel-destinations-and-beautiful-places.jpg",
         description: "旅行足迹",
+        slug: "travel"
     },
     {
         id: 3,
@@ -30,6 +34,7 @@ const albums: IAlbum[] = [
         category: "生活",
         image: "/happy-life-moments-and-daily-activities.jpg",
         description: "生活记录",
+        slug: "life"
     },
     {
         id: 4,
@@ -37,6 +42,7 @@ const albums: IAlbum[] = [
         category: "景色",
         image: "/beautiful-hometown-landscape-and-scenery.jpg",
         description: "家乡风景",
+        slug: "scenery"
     },
 ]
 
@@ -97,7 +103,7 @@ function AlbumCard({
 }) {
     if (isMobile) {
         return (
-            <div className="relative cursor-pointer rounded-xl overflow-hidden shadow-lg">
+            <Link href={`/album/${album.slug}`} className="block relative cursor-pointer rounded-xl overflow-hidden shadow-lg">
                 <div className="relative aspect-[4/3] group">
 
                     <Image
@@ -128,13 +134,14 @@ function AlbumCard({
                         </p>
                     </div>
                 </div>
-            </div>
+            </Link>
         )
     }
 
     // 平板和PC版本
     return (
-        <div
+        <Link href={`/album/${album.slug}`} className="block">
+            <div
             className={ `relative cursor-pointer rounded-2xl overflow-hidden transition-all duration-500 ${hoveredAlbum !== null && hoveredAlbum !== album.id
                 ? "blur-sm scale-95 opacity-70"
                 : hoveredAlbum === album.id
@@ -178,6 +185,7 @@ function AlbumCard({
 
                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
-        </div>
+            </div>
+        </Link>
     )
 }
