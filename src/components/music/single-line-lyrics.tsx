@@ -13,6 +13,7 @@ interface SingleLineLyricsProps {
 export function SingleLineLyrics({ lyrics, playbackState, className = "" }: SingleLineLyricsProps) {
   const [isAnimating, setIsAnimating] = useState(false)
   const [displayLyric, setDisplayLyric] = useState("")
+  let currentLyric:any = null
 
   // Custom lyric synchronization logic for single line display
   useEffect(() => {
@@ -20,7 +21,6 @@ export function SingleLineLyrics({ lyrics, playbackState, className = "" }: Sing
 
     const currentTime = playbackState.currentTime
     let currentIndex = -1
-    let currentLyric = null
 
     // Find current lyric
     for (let i = 0; i < lyrics.length; i++) {
