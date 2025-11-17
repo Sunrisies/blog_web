@@ -1,9 +1,8 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { ArrowLeft, Grid3X3 } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { AlbumGrid } from "@/components/album/album-grid"
-import { AlbumImage } from "@/components/album/album-image"
+import { AlbumDetail } from "@/components/album/album-detail"
 
 // 定义相册元数据
 const albumData: Record<string, { title: string; description: string; category: string }> = {
@@ -112,52 +111,12 @@ export default function AlbumPage({ params }: { params: { slug: string } }) {
   const images = generateAlbumImages(slug)
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* 页面头部 */}
-      <div className="mb-8">
-        <Button variant="ghost" asChild className="mb-4">
-          <Link href="/album">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            返回相册列表
-          </Link>
-        </Button>
-
-        <div className="flex items-center gap-2 mb-2">
-          <h1 className="text-3xl font-bold">{album.title}</h1>
-          <span className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
-            {album.category}
-          </span>
-        </div>
-        <p className="text-muted-foreground">{album.description}</p>
-      </div>
-
-      {/* 相册网格 */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {images.map((image) => (
-          <div key={image.id} className="group relative overflow-hidden rounded-lg aspect-[4/3]">
-            <AlbumImage
-              src={image.src}
-              alt={image.alt}
-              width={image.width}
-              height={image.height}
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-              slug={slug}
-              id={image.id}
-            />
-            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </div>
-        ))}
-      </div>
-
-      {/* 底部操作区 */}
-      <div className="mt-8 flex justify-center">
-        <Button asChild variant="outline">
-          <Link href="/album">
-            <Grid3X3 className="mr-2 h-4 w-4" />
-            查看更多相册
-          </Link>
-        </Button>
-      </div>
-    </div>
+    <AlbumDetail
+      slug={slug}
+      title={album.title}
+      category={album.category}
+      description={album.description}
+      images={images}
+    />
   )
 }
