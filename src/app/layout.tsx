@@ -1,6 +1,7 @@
 import { SiteFooter } from "@/components/footer"
 import { FPSCounter } from "@/components/fps-counter"
 import { SiteHeader } from "@/components/header"
+import { ScrollProgressBar } from "@/components/ui/scroll-progress-bar"
 import "./globals.css"
 import { Toaster } from "sonner"
 import VersionIndicator from "@/components/versionIndicator"
@@ -29,6 +30,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col antialiased">
+        <ScrollProgressBar />
         <Toaster />
         <FPSCounter />
         <SiteHeader />
