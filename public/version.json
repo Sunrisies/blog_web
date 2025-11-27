@@ -1,11 +1,11 @@
 {
   "name": "blog-web",
-  "version": "0.1.27",
-  "previousVersion": "0.1.26",
-  "build": "0.1.27-1763027837103",
-  "buildDate": "2025-11-13T09:57:17.103Z",
-  "commitHash": "cf5481a",
-  "deployDate": "2025-11-13T09:57:17.103Z",
+  "version": "0.1.28",
+  "previousVersion": "0.1.27",
+  "build": "0.1.28-1764235535808",
+  "buildDate": "2025-11-27T09:25:35.808Z",
+  "commitHash": "c6fc043",
+  "deployDate": "2025-11-27T09:25:35.808Z",
   "environment": "production",
   "language": "nodejs"
 }
