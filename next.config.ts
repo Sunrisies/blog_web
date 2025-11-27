@@ -14,15 +14,15 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "aly.chaoyang1024.top",
+        hostname: "aly.sunrise1024.top",
       },
       {
         protocol: "https",
-        hostname: "img.chaoyang1024.top",
+        hostname: "img.sunrise1024.top",
       },
       {
         protocol: "https",
-        hostname: "vip.chaoyang1024.top",
+        hostname: "vip.sunrise1024.top",
       },
       {
         protocol: "https",

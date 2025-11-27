@@ -367,6 +367,7 @@ export function MusicPlayer({
             {/* 播放状态覆盖层 */ }
             <div className={ cn(
               'absolute inset-0 bg-black/20 flex items-center justify-center rounded-full transition-opacity',
+              isPlaying ? 'opacity-0 hover:opacity-100' : 'opacity-100'
             ) }>
               { isPlaying ? (
                 <Pause className="w-6 h-6" />
@@ -487,7 +488,7 @@ export function MusicPlayer({
       </div>
       {/* 歌词显示区域 - 精确定位在header下方 */ }
       {
-       isPlaying && currentMusic && parsedLyrics.length > 0 && (
+        currentMusic && parsedLyrics.length > 0 && (
           <div
             className={ cn(
               'fixed z-40 w-full',
@@ -498,7 +499,7 @@ export function MusicPlayer({
               'opacity-100 translate-y-0'
             ) }
             style={{
-              bottom: '0px', // header高度是56px，确保不重叠
+              top: '56px', // header高度是56px，确保不重叠
               left: 0,
               right: 0
             }}
