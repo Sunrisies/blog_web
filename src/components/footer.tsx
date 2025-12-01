@@ -164,7 +164,7 @@ export function SiteFooter() {
               rel="noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors hover:underline"
             >
-              豫ICP备2023028265号-2
+              豫ICP备2025154392号-1
             </Link>
           </div>
         </div>
@@ -174,7 +174,7 @@ export function SiteFooter() {
 }
 
 // 需要添加的图标组件（如果你还没有的话）
-function Rss(props) {
+function Rss(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       { ...props }
@@ -192,7 +192,7 @@ function Rss(props) {
   )
 }
 
-function Mail(props) {
+function Mail(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       { ...props }

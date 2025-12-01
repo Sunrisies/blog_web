@@ -1,40 +1,38 @@
-'use client';
+'use client'
 
-import { useEffect } from 'react';
-import { ResponsiveMusicPlayer } from '@/components/music/responsive-music-player';
-import { useAudioPlayer } from '@/hooks/use-audio-player';
+import { useEffect } from 'react'
+import { ResponsiveMusicPlayer } from '@/components/music/responsive-music-player'
 
 export default function MusicPlayerPage() {
   // 初始化音频播放器
-  const { audioRef } = useAudioPlayer();
 
   useEffect(() => {
     // 页面加载时添加浮动音乐播放器
-    const playerContainer = document.createElement('div');
-    playerContainer.id = 'floating-music-player-container';
-    document.body.appendChild(playerContainer);
+    const playerContainer = document.createElement('div')
+    playerContainer.id = 'floating-music-player-container'
+    document.body.appendChild(playerContainer)
 
     return () => {
       // 清理
-      const container = document.getElementById('floating-music-player-container');
+      const container = document.getElementById('floating-music-player-container')
       if (container) {
-        document.body.removeChild(container);
+        document.body.removeChild(container)
       }
-    };
-  }, []);
+    }
+  }, [])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100">
-      {/* 主要内容区域 */}
+      {/* 主要内容区域 */ }
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">音乐播放器</h1>
           <p className="text-gray-600">享受美妙的音乐时光</p>
         </div>
 
-        {/* 音乐播放器控制面板 */}
+        {/* 音乐播放器控制面板 */ }
         <div className="max-w-4xl mx-auto">
-          {/* 这里可以添加更多的音乐播放器功能 */}
+          {/* 这里可以添加更多的音乐播放器功能 */ }
           <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-8">
             <div className="text-center">
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">🎵 音乐播放</h2>
@@ -60,8 +58,8 @@ export default function MusicPlayerPage() {
         </div>
       </div>
 
-      {/* 浮动音乐播放器 */}
+      {/* 浮动音乐播放器 */ }
       <ResponsiveMusicPlayer className="fixed right-6 bottom-6 z-50" />
     </div>
-  );
+  )
 }
