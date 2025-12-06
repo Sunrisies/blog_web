@@ -31,6 +31,12 @@ export default ky.create({
   hooks: {
     beforeRequest: [
       async (request) => {
+        request.headers.set(
+          "Cache-Control",
+          "no-cache, no-store, must-revalidate"
+        );
+        request.headers.set("Pragma", "no-cache");
+        request.headers.set("Expires", "0");
         console.log(request, "==========");
         // if (typeof window !== "undefined") {
         //   console.log("beforeRequest---------------");

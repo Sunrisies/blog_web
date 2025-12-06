@@ -19,6 +19,7 @@
 ## ✨ 特性
 
 ### 🎯 核心功能
+
 - **📝 博客系统** - 支持 Markdown 编写、代码高亮、目录导航
 - **📰 文章管理** - 文章发布、分类、标签、搜索
 - **💬 实时聊天** - 基于 WebSocket 的多人聊天室
@@ -29,6 +30,7 @@
 - **📧 联系方式** - 联系表单和社交链接
 
 ### 🎨 用户体验
+
 - **🌓 主题切换** - 支持明暗模式自动切换
 - **📱 响应式设计** - 完美适配移动端、平板、桌面
 - **⚡ 性能优化** - SSR/SSG、图片懒加载、代码分割
@@ -38,6 +40,7 @@
 - **🔄 自动重连** - WebSocket 断线自动重连
 
 ### 🛠️ 开发特性
+
 - **📦 Standalone 模式** - 优化的生产构建
 - **🐳 Docker 支持** - 容器化部署
 - **📈 Bundle 分析** - 打包体积分析
@@ -81,7 +84,7 @@ npm install
 
 ```env
 # API 地址
-NEXT_PUBLIC_API_URL=https://api.sunrise1024.top:12345
+NEXT_PUBLIC_API_URL=xxx
 
 # 其他配置（可选）
 # NODE_ENV=development
@@ -177,11 +180,13 @@ blog-web/
 ## 🛠️ 技术栈
 
 ### 核心框架
+
 - **[Next.js 15.3.2](https://nextjs.org/)** - React 全栈框架
 - **[React 19.0.0](https://react.dev/)** - UI 库
 - **[TypeScript 5](https://www.typescriptlang.org/)** - 类型安全
 
 ### UI 和样式
+
 - **[Tailwind CSS 4.1](https://tailwindcss.com/)** - CSS 框架
 - **[Radix UI](https://www.radix-ui.com/)** - 无障碍组件库
 - **[Lucide React](https://lucide.dev/)** - 图标库
@@ -189,6 +194,7 @@ blog-web/
 - **[Sonner](https://sonner.emilkowal.ski/)** - Toast 通知
 
 ### 内容和 Markdown
+
 - **[react-markdown](https://github.com/remarkjs/react-markdown)** - Markdown 渲染
 - **[react-syntax-highlighter](https://github.com/react-syntax-highlighter/react-syntax-highlighter)** - 代码高亮
 - **[remark-gfm](https://github.com/remarkjs/remark-gfm)** - GitHub 风格 Markdown
@@ -196,19 +202,23 @@ blog-web/
 - **[rehype-slug](https://github.com/rehypejs/rehype-slug)** - 自动生成标题 ID
 
 ### 网络和通信
+
 - **[ky](https://github.com/sindresorhus/ky)** - HTTP 客户端
 - **[reconnecting-websocket](https://github.com/pladaria/reconnecting-websocket)** - WebSocket 自动重连
 - **[ua-parser-js](https://github.com/faisalman/ua-parser-js)** - User Agent 解析
 
 ### 数据和可视化
+
 - **[echarts-for-react](https://github.com/hustcc/echarts-for-react)** - 图表库
 - **[date-fns](https://date-fns.org/)** - 日期处理
 - **[feed](https://github.com/jpmonette/feed)** - RSS Feed 生成
 
 ### 社交和评论
+
 - **[@giscus/react](https://giscus.app/)** - GitHub Discussions 评论系统
 
 ### 开发工具
+
 - **[Turbopack](https://turbo.build/pack)** - 快速构建工具
 - **[ESLint 9](https://eslint.org/)** - 代码检查
 - **[@next/bundle-analyzer](https://www.npmjs.com/package/@next/bundle-analyzer)** - 打包分析
@@ -262,11 +272,11 @@ pnpm add <package>    # 添加新依赖
 
 ### 环境变量
 
-| 变量名 | 说明 | 示例 |
-|--------|------|------|
-| `NEXT_PUBLIC_API_URL` | 后端 API 地址 | `https://api.sunrise1024.top:12345` |
-| `NODE_ENV` | 运行环境 | `development` / `production` |
-| `ANALYZE` | 是否开启打包分析 | `true` / `false` |
+| 变量名                | 说明             | 示例                         |
+| --------------------- | ---------------- | ---------------------------- |
+| `NEXT_PUBLIC_API_URL` | 后端 API 地址    | `xxx`                        |
+| `NODE_ENV`            | 运行环境         | `development` / `production` |
+| `ANALYZE`             | 是否开启打包分析 | `true` / `false`             |
 
 ## 🐳 Docker 部署
 
@@ -288,6 +298,7 @@ bash deploy.sh
 ```
 
 该脚本会自动：
+
 1. 构建 Next.js 应用
 2. 复制必要的静态资源
 3. 创建 Docker 镜像
@@ -371,6 +382,3 @@ pnpm build
 Made with ❤️ by [Your Name](https://github.com/your-username)
 
 </div>
-
-
-        
