@@ -1,6 +1,6 @@
-import { LibrariesList } from "@/components/libraries/libraries-list";
-import { LibraryFilters } from "@/components/libraries/library-filters";
-import { Suspense } from "react";
+import { LibrariesList } from "@/components/libraries/libraries-list"
+import { LibraryFilters } from "@/components/libraries/library-filters"
+import { Suspense } from "react"
 
 export const metadata = {
   title: "中文学习资源库 | 朝阳的码农札记 - 精选优质学习资源",
@@ -24,25 +24,33 @@ export const metadata = {
     description: "探索丰富的中文学习和文化资源，包括教材、视频、播客、应用等。精心筛选的实用学习材料，助你高效掌握中文。",
     images: ["https://sunrise1024.top/og-library.png"]
   }
-};
+}
+import Http, { PaginatedResponseDto, ResponseDto } from "@/services/request"
+
+const getLibrariesApi = async <T,>() => {
+  const { data } = await Http.get(`v1/links`).json<PaginatedResponseDto<T>>()
+  return data
+}
 function SearchBarFallback() {
   return <>placeholder</>
 }
-export default function LibrariesPage() {
+export default async function LibrariesPage() {
+  const data = await getLibrariesApi()
+  console.log(data, '==========')
   return (
     <div className="flex flex-col">
       <div className="md:static fixed top-14 inset-x-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-10 border-b md:border-none md:bg-transparent md:backdrop-blur-none">
         <div className="container mx-auto px-4 py-2 md:py-4">
-          <Suspense fallback={<SearchBarFallback />}>
+          <Suspense fallback={ <SearchBarFallback /> }>
             <LibraryFilters />
           </Suspense>
         </div>
       </div>
       <div className="container mx-auto px-4 pt-40 md:pt-2 pb-4">
-        <Suspense fallback={<SearchBarFallback />}>
-          <LibrariesList />
+        <Suspense fallback={ <SearchBarFallback /> }>
+          <LibrariesList data={ data } ></LibrariesList>
         </Suspense>
       </div>
-    </div>
+    </div >
   )
 }

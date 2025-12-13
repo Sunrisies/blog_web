@@ -10,14 +10,16 @@ export interface Tag {
   
   export interface Library {
     id: number
+    uuid: string
     name: string
-    officialUrl: string
     description: string
-    metadata: Record<string, any>
+    url: string
+    protocol: string
+    icon_url: string
+    category: string
+    tags: string[]
     created_at: string
     updated_at: string
-    category: Category
-    tags: Tag[]
   }
   
   export interface LibraryFilters {

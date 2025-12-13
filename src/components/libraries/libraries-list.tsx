@@ -7,10 +7,11 @@ import { useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
 import { Button } from "../ui/button"
 import { LibraryCard } from "./library-card"
+import { PaginatedResponseDto } from "@/services/request"
 
-export function LibrariesList() {
-  const [libraries, setLibraries] = useState<Library[]>([])
-  const [loading, setLoading] = useState(true)
+export function LibrariesList({ data }: { data: PaginatedResponseDto<Library[]> }) {
+  const [libraries, setLibraries] = useState<Library[]>(data.data)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 8
@@ -33,38 +34,12 @@ export function LibrariesList() {
 
   // Fetch libraries only when searchParams changes
   useEffect(() => {
-    let isMounted = true
-
-    async function fetchLibraries() {
-      if (!isMounted) return
-
-      setLoading(true)
-      setError(null)
-
-      try {
-        const filters = getFilters()
-        const data = await getLibraries(filters)
-
-        if (isMounted) {
-          setLibraries(data)
-        }
-      } catch (error) {
-        console.error("Error fetching libraries:", error)
-        if (isMounted) {
-          setError("加载资源时出错，请稍后再试。")
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false)
-        }
-      }
-    }
-
-    fetchLibraries()
+    // let isMounted = true
+    // 后续的搜索
 
     // Cleanup function to prevent state updates if component unmounts
     return () => {
-      isMounted = false
+      // isMounted = false
     }
   }, [getFilters])
 
@@ -86,7 +61,7 @@ export function LibrariesList() {
     return (
       <div className="text-center py-20">
         <h3 className="text-xl font-medium mb-2 text-destructive">出错了</h3>
-        <p className="text-muted-foreground">{error}</p>
+        <p className="text-muted-foreground">{ error }</p>
       </div>
     )
   }
@@ -103,32 +78,32 @@ export function LibrariesList() {
   return (
     <div className="space-y-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {currentLibraries.map((library) => (
-          <LibraryCard key={library.id} library={library} />
-        ))}
+        { currentLibraries.map((library) => (
+          <LibraryCard key={ library.id } library={ library } />
+        )) }
       </div>
 
-      {totalPages > 1 && (
+      { totalPages > 1 && (
         <div className="flex justify-center items-center gap-4">
           <Button
             variant="outline"
-            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-            disabled={currentPage === 1}
+            onClick={ () => setCurrentPage(p => Math.max(1, p - 1)) }
+            disabled={ currentPage === 1 }
           >
             上一页
           </Button>
           <span className="text-sm text-muted-foreground">
-            第 {currentPage} 页，共 {totalPages} 页
+            第 { currentPage } 页，共 { totalPages } 页
           </span>
           <Button
             variant="outline"
-            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-            disabled={currentPage === totalPages}
+            onClick={ () => setCurrentPage(p => Math.min(totalPages, p + 1)) }
+            disabled={ currentPage === totalPages }
           >
             下一页
           </Button>
         </div>
-      )}
+      ) }
     </div>
   )
 }

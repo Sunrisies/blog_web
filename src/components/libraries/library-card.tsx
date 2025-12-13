@@ -21,34 +21,35 @@ export function LibraryCard({ library }: LibraryCardProps) {
       <CardContent className="flex-1">
         <div className="flex justify-between items-start mb-2">
           <h3 className="text-xl font-semibold line-clamp-2">
-            <Link href={`/libraries/${library.id}`} className="hover:underline">
-              {library.name}
-            </Link>
+            <a href={ library.url } target="_blank" rel="noopener noreferrer" className="flex items-center">
+              { library.name }
+              <ExternalLink className="h-3 w-3 ml-1" />
+            </a>
           </h3>
-          <Badge variant="outline">{library.category.name}</Badge>
+          <Badge variant="outline">{ library.category }</Badge>
         </div>
 
-        <p className="text-muted-foreground mb-4 line-clamp-2 text-sm">{library.description}</p>
+        <p className="text-muted-foreground mb-4 line-clamp-2 text-sm">{ library.description }</p>
 
         <div className="flex flex-wrap gap-2 mb-4">
-          {library.tags.map((tag) => (
-            <Link key={tag.id} href={`/libraries?tag=${tag.id}`}>
+          { library.tags.map((tag, index) => (
+            <Link key={ index } href={ `/libraries?tag=${tag}` }>
               <Badge variant="secondary" className="cursor-pointer">
-                {tag.name}
+                { tag }
               </Badge>
             </Link>
-          ))}
+          )) }
         </div>
       </CardContent>
 
       <CardFooter className="flex justify-between border-t !pt-3">
         <div className="flex items-center text-xs text-muted-foreground">
           <Calendar className="h-3 w-3 mr-1" />
-          <span>{formatDate(library.updated_at)}</span>
+          <span>{ formatDate(library.updated_at) }</span>
         </div>
 
         <Button variant="outline" size="sm" asChild>
-          <a href={library.officialUrl} target="_blank" rel="noopener noreferrer" className="flex items-center">
+          <a href={ library.url } target="_blank" rel="noopener noreferrer" className="flex items-center">
             访问官网
             <ExternalLink className="h-3 w-3 ml-1" />
           </a>
