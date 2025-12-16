@@ -37,11 +37,7 @@ interface PageProps {
   id: number
   tags: TagType[]
 }
-const devices = {
-  mobile: 10,
-  tablet: 10,
-  desktop: 8,
-}
+
 // const getPostApi = async <T,>(id: number) =>
 //   await Http.get<T[]>(`/article?page=${id}&limit=8`)
 const BlogDetail = ({ blog, categories, pagination, id, tags }: PageProps) => {

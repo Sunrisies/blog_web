@@ -1,47 +1,45 @@
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { cn } from '@/lib/utils';
-import { IMusic } from '@/types/music';
-import { Play, Pause } from 'lucide-react';
-import Http, { ResponseDto } from '@/services/request';
-import { IMusicListResponse } from '@/types/music';
-import { useMusicPlayer } from '@/hooks/use-music-player';
+import { useMusicPlayer } from '@/hooks/use-music-player'
+import { cn } from '@/lib/utils'
+import { IMusic } from '@/types/music'
+import { Pause, Play } from 'lucide-react'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 interface MusicListProps {
-  onMusicSelect: (music: IMusic) => void;
-  currentMusic: IMusic | null;
+  onMusicSelect: (music: IMusic) => void
+  currentMusic: IMusic | null
 }
 
 export function MusicList({ onMusicSelect, currentMusic }: MusicListProps) {
-  const [musicList, setMusicList] = useState<IMusic[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { isPlaying } = useMusicPlayer();
+  const [musicList, setMusicList] = useState<IMusic[]>([])
+  const [loading, setLoading] = useState(true)
+  const { isPlaying } = useMusicPlayer()
 
   useEffect(() => {
-    fetchMusicList();
-  }, []);
+    fetchMusicList()
+  }, [])
 
   const fetchMusicList = async () => {
     try {
-      setLoading(true);
-      
+      setLoading(true)
+
       // 首先尝试使用模拟数据，避免API调用问题
-      setMusicList(getMockMusicList());
-      
+      setMusicList(getMockMusicList())
+
       // 如果后续需要真实API数据，可以在这里添加
       // const response = await Http.get('v1/music/list?limit=10').json<IMusicListResponse>();
       // if (response.data?.data && response.data.data.length > 0) {
       //   setMusicList(response.data.data);
       // }
     } catch (error) {
-      console.warn('获取音乐列表失败，使用模拟数据:', error);
-      setMusicList(getMockMusicList());
+      console.warn('获取音乐列表失败，使用模拟数据:', error)
+      setMusicList(getMockMusicList())
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const getMockMusicList = (): IMusic[] => {
     return [
@@ -156,29 +154,29 @@ export function MusicList({ onMusicSelect, currentMusic }: MusicListProps) {
 [00:22.50]拼命想挽回的从前
 [00:26.20]在我脸上依旧清晰可见`
       }
-    ];
-  };
+    ]
+  }
 
   const formatDuration = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-  };
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = seconds % 60
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
+  }
 
   if (loading) {
     return (
       <div className="p-4 space-y-3">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="flex items-center space-x-3 animate-pulse">
+        { [1, 2, 3].map((i) => (
+          <div key={ i } className="flex items-center space-x-3 animate-pulse">
             <div className="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-md" />
             <div className="flex-1 space-y-2">
               <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-3/4" />
               <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded w-1/2" />
             </div>
           </div>
-        ))}
+        )) }
       </div>
-    );
+    )
   }
 
   if (musicList.length === 0) {
@@ -186,74 +184,74 @@ export function MusicList({ onMusicSelect, currentMusic }: MusicListProps) {
       <div className="p-8 text-center text-muted-foreground">
         <p>暂无音乐</p>
       </div>
-    );
+    )
   }
 
   return (
     <div className="max-h-[240px] overflow-y-auto">
       <div className="p-2 space-y-1">
-        {musicList.map((music) => {
-          const isCurrentMusic = currentMusic?.id === music.id;
-          const isCurrentPlaying = isCurrentMusic && isPlaying;
+        { musicList.map((music) => {
+          const isCurrentMusic = currentMusic?.id === music.id
+          const isCurrentPlaying = isCurrentMusic && isPlaying
 
           return (
             <div
-              key={music.id}
-              onClick={() => onMusicSelect(music)}
-              className={cn(
+              key={ music.id }
+              onClick={ () => onMusicSelect(music) }
+              className={ cn(
                 'flex items-center space-x-3 p-3 rounded-lg cursor-pointer',
                 'hover:bg-accent hover:text-accent-foreground transition-colors',
                 'group',
                 isCurrentMusic && 'bg-accent text-accent-foreground'
-              )}
+              ) }
             >
-              {/* 封面图片 */}
+              {/* 封面图片 */ }
               <div className="relative w-10 h-10 flex-shrink-0">
                 <Image
-                  src={music.cover}
-                  alt={music.title}
-                  width={40}
-                  height={40}
+                  src={ music.cover }
+                  alt={ music.title }
+                  width={ 40 }
+                  height={ 40 }
                   className="rounded-md object-cover"
                 />
-                {/* 播放状态覆盖层 */}
-                <div className={cn(
+                {/* 播放状态覆盖层 */ }
+                <div className={ cn(
                   'absolute inset-0 bg-black bg-opacity-50 rounded-md flex items-center justify-center',
                   'opacity-0 group-hover:opacity-100 transition-opacity',
                   isCurrentMusic && 'opacity-100'
-                )}>
-                  {isCurrentPlaying ? (
+                ) }>
+                  { isCurrentPlaying ? (
                     <Pause className="w-4 h-4 text-white" />
                   ) : (
                     <Play className="w-4 h-4 text-white" />
-                  )}
+                  ) }
                 </div>
               </div>
 
-              {/* 歌曲信息 */}
+              {/* 歌曲信息 */ }
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
                   <div className="flex-1 min-w-0">
-                    <p className={cn(
+                    <p className={ cn(
                       'text-sm font-medium truncate',
                       isCurrentMusic && 'text-primary'
-                    )}>
-                      {music.title}
+                    ) }>
+                      { music.title }
                     </p>
                     <p className="text-xs text-muted-foreground truncate">
-                      {music.artist}
-                      {music.album && ` · ${music.album}`}
+                      { music.artist }
+                      { music.album && ` · ${music.album}` }
                     </p>
                   </div>
                   <span className="text-xs text-muted-foreground ml-2">
-                    {formatDuration(music.duration)}
+                    { formatDuration(music.duration) }
                   </span>
                 </div>
               </div>
             </div>
-          );
-        })}
+          )
+        }) }
       </div>
     </div>
-  );
+  )
 }

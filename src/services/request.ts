@@ -14,7 +14,7 @@ export type PaginatedResponseDto<T> = {
   };
 };
 
-import { getClientInfo } from "@/utils/get-client-info";
+// import { getClientInfo } from "@/utils/get-client-info";
 // POST请求返回类型
 export type ResponseDto<T> = {
   code: number;
