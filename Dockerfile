@@ -1,4 +1,4 @@
-FROM node:22-alpine
+FROM node:24
 
 # 设置构建参数
 ARG BUILD_TIMESTAMP
