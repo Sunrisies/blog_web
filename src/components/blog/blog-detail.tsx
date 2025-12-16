@@ -54,12 +54,6 @@ const BlogDetail = ({ blog, categories, pagination, id, tags }: PageProps) => {
     // 初始检查
     const device = checkDeviceType()
     setDeviceType(() => device)
-
-    if (device in devices) {
-      // setLimit(() => devices[device as keyof typeof devices]); // 这里使用了类型断言
-    } else {
-      console.log("未知设备类型", device)
-    }
   }, [])
   const loadArticles = (page: number) => {
     // 获取数据的逻辑

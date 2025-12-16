@@ -1,9 +1,8 @@
 "use client"
 
-import { useState } from "react"
-import Image from "next/image"
 import { X } from "lucide-react"
-import { useEffect } from "react"
+import Image from "next/image"
+import { useEffect, useState, useCallback } from "react"
 
 interface ImageViewerProps {
   images: Array<{
@@ -19,44 +18,51 @@ interface ImageViewerProps {
   slug: string
 }
 
-export function ImageViewer({ images, initialIndex = 0, isOpen, onClose, slug }: ImageViewerProps) {
-  const [currentIndex, setCurrentIndex] = useState(initialIndex)
+export function ImageViewer({ images, initialIndex = 0, isOpen, onClose }: ImageViewerProps) {
+  // 使用初始索引作为默认值
+  const [currentIndex, setCurrentIndex] = useState(() => initialIndex)
 
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [imgSrc, setImgSrc] = useState<string[]>()
+  // 使用 useCallback 优化导航函数
+  const navigatePrevious = useCallback(() => {
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
+  }, [images.length])
 
-  // 当查看器打开时，重置到初始索引
-  useEffect(() => {
-    if (isOpen) {
-      setCurrentIndex(initialIndex)
-    }
-  }, [isOpen, initialIndex])
+  const navigateNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
+  }, [images.length])
 
   // 处理键盘导航
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isOpen) return
 
-      if (e.key === "Escape") {
-        onClose()
-      } else if (e.key === "ArrowLeft") {
-        navigatePrevious()
-      } else if (e.key === "ArrowRight") {
-        navigateNext()
+      switch (e.key) {
+        case "Escape":
+          onClose()
+          break
+        case "ArrowLeft":
+          navigatePrevious()
+          break
+        case "ArrowRight":
+          navigateNext()
+          break
       }
     }
 
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [isOpen, currentIndex])
+  }, [isOpen, navigatePrevious, navigateNext, onClose])
 
-  const navigatePrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
-  }
-
-  const navigateNext = () => {
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
-  }
+  // 当组件打开时，重置索引
+  useEffect(() => {
+    if (isOpen) {
+      // 使用 setTimeout 将状态更新推迟到下一个事件循环
+      const timer = setTimeout(() => {
+        setCurrentIndex(initialIndex)
+      }, 0)
+      return () => clearTimeout(timer)
+    }
+  }, [isOpen, initialIndex])
 
   if (!isOpen || images.length === 0) return null
 
@@ -79,7 +85,7 @@ export function ImageViewer({ images, initialIndex = 0, isOpen, onClose, slug }:
         className="absolute left-4 p-2 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition-colors"
         aria-label="上一张图片"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
       </button>
@@ -89,7 +95,7 @@ export function ImageViewer({ images, initialIndex = 0, isOpen, onClose, slug }:
         className="absolute right-4 p-2 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition-colors"
         aria-label="下一张图片"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
       </button>

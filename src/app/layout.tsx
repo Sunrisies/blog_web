@@ -8,7 +8,7 @@ import VersionIndicator from "@/components/versionIndicator"
 import { Viewport } from 'next'
 import Script from 'next/script'
 import { GlobalAudioPlayer } from "@/components/music/global-audio-player"
-import { MusicPlayer } from "@/components/music/draggable-music-player"
+// import { MusicPlayer } from "@/components/music/draggable-music-player"
 
 export function generateViewport(): Viewport {
   return {

@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import { generateHeadingId } from "@/utils"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 
 interface TocItem {
   id: string
@@ -14,13 +14,12 @@ interface TableOfContentsProps {
   content: string
 }
 
-
 export default function TableOfContents({ content }: TableOfContentsProps) {
   const [tocItems, setTocItems] = useState<TocItem[]>([])
   const [activeId, setActiveId] = useState<string>("")
 
   // Parse the markdown content to extract headings
-  useEffect(() => {
+  const parseContent = useCallback((content: string) => {
     const headingRegex = /^(#{1,6})\s+(.+)$/gm
     const items: TocItem[] = []
     let match
@@ -28,21 +27,24 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
     while ((match = headingRegex.exec(content)) !== null) {
       const level = match[1].length
       const text = match[2]
-        .replace(/\[([^\]]+)\]$$[^)]+$$/g, "$1") // Remove markdown links but keep text
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // Remove markdown links but keep text
         .replace(/`([^`]+)`/g, "$1") // Remove code backticks but keep text
         .replace(/\*\*([^*]+)\*\*/g, "$1") // Remove bold markers but keep text
         .replace(/\*([^*]+)\*/g, "$1") // Remove italic markers but keep text
         .trim()
       const id = generateHeadingId(text)
-      // const id = text
-      //   .toLowerCase()
-      //   .replace(/[^\w\s-]/g, "")
-      //   .replace(/\s+/g, "-")
-
       items.push({ id, text, level })
     }
-    setTocItems(items)
-  }, [content])
+    return items
+  }, [])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const items = parseContent(content)
+      setTocItems(items)
+    }, 0)
+    return () => clearTimeout(timer)
+  }, [content, parseContent])
 
   // Track the active heading based on scroll position
   useEffect(() => {
@@ -79,7 +81,7 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
   }, [tocItems])
 
   // Scroll to section when TOC item is clicked
-  const scrollToSection = (id: string) => {
+  const scrollToSection = useCallback((id: string) => {
     const element = document.getElementById(id)
     if (element) {
       window.scrollTo({
@@ -87,7 +89,7 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
         behavior: "smooth",
       })
     }
-  }
+  }, [])
 
   if (tocItems.length === 0) {
     return null
@@ -97,10 +99,10 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
     <div className="space-y-4 sticky top-24">
       <h3 className="text-xl font-semibold border-b pb-3">目录</h3>
       <nav className="space-y-1">
-        {tocItems.map((item) => (
+        { tocItems.map((item) => (
           <div
-            key={item.id}
-            className={cn(
+            key={ item.id }
+            className={ cn(
               "group relative py-1 text-sm cursor-pointer transition-all duration-200",
               "hover:bg-accent hover:text-accent-foreground rounded",
               activeId === item.id && [
@@ -109,23 +111,23 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
                 "before:bg-primary before:rounded-full",
               ],
               item.level === 1 && "font-medium",
-            )}
-            style={{
+            ) }
+            style={ {
               paddingLeft: `${item.level * 0.75}rem`,
-            }}
-            onClick={() => scrollToSection(item.id)}
+            } }
+            onClick={ () => scrollToSection(item.id) }
           >
             <span
-              className={cn(
+              className={ cn(
                 "relative block transition-transform duration-200",
                 "group-hover:translate-x-1",
                 activeId === item.id && "translate-x-1",
-              )}
+              ) }
             >
-              {item.text}
+              { item.text }
             </span>
           </div>
-        ))}
+        )) }
       </nav>
     </div>
   )
