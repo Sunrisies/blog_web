@@ -49,13 +49,14 @@ const BlogDetail = ({ blog, categories, pagination, id, tags }: PageProps) => {
   useEffect(() => {
     // 初始检查
     const device = checkDeviceType()
-    setDeviceType(() => device)
+    setDeviceType(device)
   }, [])
   const loadArticles = (page: number) => {
     // 获取数据的逻辑
     // getPostApi<IBlog>(page).then(() => {
     //   setNewArticles((prevArticles) => [...prevArticles])
     // })
+    console.log(`Loading page ${page}`)
   }
   const { ref } = useInView({
     threshold: 0,

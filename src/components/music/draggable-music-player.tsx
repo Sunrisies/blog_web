@@ -26,21 +26,23 @@ export function MusicPlayer({
   defaultPosition = 'top-right'
 }: DraggableMusicPlayerProps) {
   const [isExpanded, setIsExpanded] = useState(false)
-  const [isMinimized, setIsMinimized] = useState(false)
-  const [isClient, setIsClient] = useState(false)
   const [showVolumeSlider, setShowVolumeSlider] = useState(false)
   const [parsedLyrics, setParsedLyrics] = useState<LyricLine[]>([])
+  const [isPlaying, setIsPlaying] = useState(false) // 移到这里，在使用前声明
   const playerRef = useRef<HTMLDivElement>(null)
   const volumeTimeoutRef = useRef<NodeJS.Timeout>()
 
   const { currentMusic, play, pause, isPlaying: globalIsPlaying, volume, setVolume, currentTime } = useMusicPlayer()
-  const { play: audioPlay, pause: audioPause } = useAudioPlayer()
   const isMobile = useMobile()
 
   // 确保客户端渲染
   useEffect(() => {
-    setIsClient(true)
+    // 仅在客户端运行
+    if (typeof window !== 'undefined') {
+      // 原本的 isClient 逻辑可以在这里使用
+    }
   }, [])
+
 
   // 同步全局播放状态
   useEffect(() => {
@@ -66,12 +68,8 @@ export function MusicPlayer({
     }
   }, []) // Only run on unmount
 
-  const [isPlaying, setIsPlaying] = useState(false)
-
-
-
-  // 播放/暂停切换
-  const handlePlayButtonClick = () => {
+  // 播放/暂停切换 - 使用 useCallback 优化
+  const handlePlayButtonClick = useCallback(() => {
     if (currentMusic) {
       if (isPlaying) {
         pause()
@@ -79,18 +77,18 @@ export function MusicPlayer({
         play(currentMusic)
       }
     }
-  }
+  }, [currentMusic, isPlaying, pause, play])
 
-  // 播放列表切换
-  const handlePlaylistToggle = () => {
+  // 播放列表切换 - 使用 useCallback 优化
+  const handlePlaylistToggle = useCallback(() => {
     setIsExpanded(prev => !prev)
-  }
-
+  }, [])
   // 播放按钮点击 - 不触发拖拽
   const handlePlayClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation()
     handlePlayButtonClick()
   }, [handlePlayButtonClick])
+
 
   // 播放列表切换 - 不触发拖拽
   const handlePlaylistClick = useCallback((e: React.MouseEvent) => {
