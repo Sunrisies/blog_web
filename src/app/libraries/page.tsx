@@ -1,5 +1,6 @@
 import { LibrariesList } from "@/components/libraries/libraries-list"
 import { LibraryFilters } from "@/components/libraries/library-filters"
+import Http, { PaginatedResponseDto } from "@/services/request"
 import { Suspense } from "react"
 
 export const metadata = {
@@ -25,7 +26,6 @@ export const metadata = {
     images: ["https://sunrise1024.top/og-library.png"]
   }
 }
-import Http, { PaginatedResponseDto, ResponseDto } from "@/services/request"
 
 const getLibrariesApi = async <T,>() => {
   const { data } = await Http.get(`v1/links`).json<PaginatedResponseDto<T>>()

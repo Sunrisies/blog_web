@@ -21,9 +21,7 @@ interface ImageViewerProps {
 
 export function ImageViewer({ images, initialIndex = 0, isOpen, onClose, slug }: ImageViewerProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
-  const fallbackSrc = Array.from({ length: images.length }, (_, index) =>
-    `https://picsum.photos/seed/${slug}-${index}/800/600.jpg`
-  )
+
   const [isLoaded, setIsLoaded] = useState(false)
   const [imgSrc, setImgSrc] = useState<string[]>()
 
@@ -66,18 +64,18 @@ export function ImageViewer({ images, initialIndex = 0, isOpen, onClose, slug }:
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90">
-      {/* 关闭按钮 */}
+      {/* 关闭按钮 */ }
       <button
-        onClick={onClose}
+        onClick={ onClose }
         className="absolute top-4 right-4 p-2 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition-colors"
         aria-label="关闭图片查看器"
       >
         <X className="h-6 w-6" />
       </button>
 
-      {/* 图片导航按钮 */}
+      {/* 图片导航按钮 */ }
       <button
-        onClick={navigatePrevious}
+        onClick={ navigatePrevious }
         className="absolute left-4 p-2 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition-colors"
         aria-label="上一张图片"
       >
@@ -87,7 +85,7 @@ export function ImageViewer({ images, initialIndex = 0, isOpen, onClose, slug }:
       </button>
 
       <button
-        onClick={navigateNext}
+        onClick={ navigateNext }
         className="absolute right-4 p-2 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition-colors"
         aria-label="下一张图片"
       >
@@ -96,22 +94,22 @@ export function ImageViewer({ images, initialIndex = 0, isOpen, onClose, slug }:
         </svg>
       </button>
 
-      {/* 图片计数器 */}
+      {/* 图片计数器 */ }
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 px-3 py-1 rounded-full bg-white bg-opacity-20">
         <p className="text-sm font-medium">
-          {currentIndex + 1} / {images.length}
+          { currentIndex + 1 } / { images.length }
         </p>
       </div>
 
-      {/* 主图片 */}
+      {/* 主图片 */ }
       <div className="max-w-[90vw] max-h-[90vh] relative">
         <Image
-          src={currentImage.src}
-          alt={currentImage.alt}
-          width={currentImage.width}
-          height={currentImage.height}
+          src={ currentImage.src }
+          alt={ currentImage.alt }
+          width={ currentImage.width }
+          height={ currentImage.height }
           className="max-w-full max-h-full object-contain"
-          unoptimized={true}
+          unoptimized={ true }
         />
       </div>
     </div>

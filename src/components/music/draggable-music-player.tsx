@@ -498,11 +498,11 @@ export function MusicPlayer({
               'transition-all duration-500 ease-out',
               'opacity-100 translate-y-0'
             ) }
-            style={{
+            style={ {
               top: '56px', // header高度是56px，确保不重叠
               left: 0,
               right: 0
-            }}
+            } }
           >
             <SingleLineLyrics
               lyrics={ parsedLyrics }

@@ -38,7 +38,7 @@ export default async function RootLayout({
         <SiteFooter />
         { process.env.NODE_ENV === 'production' && <VersionIndicator /> }
         <GlobalAudioPlayer />
-        <MusicPlayer defaultPosition="bottom-right" />
+        {/* <MusicPlayer defaultPosition="bottom-right" /> */ }
       </body>
       { process.env.NODE_ENV === 'production' && (
         <Script

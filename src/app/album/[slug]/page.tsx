@@ -31,11 +31,10 @@ const albumData: Record<string, { title: string; description: string; category: 
 // 生成相册图片
 function generateAlbumImages(slug: string, count: number = 12) {
   // 确保slug存在
-  if (!slug) return [];
-  
+  if (!slug) return []
   return Array.from({ length: count }, (_, i) => ({
     id: i + 1,
-    src: `/album/${slug}/${i + 1}.jpg`,
+    src: `https://picsum.photos/seed/${slug}-${i + 1}/800/600.jpg`,
     alt: `${albumData[slug]?.title || slug} 图片 ${i + 1}`,
     width: 800,
     height: 600
@@ -44,8 +43,7 @@ function generateAlbumImages(slug: string, count: number = 12) {
 
 // 动态生成元数据
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const slug = params?.slug;
-  
+  const { slug } = await params
   // 如果slug不存在，返回默认元数据
   if (!slug) {
     return {
@@ -53,7 +51,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       description: "浏览精美相册"
     }
   }
-  
+
   const album = albumData[slug]
 
   if (!album) {
@@ -69,10 +67,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-export default function AlbumPage({ params }: { params: { slug: string } }) {
+export default async function AlbumPage({ params }: { params: { slug: string } }) {
   // 确保params存在且包含slug
-  const slug = params?.slug;
-  
+  const { slug } = await params
+  console.log(slug, '---111----------')
   // 如果slug不存在，显示错误页面
   if (!slug) {
     return (
@@ -88,7 +86,7 @@ export default function AlbumPage({ params }: { params: { slug: string } }) {
       </div>
     )
   }
-  
+
   const album = albumData[slug]
 
   // 如果相册不存在，显示404页面
@@ -112,11 +110,11 @@ export default function AlbumPage({ params }: { params: { slug: string } }) {
 
   return (
     <AlbumDetail
-      slug={slug}
-      title={album.title}
-      category={album.category}
-      description={album.description}
-      images={images}
+      slug={ slug }
+      title={ album.title }
+      category={ album.category }
+      description={ album.description }
+      images={ images }
     />
   )
 }

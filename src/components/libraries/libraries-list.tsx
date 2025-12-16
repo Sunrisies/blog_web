@@ -1,6 +1,5 @@
 "use client"
 
-import { getLibraries } from "@/services/library-service"
 import type { Library, LibraryFilters } from "@/types/library"
 import { Loader2 } from "lucide-react"
 import { useSearchParams } from "next/navigation"
