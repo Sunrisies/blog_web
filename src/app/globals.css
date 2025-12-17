@@ -8,15 +8,19 @@
   0% {
     transform: translateX(-100%);
   }
+
   100% {
     transform: translateX(100%);
   }
 }
 
 @keyframes lyric-glow {
-  0%, 100% {
+
+  0%,
+  100% {
     filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3));
   }
+
   50% {
     filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.6));
   }
@@ -222,6 +226,7 @@
   animation-fill-mode: both;
 }
 
+/* 
 .dark::view-transition-old(root) {
   z-index: 100;
 }
@@ -230,7 +235,7 @@
 ::view-transition-old(root) {
   animation: none;
   transform: none !important;
-}
+} */
 
 /* 精细控制版本的动画 */
 @keyframes float-404 {
@@ -261,4 +266,25 @@
 
 .animate-float-404 {
   animation: float-404 4s ease-in-out infinite;
+}
+
+@layer base {
+
+  ::view-transition-new(root),
+  ::view-transition-old(root) {
+    animation: none;
+  }
+
+  ::view-transition-group(root) {
+    animation: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation: none !important;
+    }
+  }
 }

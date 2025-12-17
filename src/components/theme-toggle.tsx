@@ -1,122 +1,91 @@
-import { useState, useEffect, useRef } from "react"
-import { Sun, Moon } from "lucide-react"
-import { Button } from "@/components/ui/button"
+"use client"
+import { useState, useEffect } from "react"
+import { Moon, Sun } from "lucide-react"
 
 export function ThemeToggle() {
-    const [isDarkMode, setIsDarkMode] = useState(() => {
-        // 使用函数形式初始化状态，避免同步渲染问题
-        if (typeof window === "undefined") return false
-        const savedTheme = localStorage.getItem("theme")
-        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-        return savedTheme === "dark" || (!savedTheme && systemPrefersDark)
-    })
-    const [isAnimating, setIsAnimating] = useState(false)
-    const buttonRef = useRef(null)
-
+    // 使用状态管理主题
+    const [theme, setTheme] = useState<"light" | "dark">("light")
+    const [mounted, setMounted] = useState(false)
+    // 只在客户端初始化主题
     useEffect(() => {
-        // 使用 setTimeout 将状态更新推迟到下一个事件循环
-        const timer = setTimeout(() => {
-            const savedTheme = localStorage.getItem("theme")
-            const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-            const initialTheme = savedTheme === "dark" || (!savedTheme && systemPrefersDark)
+        setMounted(true)
 
-            setIsDarkMode(initialTheme)
-            document.documentElement.classList.toggle("dark", initialTheme)
-        }, 0)
-
-        return () => clearTimeout(timer)
+        const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null
+        if (savedTheme) {
+            setTheme(savedTheme)
+        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            setTheme("dark")
+        }
     }, [])
 
-    const toggleTheme = (event: PointerEvent) => {
-        if (isAnimating) return
+    // 应用主题到DOM
+    useEffect(() => {
+        if (!mounted) return
 
-        // 检查浏览器是否支持 View Transition API
-        if (!document.startViewTransition) {
-            // 降级方案：直接切换主题
-            const newMode = !isDarkMode
-            setIsDarkMode(newMode)
-            document.documentElement.classList.toggle("dark", newMode)
-            localStorage.setItem("theme", newMode ? "dark" : "light")
-            return
-        }
+        document.documentElement.classList.toggle("dark", theme === "dark")
+        localStorage.setItem("theme", theme)
+    }, [theme, mounted])
 
-        setIsAnimating(true)
-        const newMode = !isDarkMode
-
+    // 切换主题处理函数
+    const handleThemeChange = async (event: React.MouseEvent) => {
         // 获取点击位置
-        const { clientX, clientY } = event
+        const x = event.clientX
+        const y = event.clientY
 
-        // 使用 View Transition API
-        const transition = document.startViewTransition(() => {
-            setIsDarkMode(newMode)
-            document.documentElement.classList.toggle("dark")
-            localStorage.setItem("theme", newMode ? "dark" : "light")
-        })
+        // 计算过渡半径（从点击位置到最远角落的距离）
+        const transitionRadius = Math.hypot(
+            Math.max(x, window.innerWidth - x),
+            Math.max(y, window.innerHeight - y)
+        )
 
-        // 在过渡准备完成后执行自定义动画
-        transition.ready.then(() => {
-            // 计算半径，以点击位置为圆心，到四个角的距离中最大的那个作为半径
-            const radius = Math.hypot(
-                Math.max(clientX, window.innerWidth - clientX),
-                Math.max(clientY, window.innerHeight - clientY)
-            )
+        // 判断主题切换方向
+        const isDarkToLight = theme === 'dark'
+        console.log(theme, 'isDarkToLight')
+        // 检查是否支持 View Transition API
+        if (document.startViewTransition) {
+            const transition = document.startViewTransition(() => {
+                setTheme(isDarkToLight ? 'light' : 'dark')
+            })
 
-            const clipPath = [
-                `circle(0% at ${clientX}px ${clientY}px)`,
-                `circle(${radius}px at ${clientX}px ${clientY}px)`
-            ]
-
-            // 执行自定义动画
-            document.documentElement.animate(
-                {
-                    clipPath: newMode ? clipPath.reverse() : clipPath
-                },
-                {
-                    duration: 500,
-                    easing: 'ease-in-out',
-                    pseudoElement: newMode
-                        ? '::view-transition-old(root)'
-                        : '::view-transition-new(root)'
-                }
-            )
-        })
-
-        // 动画完成后重置状态
-        transition.finished.finally(() => {
-            setIsAnimating(false)
-        })
+            // 等待过渡准备就绪
+            transition.ready.then(() => {
+                // 从亮到暗：使用裁切半径从小到大实现扩散效果
+                document.documentElement.animate(
+                    {
+                        clipPath: [
+                            `circle(0 at ${x}px ${y}px)`,
+                            `circle(${transitionRadius}px at ${x}px ${y}px)`
+                        ]
+                    },
+                    {
+                        duration: 1000,
+                        easing: 'ease-in-out',
+                        pseudoElement: '::view-transition-new(root)'
+                    }
+                )
+            })
+        } else {
+            // 降级方案：直接切换主题
+            setTheme(isDarkToLight ? 'light' : 'dark')
+        }
     }
 
     return (
-        <div className="flex items-center ml-auto md:ml-0">
-            <Button
-                ref={ buttonRef }
-                variant="ghost"
-                size="icon"
-                onClick={ () => toggleTheme(event as PointerEvent) }
-                className={ `relative mr-1 h-9 w-9 overflow-hidden cursor-pointer transition-transform duration-300 ${isAnimating ? "scale-90" : "scale-100 hover:scale-110"
-                    }` }
-                disabled={ isAnimating }
-                aria-label="切换主题"
+        <button
+            onClick={ handleThemeChange }
+            className="theme-toggle-button relative h-7 w-14 rounded-full bg-slate-200 transition-colors duration-300 ease-in-out dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 cursor-pointer"
+            aria-label="切换主题"
+        >
+            <div
+                className={ `absolute left-0.5 top-0.5 h-6 w-6 rounded-full bg-white shadow-md transition-all duration-300 ease-in-out flex items-center justify-center ${theme === 'dark' ? 'translate-x-7' : 'translate-x-0'
+                    } hover:shadow-lg` }
             >
-                {/* 旋转背景效果 */ }
-                <div className={ `absolute inset-0 rounded-full transition-all duration-500 ${isDarkMode
-                    ? "bg-gradient-to-br from-slate-700 to-slate-900 scale-100"
-                    : "bg-gradient-to-br from-amber-100 to-yellow-100 scale-100"
-                    } ${isAnimating ? 'rotate-180' : ''}` } />
-
-                {/* 太阳图标 */ }
-                <Sun className={ `relative h-4 w-4 transition-all duration-500 ${isDarkMode
-                    ? "rotate-90 scale-0 opacity-0 text-amber-200"
-                    : "rotate-0 scale-100 opacity-100 text-amber-600"
-                    }` } />
-
-                {/* 月亮图标 */ }
-                <Moon className={ `absolute h-4 w-4 transition-all duration-500 ${isDarkMode
-                    ? "rotate-0 scale-100 opacity-100 text-slate-200"
-                    : "-rotate-90 scale-0 opacity-0 text-slate-400"
-                    }` } />
-            </Button>
-        </div>
+                { theme === 'dark' ? (
+                    <Moon className="h-4 w-4 text-slate-700" />
+                ) : (
+                    <Sun className="h-4 w-4 text-amber-400" />
+                ) }
+            </div>
+        </button>
     )
 }

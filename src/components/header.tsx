@@ -71,10 +71,7 @@ export function SiteHeader() {
           )) }
         </nav>
 
-        {/* Theme Toggle - Always visible */ }
         <ThemeToggle></ThemeToggle>
-
-        {/* Mobile Menu Toggle - Right side on mobile */ }
         <div className="md:hidden ml-2">
 
           <Sheet open={ isOpen } onOpenChange={ setIsOpen }>
